@@ -17,6 +17,58 @@ html, body {
   cursor: url("assets/Cursors/Pistolidle.png"), auto;
 }
 
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10000;
+  background: radial-gradient(circle at center, transparent 0%, transparent 60%, rgba(0,0,0,0.3) 100%);
+}
+
+#sphere-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.03);
+}
+
+/* Effetto barrel distortion CSS più controllato */
+@supports (backdrop-filter: blur(0px)) {
+  #sphere-container {
+    transform: scale(1.03) perspective(1000px) rotateX(0deg);
+  }
+}
+
+#sphere-container > * {
+  transform-style: preserve-3d;
+}
+
+/* Vignette più controllata */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 50%,
+    rgba(0,0,0,0.2) 80%,
+    rgba(0,0,0,0.5) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
 body.charging {
   cursor: url("assets/Cursors/strongcharge.png"), pointer;
 }
@@ -29,7 +81,8 @@ body.firing {
 #bg {
   position: fixed;
   top: 0; left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateZ(-30px);
+  transform-style: preserve-3d;
   width: auto; height: 18vh;
   min-width: 100vw;
   object-fit: cover;
@@ -43,7 +96,12 @@ body.firing {
   width: 100%; height: calc(100vh - 15vh);
   background: linear-gradient(to bottom, rgba(0,0,0,0), black);
   z-index: 1;
+  transform: translateZ(-15px);
+  transform-style: preserve-3d;
 }
+
+/* --- PLASMA EFFECT (SOTTO IL CONTENUTO) --- */
+/* Rimosso */
 
 /* --- 3. TOP BAR --- */
 #top {
@@ -52,6 +110,8 @@ body.firing {
   display: flex; justify-content: space-between; align-items: center;
   z-index: 10; font-size: 14px;
   pointer-events: none;
+  transform-style: preserve-3d;
+  transform: translateZ(10px);
 }
 #top div, #top #logo { pointer-events: auto; }
 #logo img {
@@ -62,22 +122,48 @@ body.firing {
 /* --- 4. LISTA CENTRALE --- */
 #scroll {
   position: absolute;
-  top: calc(15vh + 30px); 
+  top: calc(19vh + 50px); 
   left: 50%;
   transform: translateX(-50%);
-  width: 260px;
+  width: 90%;
+  max-width: 1400px;
   z-index: 5;
-  text-align: center;
-  line-height: 0.60; 
+  line-height: 1.4;
+  transform-style: preserve-3d;
+  perspective: 1500px;
 }
-#scroll div {
-  padding: 4px 0;
+#scroll .row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
   font-size: 14px;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: all 0.3s ease;
   color: #535353;
+  border-bottom: 1px solid #1a1a1a;
+  transform-style: preserve-3d;
+  transform-origin: center center;
 }
-#scroll div:hover { color: #ffffff; }
+
+/* Applica prospettiva più leggera alle righe */
+#scroll .row:nth-child(1) { transform: translateZ(0px) rotateX(0.5deg); }
+#scroll .row:nth-child(2) { transform: translateZ(-5px) rotateX(1deg); }
+#scroll .row:nth-child(3) { transform: translateZ(-10px) rotateX(1.5deg); }
+#scroll .row:nth-child(4) { transform: translateZ(-15px) rotateX(2deg); }
+#scroll .row:nth-child(5) { transform: translateZ(-20px) rotateX(2.5deg); }
+#scroll .row:nth-child(6) { transform: translateZ(-25px) rotateX(3deg); }
+
+#scroll .row:hover { 
+  color: #ffffff;
+  transform: translateZ(10px) rotateX(0deg) scale(1.01);
+  border-bottom-color: #333;
+}
+#scroll .row:hover .col3 { color: #00ff00; }
+#scroll .row:hover .col4 { color: #00ff00; }
+#scroll .col1 { flex: 1; text-align: left; }
+#scroll .col2 { flex: 1; text-align: center; }
+#scroll .col3 { flex: 1; text-align: right; color: #535353; transition: color 0.2s ease; padding-right: 40px; }
+#scroll .col4 { flex: 0 0 60px; text-align: right; color: #535353; transition: color 0.2s ease; }
 
 /* --- 5. MODAL (GALLERY EDGE-TO-EDGE) --- */
 #project-modal {
@@ -168,11 +254,46 @@ body.firing {
   bottom: 250px;
   left: 30px;
   width: 500px;
-  z-index: 1500;
+  z-index: 800;
   pointer-events: auto;
   cursor: pointer;
   transition: filter 0.1s;
+  display: none;
+  opacity: 0;
 }
+
+#widget-simona.bouncing {
+  display: block;
+  animation: bounceFallSimona 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  opacity: 1;
+}
+
+@keyframes bounceFallSimona {
+  0% {
+    transform: translateY(-800px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-80px);
+  }
+  85% {
+    transform: translateY(0);
+  }
+  92% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 #widget-simona:hover {
   filter: hue-rotate(180deg) saturate(1.5);
 }
@@ -219,12 +340,48 @@ body.firing {
 #widget-dog {
   position: fixed;
   bottom: 30px;
+  left: 30px;
   width: 130px;
-  z-index: 1500;
+  z-index: 800;
   pointer-events: auto;
   cursor: move;
   transition: filter 0.1s;
+  display: none;
+  opacity: 0;
 }
+
+#widget-dog.bouncing {
+  display: block;
+  animation: bounceFallDog 1.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  opacity: 1;
+}
+
+@keyframes bounceFallDog {
+  0% {
+    transform: translateY(-800px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-100px);
+  }
+  85% {
+    transform: translateY(0);
+  }
+  92% {
+    transform: translateY(-40px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 #widget-dog:hover {
   filter: hue-rotate(90deg) saturate(2);
 }
@@ -276,7 +433,7 @@ body.firing {
 }
 
 #window-4k { 
-  display: none;
+  display: block;
   top: 0;
   left: 0;
   width: 100vw; 
@@ -287,7 +444,7 @@ body.firing {
 }
 
 #window-1080p { 
-  display: none;
+  display: block;
   width: 720px; 
   height: 405px; 
   border-color: #ff0000; 
@@ -296,7 +453,7 @@ body.firing {
 }
 
 #window-720p { 
-  display: none;
+  display: block;
   width: 480px; 
   height: 270px; 
   border-color: #ff0000; 
@@ -305,7 +462,7 @@ body.firing {
 }
 
 #window-dvd { 
-  display: none;
+  display: block;
   width: 320px; 
   height: 180px; 
   border-color: #ff0000; 
@@ -334,6 +491,24 @@ body.firing {
 
 <body>
 
+<!-- SVG Filter per effetto fisheye -->
+<svg style="position: absolute; width: 0; height: 0;">
+  <defs>
+    <filter id="fisheye" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="blur"/>
+      <feDisplacementMap in="SourceGraphic" in2="blur" scale="15" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    
+    <!-- Distorsione barrel più marcata -->
+    <filter id="barrel-distortion">
+      <feTurbulence type="fractalNoise" baseFrequency="0.001" numOctaves="1" result="warp" />
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="30" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </defs>
+</svg>
+
+<div id="sphere-container">
+
 <!-- BACKGROUND VIDEO -->
 <video id="bg" autoplay muted loop playsinline>
   <source src="assets/Video/beeonflower.mp4" type="video/mp4">
@@ -343,47 +518,47 @@ body.firing {
 <!-- TOP BAR -->
 <div id="top">
   <div id="logo"><img src="assets/Logo/logo4k.svg" alt="4K Logo"></div>
-  <div>Works &nbsp; <span id="link-about" style="cursor:pointer;">About</span> &nbsp; Contact &nbsp; Cellula</div>
+  <div><span id="link-works" style="cursor:pointer;">Works</span> &nbsp; <span id="link-about" style="cursor:pointer;">About</span> &nbsp; <span id="link-contact" style="cursor:pointer;">Contact</span> &nbsp; Cellula</div>
 </div>
 
 <!-- CENTRAL LIST -->
 <div id="scroll">
-  <div onclick="openProject('slamjam')">Slam Jam</div>
-  <div onclick="openProject('nike')">Nike</div>
-  <div onclick="openProject('magliano')">Magliano</div>
-  <div onclick="openProject('hglf')">HGLF</div>
-  <div onclick="openProject('trashgirls')">TrashGirls8000</div>
-  <div onclick="openProject('amsterdam')">Amsterdam Junglist Kru</div>
-  <div onclick="openProject('sperm')">Sperm Studios</div>
-  <div onclick="openProject('dysphoria')">Dysphoria</div>
-  <div onclick="openProject('autostraddle')">Autostraddle</div>
-  <div onclick="openProject('forthem')">For Them</div>
-  <div onclick="openProject('hundebiss')">Hundebiss</div>
-  <div onclick="openProject('cellula')">Cellula</div>
-  <div onclick="openProject('robot')">Robot Festival</div>
-  <div onclick="openProject('bim')">Bim Milano</div>
-  <div onclick="openProject('sozzani')">Fondazione Sozzani</div>
-  <div onclick="openProject('specific')">Specific</div>
-  <div onclick="openProject('pessima')">Pessima</div>
-  <div onclick="openProject('people')">People Of Meat</div>
-  <div onclick="openProject('slamjam')">Slam Jam</div>
-  <div onclick="openProject('nike')">Nike</div>
-  <div onclick="openProject('magliano')">Magliano</div>
-  <div onclick="openProject('hglf')">HGLF</div>
-  <div onclick="openProject('trashgirls')">TrashGirls8000</div>
-  <div onclick="openProject('amsterdam')">Amsterdam Junglist Kru</div>
-  <div onclick="openProject('sperm')">Sperm Studios</div>
-  <div onclick="openProject('dysphoria')">Dysphoria</div>
-  <div onclick="openProject('autostraddle')">Autostraddle</div>
-  <div onclick="openProject('forthem')">For Them</div>
-  <div onclick="openProject('hundebiss')">Hundebiss</div>
-  <div onclick="openProject('cellula')">Cellula</div>
-  <div onclick="openProject('robot')">Robot Festival</div>
-  <div onclick="openProject('bim')">Bim Milano</div>
-  <div onclick="openProject('sozzani')">Fondazione Sozzani</div>
-  <div onclick="openProject('specific')">Specific</div>
-  <div onclick="openProject('pessima')">Pessima</div>
-  <div onclick="openProject('people')">People Of Meat</div>
+  <div class="row" onclick="openProject('slamjam')">
+    <div class="col1">Slam Jam</div>
+    <div class="col2">New Balance Campaign</div>
+    <div class="col3">Photography</div>
+    <div class="col4">2025</div>
+  </div>
+  <div class="row" onclick="openProject('exhibition')">
+    <div class="col1">Exhibition Name</div>
+    <div class="col2">Temu Backrooms</div>
+    <div class="col3">Video Game, Installation</div>
+    <div class="col4">2025</div>
+  </div>
+  <div class="row" onclick="openProject('client')">
+    <div class="col1">Client Name</div>
+    <div class="col2">Dress My Nelli</div>
+    <div class="col3">Web</div>
+    <div class="col4">2023</div>
+  </div>
+  <div class="row" onclick="openProject('pessima')">
+    <div class="col1">Pessima</div>
+    <div class="col2">Pessima Magazine</div>
+    <div class="col3">Publishing</div>
+    <div class="col4">2020</div>
+  </div>
+  <div class="row" onclick="openProject('slamjam2')">
+    <div class="col1">Slam Jam</div>
+    <div class="col2">New Balance Campaign</div>
+    <div class="col3">Photography</div>
+    <div class="col4">2025</div>
+  </div>
+  <div class="row" onclick="openProject('exhibition2')">
+    <div class="col1">Exhibition Name</div>
+    <div class="col2">Temu Backrooms</div>
+    <div class="col3">Video Game, Installation</div>
+    <div class="col4">2025</div>
+  </div>
 </div>
 
 <!-- MODAL -->
@@ -425,32 +600,60 @@ body.firing {
 </div>
 
 <!-- FINESTRE RISOLUZIONI -->
-<div id="window-4k" class="resolution-window">
+<div id="window-4k" class="resolution-window visible">
   <div class="resolution-label">4K</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden;width:100vw;height:100vh}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;image-rendering:crisp-edges'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<div id="window-1080p" class="resolution-window">
+<div id="window-1080p" class="resolution-window visible">
   <div class="resolution-label">1080p</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<div id="window-720p" class="resolution-window">
+<div id="window-720p" class="resolution-window visible">
   <div class="resolution-label">720p</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<div id="window-dvd" class="resolution-window">
+<div id="window-dvd" class="resolution-window visible">
   <div class="resolution-label">DVD</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(0.5px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<div id="window-vcd" class="resolution-window">
+<div id="window-vcd" class="resolution-window visible">
   <div class="resolution-label">VCD</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(1px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <script>
+// --- EFFETTO SPHERE DINAMICO ---
+const sphereContainer = document.getElementById('sphere-container');
+let mouseXNorm = 0.5;
+let mouseYNorm = 0.5;
+
+document.addEventListener('mousemove', (e) => {
+  mouseXNorm = e.clientX / window.innerWidth;
+  mouseYNorm = e.clientY / window.innerHeight;
+});
+
+function updateSphereEffect() {
+  // Calcola rotazione basata sulla posizione del mouse (bilanciata)
+  const rotateY = (mouseXNorm - 0.5) * 2.5; // ±1.25 gradi
+  const rotateX = -(mouseYNorm - 0.5) * 2.5;
+  
+  // Applica trasformazione con parallasse controllata
+  sphereContainer.style.transform = `
+    scale(1.03) 
+    perspective(1000px) 
+    rotateX(${rotateX}deg) 
+    rotateY(${rotateY}deg)
+  `;
+  
+  requestAnimationFrame(updateSphereEffect);
+}
+
+updateSphereEffect();
+
 // --- CURSOR STATES ---
 let isMouseDown = false;
 let fireTimeout;
@@ -522,29 +725,52 @@ function closeProject() {
   document.getElementById('project-modal').style.display = 'none';
 }
 
+// --- WORKS CLICK (HOMEPAGE) ---
+document.getElementById('link-works').addEventListener('click', () => {
+  location.reload();
+});
+
+// --- CONTACT CLICK TO SHOW WIDGETS ---
+let widgetsVisible = false;
+
+document.getElementById('link-contact').addEventListener('click', () => {
+  if (!widgetsVisible) {
+    widgetSimona.classList.add('bouncing');
+    
+    setTimeout(() => {
+      widgetDog.classList.add('bouncing');
+    }, 200);
+    
+    widgetsVisible = true;
+  }
+});
+
 // --- CADUTA LETTERE ABOUT ---
 document.getElementById('link-about').addEventListener('click', () => {
   const scrollContainer = document.getElementById('scroll');
-  const divs = Array.from(scrollContainer.querySelectorAll('div'));
+  const rows = Array.from(scrollContainer.querySelectorAll('.row'));
 
-  divs.forEach(div => {
-    const text = div.innerText;
-    div.style.visibility = 'hidden';
+  rows.forEach(row => {
+    const text = row.innerText;
+    row.style.visibility = 'hidden';
 
     for (let i = 0; i < text.length; i++) {
       const char = text[i];
       if (char === ' ') continue;
 
+      const textNode = row.firstChild ? row.firstChild.firstChild : null;
+      if (!textNode) continue;
+
       const range = document.createRange();
-      range.setStart(div.firstChild, i);
-      range.setEnd(div.firstChild, i + 1);
+      range.setStart(textNode, Math.min(i, textNode.length - 1));
+      range.setEnd(textNode, Math.min(i + 1, textNode.length));
       const rect = range.getBoundingClientRect();
 
       const span = document.createElement('span');
       span.className = 'fall-letter';
       span.innerText = char;
 
-      const style = window.getComputedStyle(div);
+      const style = window.getComputedStyle(row);
       span.style.font = style.font;
       span.style.color = style.color;
       span.style.fontWeight = style.fontWeight;
@@ -587,18 +813,15 @@ document.getElementById('link-about').addEventListener('click', () => {
 });
 
 // --- CLICK RESOLUTION WINDOWS ---
-let resolutionsOpen = false;
+let resolutionsOpen = true;
 
-// Apri solo cliccando su VCD
 document.getElementById('window-vcd').addEventListener('click', (e) => {
   e.stopPropagation();
   
   if (!resolutionsOpen) {
-    // Widget vanno sotto
     widgetSimona.style.zIndex = '800';
     widgetDog.style.zIndex = '800';
     
-    // Apri tutte le finestre con animazione fluida
     const dvd = document.getElementById('window-dvd');
     const w720 = document.getElementById('window-720p');
     const w1080 = document.getElementById('window-1080p');
@@ -626,14 +849,11 @@ document.getElementById('window-vcd').addEventListener('click', (e) => {
   }
 });
 
-// Chiudi cliccando ovunque (tranne su VCD)
 document.addEventListener('click', (e) => {
   if (resolutionsOpen && !e.target.closest('#window-vcd')) {
-    // Widget tornano sopra
     widgetSimona.style.zIndex = '1500';
     widgetDog.style.zIndex = '1500';
     
-    // Chiudi con animazione inversa
     const w4k = document.getElementById('window-4k');
     const w1080 = document.getElementById('window-1080p');
     const w720 = document.getElementById('window-720p');
@@ -675,7 +895,6 @@ let hasMoved = false;
 const playArea = widgetSimona.querySelector('.play-area');
 const stopArea = widgetSimona.querySelector('.stop-area');
 
-// Click sul widget intero per play/pause
 widgetSimona.addEventListener('click', (e) => {
   if (!hasMoved && !e.target.classList.contains('play-area') && !e.target.classList.contains('stop-area')) {
     if (isPlaying) {
@@ -730,9 +949,6 @@ const widgetDog = document.getElementById('widget-dog');
 let isDraggingDog = false, offsetXDog = 0, offsetYDog = 0;
 let hasMovedDog = false;
 
-widgetDog.style.left = '30px';
-widgetDog.style.bottom = '30px';
-
 widgetDog.addEventListener('click', (e) => {
   if (!hasMovedDog) {
     barkingAudio.currentTime = 0;
@@ -763,6 +979,8 @@ document.addEventListener('mouseup', () => {
   isDraggingDog = false;
 });
 </script>
+
+</div> <!-- Chiude sphere-container -->
 
 </body>
 </html>
