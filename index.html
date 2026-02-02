@@ -17,57 +17,7 @@ html, body {
   cursor: url("assets/Cursors/Pistolidle.png"), auto;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 10000;
-  background: radial-gradient(circle at center, transparent 0%, transparent 60%, rgba(0,0,0,0.3) 100%);
-}
 
-#sphere-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transform: scale(1.03);
-}
-
-/* Effetto barrel distortion CSS più controllato */
-@supports (backdrop-filter: blur(0px)) {
-  #sphere-container {
-    transform: scale(1.03) perspective(1000px) rotateX(0deg);
-  }
-}
-
-#sphere-container > * {
-  transform-style: preserve-3d;
-}
-
-/* Vignette più controllata */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 0%,
-    transparent 50%,
-    rgba(0,0,0,0.2) 80%,
-    rgba(0,0,0,0.5) 100%
-  );
-  mix-blend-mode: multiply;
-}
 
 body.charging {
   cursor: url("assets/Cursors/strongcharge.png"), pointer;
@@ -79,39 +29,22 @@ body.firing {
 
 /* --- 2. BACKGROUND & FADE --- */
 #bg {
-  position: fixed;
-  top: 0; left: 50%;
-  transform: translateX(-50%) translateZ(-30px);
-  transform-style: preserve-3d;
-  width: auto; height: 18vh;
-  min-width: 100vw;
-  object-fit: cover;
-  object-position: 50% 40%; 
-  z-index: 0;
+  display: none;
 }
 
 #fade {
-  position: fixed;
-  top: 15vh; left: 0;
-  width: 100%; height: calc(100vh - 15vh);
-  background: linear-gradient(to bottom, rgba(0,0,0,0), black);
-  z-index: 1;
-  transform: translateZ(-15px);
-  transform-style: preserve-3d;
+  display: none;
 }
-
-/* --- PLASMA EFFECT (SOTTO IL CONTENUTO) --- */
-/* Rimosso */
 
 /* --- 3. TOP BAR --- */
 #top {
   position: absolute;
-  top: 19vh; left: 30px; right: 30px;
+  top: 30px; 
+  left: 30px; 
+  right: 30px;
   display: flex; justify-content: space-between; align-items: center;
-  z-index: 10; font-size: 14px;
+  z-index: 10; font-size: 11px;
   pointer-events: none;
-  transform-style: preserve-3d;
-  transform: translateZ(10px);
 }
 #top div, #top #logo { pointer-events: auto; }
 #logo img {
@@ -122,40 +55,25 @@ body.firing {
 /* --- 4. LISTA CENTRALE --- */
 #scroll {
   position: absolute;
-  top: calc(19vh + 50px); 
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 1400px;
+  top: 80px; 
+  left: 30px;
+  right: 30px;
   z-index: 5;
   line-height: 1.4;
-  transform-style: preserve-3d;
-  perspective: 1500px;
 }
 #scroll .row {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  font-size: 14px;
+  font-size: 11px;
   cursor: pointer;
   transition: all 0.3s ease;
   color: #535353;
   border-bottom: 1px solid #1a1a1a;
-  transform-style: preserve-3d;
-  transform-origin: center center;
 }
-
-/* Applica prospettiva più leggera alle righe */
-#scroll .row:nth-child(1) { transform: translateZ(0px) rotateX(0.5deg); }
-#scroll .row:nth-child(2) { transform: translateZ(-5px) rotateX(1deg); }
-#scroll .row:nth-child(3) { transform: translateZ(-10px) rotateX(1.5deg); }
-#scroll .row:nth-child(4) { transform: translateZ(-15px) rotateX(2deg); }
-#scroll .row:nth-child(5) { transform: translateZ(-20px) rotateX(2.5deg); }
-#scroll .row:nth-child(6) { transform: translateZ(-25px) rotateX(3deg); }
 
 #scroll .row:hover { 
   color: #ffffff;
-  transform: translateZ(10px) rotateX(0deg) scale(1.01);
   border-bottom-color: #333;
 }
 #scroll .row:hover .col3 { color: #00ff00; }
@@ -207,9 +125,9 @@ body.firing {
   padding: 50px 40px; 
   flex-grow: 1; 
 }
-.modal-info-side h2 { font-size: 18px; font-weight: 300; margin: 0; color: #888; text-transform: uppercase; }
-.subtitle { font-size: 13px; margin-top: 5px; margin-bottom: 25px; opacity: 0.5; }
-.description { font-size: 14px; line-height: 1.6; color: #535353; }
+.modal-info-side h2 { font-size: 11px; font-weight: 300; margin: 0; color: #888; text-transform: uppercase; }
+.subtitle { font-size: 11px; margin-top: 5px; margin-bottom: 25px; opacity: 0.5; }
+.description { font-size: 11px; line-height: 1.6; color: #535353; }
 
 /* GALLERY CHE COPRE TUTTO IL FONDO SENZA SPAZI */
 #modal-gallery {
@@ -243,9 +161,49 @@ body.firing {
 .fall-letter {
   position: absolute;
   color: #535353;
-  font-size: 14px;
+  font-size: 11px;
   pointer-events: none;
   z-index: 9999;
+}
+
+/* --- WHITE BLOCKS ANIMATION --- */
+#white-blocks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+  display: none;
+  overflow: hidden;
+}
+
+#white-blocks-container.active {
+  display: block;
+}
+
+.white-block {
+  position: absolute;
+  height: 25px;
+  background: white;
+  right: 0;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  animation: slideRight 8s ease-in-out infinite;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(var(--slide-amount));
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 /* --- 7. WIDGET simona 50% E DRAGGABLE --- */
@@ -257,41 +215,16 @@ body.firing {
   z-index: 800;
   pointer-events: auto;
   cursor: pointer;
-  transition: filter 0.1s;
+  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.1s;
   display: none;
   opacity: 0;
+  transform: scale(0.9);
 }
 
-#widget-simona.bouncing {
+#widget-simona.visible {
   display: block;
-  animation: bounceFallSimona 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   opacity: 1;
-}
-
-@keyframes bounceFallSimona {
-  0% {
-    transform: translateY(-800px);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  60% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-80px);
-  }
-  85% {
-    transform: translateY(0);
-  }
-  92% {
-    transform: translateY(-30px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  transform: scale(1);
 }
 
 #widget-simona:hover {
@@ -345,41 +278,16 @@ body.firing {
   z-index: 800;
   pointer-events: auto;
   cursor: move;
-  transition: filter 0.1s;
+  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.1s;
   display: none;
   opacity: 0;
+  transform: scale(0.9);
 }
 
-#widget-dog.bouncing {
+#widget-dog.visible {
   display: block;
-  animation: bounceFallDog 1.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   opacity: 1;
-}
-
-@keyframes bounceFallDog {
-  0% {
-    transform: translateY(-800px);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  60% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-100px);
-  }
-  85% {
-    transform: translateY(0);
-  }
-  92% {
-    transform: translateY(-40px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  transform: scale(1);
 }
 
 #widget-dog:hover {
@@ -414,6 +322,393 @@ body.firing {
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
+/* --- 10. LOGO PAGE --- */
+#logo-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+  z-index: 500;
+  display: block;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  overflow: hidden;
+}
+
+#logo-page.hidden {
+  display: none;
+  opacity: 0;
+}
+
+#logo-page-logo {
+  position: absolute;
+  top: 50%;
+  left: 32%;
+  transform: translate(-50%, -50%);
+  /* Logo aspect ratio from SVG viewBox: 1911.62:559.76 = 3.416:1 */
+  /* Scale to 105vh height so it touches top and bottom */
+  height: 105vh;
+  width: auto;
+  z-index: 501;
+}
+
+#logo-page-header {
+  position: absolute;
+  top: 67%;
+  left: 28%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  padding: 6px 18px;
+  z-index: 502;
+  font-size: 11px;
+  color: #000;
+  white-space: nowrap;
+  letter-spacing: -0.03em;
+}
+
+#logo-page-header span {
+  margin: 0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  padding: 0 1.5px;
+}
+
+#logo-page-header span:first-child {
+  padding-left: 0;
+}
+
+#logo-page-header span:last-child {
+  padding-right: 0;
+}
+
+#logo-page-header span:hover {
+  opacity: 0.6;
+}
+
+#logo-page-resolution {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 11px;
+  color: #000;
+  z-index: 502;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+/* --- MEASUREMENT ANNOTATIONS --- */
+.annotation {
+  position: absolute;
+  font-size: 7px;
+  color: #000;
+  z-index: 503;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.annotation .arrow {
+  font-size: 8px;
+  line-height: 1;
+}
+
+.annotation .measure-text {
+  line-height: 1;
+}
+
+/* Corner annotations */
+.top-left-corner {
+  top: 8px;
+  left: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.top-left-horizontal {
+  top: 20px;
+  left: 8px;
+  flex-direction: row;
+}
+
+.top-right-corner {
+  top: 8px;
+  right: 8px;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.top-right-horizontal {
+  top: 20px;
+  right: 8px;
+  flex-direction: row;
+}
+
+.bottom-left-corner {
+  bottom: 8px;
+  left: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.bottom-left-horizontal {
+  bottom: 20px;
+  left: 8px;
+  flex-direction: row;
+}
+
+.bottom-right-corner {
+  bottom: 8px;
+  right: 8px;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.bottom-right-horizontal {
+  bottom: 20px;
+  right: 8px;
+  flex-direction: row;
+}
+
+/* Top edge measurements - in white center-top area */
+.top-measure-1 {
+  top: 100px;
+  left: 35%;
+  flex-direction: row;
+}
+
+.top-measure-2 {
+  top: 150px;
+  left: 45%;
+  flex-direction: row;
+}
+
+.top-measure-3 {
+  top: 80px;
+  right: 15%;
+  flex-direction: column;
+}
+
+/* Left edge measurements - NOT IN BLACK, in white areas */
+.left-measure-1 {
+  top: 180px;
+  left: 30%;
+  flex-direction: column;
+}
+
+.left-measure-2 {
+  top: 280px;
+  left: 28%;
+  flex-direction: column;
+}
+
+.left-measure-3 {
+  bottom: 200px;
+  left: 32%;
+  flex-direction: row;
+}
+
+/* Right edge measurements - in white right area */
+.right-measure-1 {
+  top: 10%;
+  right: 10%;
+  flex-direction: column;
+}
+
+.right-measure-2 {
+  top: 25%;
+  right: 8%;
+  flex-direction: column;
+}
+
+.right-measure-3 {
+  top: 40%;
+  right: 12%;
+  flex-direction: row;
+}
+
+/* Bottom edge measurements - in white center-bottom */
+.bottom-measure-1 {
+  bottom: 120px;
+  left: 38%;
+  flex-direction: row;
+}
+
+.bottom-measure-2 {
+  bottom: 180px;
+  left: 48%;
+  flex-direction: row;
+}
+
+.bottom-measure-3 {
+  bottom: 100px;
+  right: 20%;
+  flex-direction: column;
+}
+
+/* Scattered measurements - ONLY in white/gray areas */
+.scatter-1 {
+  top: 200px;
+  left: 34%;
+  flex-direction: row;
+}
+
+.scatter-2 {
+  top: 120px;
+  right: 18%;
+  flex-direction: row;
+}
+
+.scatter-3 {
+  bottom: 150px;
+  left: 42%;
+  flex-direction: column;
+}
+
+.scatter-4 {
+  bottom: 80px;
+  right: 25%;
+  flex-direction: row;
+}
+
+.scatter-5 {
+  top: 35%;
+  left: 36%;
+  flex-direction: row;
+}
+
+.scatter-6 {
+  bottom: 35%;
+  left: 40%;
+  flex-direction: row;
+}
+
+.scatter-7 {
+  top: 250px;
+  left: 32%;
+  flex-direction: row;
+}
+
+.scatter-8 {
+  bottom: 25%;
+  right: 15%;
+  flex-direction: column;
+}
+
+.scatter-9 {
+  top: 45%;
+  left: 38%;
+  flex-direction: row;
+}
+
+.scatter-10 {
+  top: 30%;
+  right: 20%;
+  flex-direction: column;
+}
+
+.scatter-11 {
+  bottom: 220px;
+  left: 44%;
+  flex-direction: row;
+}
+
+.scatter-12 {
+  top: 50%;
+  right: 10%;
+  flex-direction: row;
+}
+
+/* Above header annotations - in white area above "Works About Contact" */
+.above-header-1 {
+  top: 380px;
+  left: 28%;
+  flex-direction: column;
+}
+
+.above-header-2 {
+  top: 340px;
+  left: 32%;
+  flex-direction: row;
+}
+
+.above-header-3 {
+  top: 420px;
+  left: 36%;
+  flex-direction: row;
+}
+
+.above-header-4 {
+  top: 360px;
+  left: 26%;
+  flex-direction: column;
+}
+
+.above-header-5 {
+  top: 400px;
+  left: 34%;
+  flex-direction: row;
+}
+
+.above-header-6 {
+  top: 320px;
+  left: 38%;
+  flex-direction: column;
+}
+
+/* Northeast of header annotations - in white right side */
+.northeast-1 {
+  top: 35%;
+  right: 18%;
+  flex-direction: row;
+}
+
+.northeast-2 {
+  top: 22%;
+  right: 14%;
+  flex-direction: row;
+}
+
+.northeast-3 {
+  top: 48%;
+  right: 22%;
+  flex-direction: column;
+}
+
+.northeast-4 {
+  top: 28%;
+  right: 25%;
+  flex-direction: row;
+}
+
+.northeast-5 {
+  top: 55%;
+  right: 16%;
+  flex-direction: row;
+}
+
+.northeast-6 {
+  top: 15%;
+  right: 12%;
+  flex-direction: row;
+}
+
+.northeast-7 {
+  top: 60%;
+  right: 20%;
+  flex-direction: column;
+}
+
+.northeast-8 {
+  top: 38%;
+  right: 28%;
+  flex-direction: row;
+}
+
 .resolution-window.visible {
   opacity: 1;
   transform: scale(1);
@@ -423,7 +718,7 @@ body.firing {
   position: absolute;
   top: 5px;
   right: 5px;
-  font-size: 10px;
+  font-size: 11px;
   color: #888;
   background: rgba(0,0,0,0.7);
   padding: 2px 5px;
@@ -507,13 +802,231 @@ body.firing {
   </defs>
 </svg>
 
-<div id="sphere-container">
+<!-- WHITE BLOCKS CONTAINER -->
+<div id="white-blocks-container"></div>
 
-<!-- BACKGROUND VIDEO -->
-<video id="bg" autoplay muted loop playsinline>
-  <source src="assets/Video/beeonflower.mp4" type="video/mp4">
-</video>
-<div id="fade"></div>
+<!-- LOGO PAGE -->
+<div id="logo-page">
+  <img id="logo-page-logo" src="assets/Logo/logo4k.svg" alt="4K Logo">
+  <div id="logo-page-header">
+    <span id="logo-works">Works</span>
+    <span id="logo-about">About</span>
+    <span id="logo-contact">Contact</span>
+    <span id="logo-clients">Clients</span>
+  </div>
+  <div id="logo-page-resolution">3840 x 2160</div>
+  
+  <!-- Measurement Annotations -->
+  <!-- Top corners -->
+  <div class="annotation top-left-corner">
+    <span class="arrow arrow-down">↓</span>
+    <span class="measure-text">20</span>
+  </div>
+  <div class="annotation top-left-horizontal">
+    <span class="arrow arrow-right">→</span>
+    <span class="measure-text">20</span>
+  </div>
+  
+  <div class="annotation top-right-corner">
+    <span class="measure-text">20</span>
+    <span class="arrow arrow-down">↓</span>
+  </div>
+  <div class="annotation top-right-horizontal">
+    <span class="measure-text">20</span>
+    <span class="arrow arrow-left">←</span>
+  </div>
+  
+  <!-- Bottom corners -->
+  <div class="annotation bottom-left-corner">
+    <span class="arrow arrow-up">↑</span>
+    <span class="measure-text">20</span>
+  </div>
+  <div class="annotation bottom-left-horizontal">
+    <span class="arrow arrow-right">→</span>
+    <span class="measure-text">20</span>
+  </div>
+  
+  <div class="annotation bottom-right-corner">
+    <span class="measure-text">20</span>
+    <span class="arrow arrow-up">↑</span>
+  </div>
+  <div class="annotation bottom-right-horizontal">
+    <span class="measure-text">20</span>
+    <span class="arrow arrow-left">←</span>
+  </div>
+  
+  <!-- Top edge measurements -->
+  <div class="annotation top-measure-1">
+    <span class="measure-text">384</span>
+    <span class="arrow arrow-left">←</span>
+    <span class="arrow arrow-right">→</span>
+  </div>
+  <div class="annotation top-measure-2">
+    <span class="arrow arrow-left">←</span>
+    <span class="measure-text">768</span>
+    <span class="arrow arrow-right">→</span>
+  </div>
+  <div class="annotation top-measure-3">
+    <span class="arrow arrow-down">↓</span>
+    <span class="measure-text">216</span>
+  </div>
+  
+  <!-- Left edge measurements -->
+  <div class="annotation left-measure-1">
+    <span class="arrow arrow-down">↓</span>
+    <span class="measure-text">432</span>
+    <span class="arrow arrow-up">↑</span>
+  </div>
+  <div class="annotation left-measure-2">
+    <span class="measure-text">1080</span>
+    <span class="arrow arrow-up">↑</span>
+  </div>
+  <div class="annotation left-measure-3">
+    <span class="arrow arrow-right">→</span>
+    <span class="measure-text">192</span>
+  </div>
+  
+  <!-- Right edge measurements -->
+  <div class="annotation right-measure-1">
+    <span class="arrow arrow-down">↓</span>
+    <span class="measure-text">540</span>
+    <span class="arrow arrow-up">↑</span>
+  </div>
+  <div class="annotation right-measure-2">
+    <span class="measure-text">864</span>
+    <span class="arrow arrow-down">↓</span>
+  </div>
+  <div class="annotation right-measure-3">
+    <span class="measure-text">96</span>
+    <span class="arrow arrow-left">←</span>
+  </div>
+  
+  <!-- Bottom edge measurements -->
+  <div class="annotation bottom-measure-1">
+    <span class="arrow arrow-left">←</span>
+    <span class="measure-text">960</span>
+    <span class="arrow arrow-right">→</span>
+  </div>
+  <div class="annotation bottom-measure-2">
+    <span class="measure-text">480</span>
+    <span class="arrow arrow-right">→</span>
+  </div>
+  <div class="annotation bottom-measure-3">
+    <span class="arrow arrow-up">↑</span>
+    <span class="measure-text">108</span>
+  </div>
+  
+  <!-- Additional scattered measurements -->
+  <div class="annotation scatter-1">
+    <span class="measure-text">32</span>
+    <span class="arrow arrow-diagonal-1">↗</span>
+  </div>
+  <div class="annotation scatter-2">
+    <span class="arrow arrow-diagonal-2">↘</span>
+    <span class="measure-text">64</span>
+  </div>
+  <div class="annotation scatter-3">
+    <span class="measure-text">128</span>
+    <span class="arrow arrow-up">↑</span>
+  </div>
+  <div class="annotation scatter-4">
+    <span class="arrow arrow-right">→</span>
+    <span class="measure-text">256</span>
+  </div>
+  <div class="annotation scatter-5">
+    <span class="measure-text">48</span>
+  </div>
+  <div class="annotation scatter-6">
+    <span class="arrow arrow-left">←</span>
+    <span class="measure-text">72</span>
+  </div>
+  <div class="annotation scatter-7">
+    <span class="measure-text">144</span>
+    <span class="arrow arrow-diagonal-1">↗</span>
+  </div>
+  <div class="annotation scatter-8">
+    <span class="arrow arrow-down">↓</span>
+    <span class="measure-text">24</span>
+  </div>
+  <div class="annotation scatter-9">
+    <span class="measure-text">16</span>
+    <span class="arrow arrow-left">←</span>
+    <span class="arrow arrow-right">→</span>
+  </div>
+  <div class="annotation scatter-10">
+    <span class="arrow arrow-up">↑</span>
+    <span class="measure-text">88</span>
+    <span class="arrow arrow-down">↓</span>
+  </div>
+  <div class="annotation scatter-11">
+    <span class="measure-text">320</span>
+  </div>
+  <div class="annotation scatter-12">
+    <span class="arrow arrow-diagonal-2">↘</span>
+    <span class="measure-text">56</span>
+  </div>
+  
+  <!-- Above header annotations -->
+  <div class="annotation above-header-1">
+    <span class="measure-text">112</span>
+    <span class="arrow arrow-down">↓</span>
+  </div>
+  <div class="annotation above-header-2">
+    <span class="arrow arrow-left">←</span>
+    <span class="measure-text">224</span>
+    <span class="arrow arrow-right">→</span>
+  </div>
+  <div class="annotation above-header-3">
+    <span class="measure-text">56</span>
+    <span class="arrow arrow-diagonal-2">↘</span>
+  </div>
+  <div class="annotation above-header-4">
+    <span class="arrow arrow-down">↓</span>
+    <span class="measure-text">168</span>
+  </div>
+  <div class="annotation above-header-5">
+    <span class="measure-text">84</span>
+    <span class="arrow arrow-right">→</span>
+  </div>
+  <div class="annotation above-header-6">
+    <span class="arrow arrow-up">↑</span>
+    <span class="measure-text">42</span>
+    <span class="arrow arrow-down">↓</span>
+  </div>
+  
+  <!-- Northeast of header annotations -->
+  <div class="annotation northeast-1">
+    <span class="measure-text">192</span>
+    <span class="arrow arrow-left">←</span>
+  </div>
+  <div class="annotation northeast-2">
+    <span class="arrow arrow-diagonal-1">↗</span>
+    <span class="measure-text">96</span>
+  </div>
+  <div class="annotation northeast-3">
+    <span class="measure-text">144</span>
+    <span class="arrow arrow-down">↓</span>
+  </div>
+  <div class="annotation northeast-4">
+    <span class="arrow arrow-left">←</span>
+    <span class="measure-text">288</span>
+  </div>
+  <div class="annotation northeast-5">
+    <span class="measure-text">36</span>
+  </div>
+  <div class="annotation northeast-6">
+    <span class="arrow arrow-diagonal-2">↘</span>
+    <span class="measure-text">72</span>
+  </div>
+  <div class="annotation northeast-7">
+    <span class="measure-text">120</span>
+    <span class="arrow arrow-up">↑</span>
+  </div>
+  <div class="annotation northeast-8">
+    <span class="arrow arrow-right">→</span>
+    <span class="measure-text">60</span>
+  </div>
+</div>
 
 <!-- TOP BAR -->
 <div id="top">
@@ -626,34 +1139,6 @@ body.firing {
 </div>
 
 <script>
-// --- EFFETTO SPHERE DINAMICO ---
-const sphereContainer = document.getElementById('sphere-container');
-let mouseXNorm = 0.5;
-let mouseYNorm = 0.5;
-
-document.addEventListener('mousemove', (e) => {
-  mouseXNorm = e.clientX / window.innerWidth;
-  mouseYNorm = e.clientY / window.innerHeight;
-});
-
-function updateSphereEffect() {
-  // Calcola rotazione basata sulla posizione del mouse (bilanciata)
-  const rotateY = (mouseXNorm - 0.5) * 2.5; // ±1.25 gradi
-  const rotateX = -(mouseYNorm - 0.5) * 2.5;
-  
-  // Applica trasformazione con parallasse controllata
-  sphereContainer.style.transform = `
-    scale(1.03) 
-    perspective(1000px) 
-    rotateX(${rotateX}deg) 
-    rotateY(${rotateY}deg)
-  `;
-  
-  requestAnimationFrame(updateSphereEffect);
-}
-
-updateSphereEffect();
-
 // --- CURSOR STATES ---
 let isMouseDown = false;
 let fireTimeout;
@@ -730,16 +1215,39 @@ document.getElementById('link-works').addEventListener('click', () => {
   location.reload();
 });
 
+// --- LOGO CLICK (SHOW LOGO PAGE) ---
+document.getElementById('logo').addEventListener('click', () => {
+  const logoPage = document.getElementById('logo-page');
+  logoPage.style.display = 'block';
+  logoPage.style.opacity = '1';
+  logoPage.classList.remove('hidden');
+});
+
+// Logo page navigation
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'logo-works') {
+    document.getElementById('logo-page').classList.add('hidden');
+  }
+  if (e.target.id === 'logo-about') {
+    document.getElementById('logo-page').classList.add('hidden');
+    setTimeout(() => document.getElementById('link-about').click(), 100);
+  }
+  if (e.target.id === 'logo-contact') {
+    document.getElementById('logo-page').classList.add('hidden');
+    setTimeout(() => document.getElementById('link-contact').click(), 100);
+  }
+});
+
 // --- CONTACT CLICK TO SHOW WIDGETS ---
 let widgetsVisible = false;
 
 document.getElementById('link-contact').addEventListener('click', () => {
   if (!widgetsVisible) {
-    widgetSimona.classList.add('bouncing');
+    widgetSimona.classList.add('visible');
     
     setTimeout(() => {
-      widgetDog.classList.add('bouncing');
-    }, 200);
+      widgetDog.classList.add('visible');
+    }, 100);
     
     widgetsVisible = true;
   }
@@ -748,68 +1256,69 @@ document.getElementById('link-contact').addEventListener('click', () => {
 // --- CADUTA LETTERE ABOUT ---
 document.getElementById('link-about').addEventListener('click', () => {
   const scrollContainer = document.getElementById('scroll');
-  const rows = Array.from(scrollContainer.querySelectorAll('.row'));
-
-  rows.forEach(row => {
-    const text = row.innerText;
-    row.style.visibility = 'hidden';
-
-    for (let i = 0; i < text.length; i++) {
-      const char = text[i];
-      if (char === ' ') continue;
-
-      const textNode = row.firstChild ? row.firstChild.firstChild : null;
-      if (!textNode) continue;
-
-      const range = document.createRange();
-      range.setStart(textNode, Math.min(i, textNode.length - 1));
-      range.setEnd(textNode, Math.min(i + 1, textNode.length));
-      const rect = range.getBoundingClientRect();
-
-      const span = document.createElement('span');
-      span.className = 'fall-letter';
-      span.innerText = char;
-
-      const style = window.getComputedStyle(row);
-      span.style.font = style.font;
-      span.style.color = style.color;
-      span.style.fontWeight = style.fontWeight;
-
-      span.style.left = rect.left + 'px';
-      span.style.top = rect.top + 'px';
-
-      document.body.appendChild(span);
-
-      let posY = rect.top;
-      let posX = rect.left;
-      let velocityY = 0;
-      let velocityX = (Math.random() - 0.5) * 1.5;
-      let rotation = 0;
-      let rotationSpeed = (Math.random() - 0.5) * 8;
-      const gravity = 0.3;
-      
-      const animate = () => {
-        velocityY += gravity;
-        posY += velocityY;
-        posX += velocityX;
-        rotation += rotationSpeed;
-        
-        span.style.top = posY + 'px';
-        span.style.left = posX + 'px';
-        span.style.transform = `rotate(${rotation}deg)`;
-        
-        if (posY < window.innerHeight + 100) {
-          requestAnimationFrame(animate);
-        } else {
-          span.remove();
-        }
-      };
-      
-      setTimeout(() => requestAnimationFrame(animate), Math.random() * 100);
+  const blocksContainer = document.getElementById('white-blocks-container');
+  
+  // Hide scroll content
+  scrollContainer.style.display = 'none';
+  
+  // Show white blocks
+  blocksContainer.classList.add('active');
+  blocksContainer.innerHTML = '';
+  
+  // Create white blocks stacked from top to bottom
+  const blockHeight = 25;
+  const containerHeight = window.innerHeight - (window.innerHeight * 0.18);
+  const blockCount = Math.floor(containerHeight / blockHeight);
+  
+  // Split into two pyramids
+  const halfPoint = Math.floor(blockCount / 2);
+  
+  for (let i = 0; i < blockCount; i++) {
+    const block = document.createElement('div');
+    block.className = 'white-block';
+    
+    // Position from top, stacking blocks with no gaps
+    const top = i * blockHeight;
+    block.style.top = top + 'px';
+    
+    // Determine which pyramid and position within it
+    let isFirstPyramid = i < halfPoint;
+    let pyramidPosition;
+    
+    if (isFirstPyramid) {
+      // First pyramid: grows from top (0) to middle
+      pyramidPosition = i / halfPoint; // 0 to 1
+    } else {
+      // Second pyramid: shrinks from middle to bottom
+      pyramidPosition = (blockCount - 1 - i) / (blockCount - halfPoint); // 1 to 0
     }
-  });
-
-  scrollContainer.style.visibility = 'hidden';
+    
+    // Width based on pyramid position (creates staircase effect)
+    const minWidth = 100;
+    const maxWidth = 650;
+    const width = minWidth + (pyramidPosition * (maxWidth - minWidth));
+    block.style.width = width + 'px';
+    
+    // Start at right edge
+    block.style.right = '0';
+    
+    // Slide amount increases with width (longer blocks slide more)
+    const slideAmount = 50 + (pyramidPosition * 350); // 50-400px
+    block.style.setProperty('--slide-amount', slideAmount + 'px');
+    
+    // Synchronized timing within each pyramid
+    // Blocks close together have similar timing
+    const baseTime = 8;
+    const timeVariation = Math.sin(pyramidPosition * Math.PI) * 2; // Smooth variation
+    const duration = baseTime + timeVariation;
+    block.style.animationDuration = duration + 's';
+    
+    // Delay creates wave effect within pyramid
+    const delay = pyramidPosition * 2;
+    block.style.animationDelay = delay + 's';
+    
+    blocksContainer.appendChild(block);
+  }
 });
 
 // --- CLICK RESOLUTION WINDOWS ---
@@ -979,8 +1488,6 @@ document.addEventListener('mouseup', () => {
   isDraggingDog = false;
 });
 </script>
-
-</div> <!-- Chiude sphere-container -->
 
 </body>
 </html>
