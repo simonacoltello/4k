@@ -14,17 +14,32 @@ html, body {
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
   height: 100%; width: 100%;
   overflow: hidden !important;
-  cursor: url("assets/Cursors/Pistolidle.png"), auto;
+  cursor: none; /* Nasconde il cursore di default */
 }
 
-
-
-body.charging {
-  cursor: url("assets/Cursors/strongcharge.png"), pointer;
+/* --- CUSTOM CURSOR --- */
+#custom-cursor {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  border: 1px solid #08FF00;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s ease, height 0.15s ease, border-color 0.15s ease;
+  mix-blend-mode: difference;
 }
 
-body.firing {
-  cursor: url("assets/Cursors/strongfire.png"), pointer;
+body.cursor-hover #custom-cursor {
+  width: 16px;
+  height: 16px;
+  border-color: #00ff88;
+}
+
+/* Rimuove tutti i cursor pointer per mantenere solo il cursore custom */
+a, button, [onclick], .hoverable, #logo-page-header span {
+  cursor: none !important;
 }
 
 /* --- 2. BACKGROUND & FADE --- */
@@ -52,21 +67,32 @@ body.firing {
   filter: invert(33%) sepia(0%) saturate(0%) brightness(95%) contrast(88%);
 }
 
-/* --- 4. LISTA CENTRALE --- */
+/* --- 4. LISTA CENTRALE — CENTERED --- */
 #scroll {
   position: absolute;
-  top: 80px; 
-  left: 30px;
-  right: 30px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 5;
+  display: none; /* Modificato da flex a none */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#scroll-inner {
+  width: 100%;
+  padding: 0 30px;
+  box-sizing: border-box;
   line-height: 1.4;
 }
+
 #scroll .row {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
   font-size: 11px;
-  cursor: pointer;
   transition: all 0.3s ease;
   color: #535353;
   border-bottom: 1px solid #1a1a1a;
@@ -143,7 +169,6 @@ body.firing {
   width: 25%; 
   height: 100%;
   object-fit: cover;
-  cursor: pointer;
   opacity: 0.5;
   transition: 0.2s;
   border-right: 1px solid #333;
@@ -155,7 +180,7 @@ body.firing {
 .dot { width: 10px; height: 10px; border-radius: 50%; }
 .green { background: #27c93f; }
 .yellow { background: #ffbd2e; }
-.red { background: #ff5f56; cursor: pointer; }
+.red { background: #ff5f56; }
 
 /* --- 6. CADUTA LETTERE ABOUT --- */
 .fall-letter {
@@ -166,6 +191,28 @@ body.firing {
   z-index: 9999;
 }
 
+/* --- CELLULA PAGE --- */
+#cellula-page {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 5;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: #000;
+}
+
+#cellula-page.visible {
+  display: flex;
+}
+
+#cellula-image {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+}
+
 /* --- WHITE BLOCKS ANIMATION --- */
 #white-blocks-container {
   position: fixed;
@@ -174,9 +221,9 @@ body.firing {
   width: 100%;
   height: 100vh;
   pointer-events: none;
-  z-index: 2;
+  z-index: 4;
   display: none;
-  overflow: hidden;
+  overflow: visible;
 }
 
 #white-blocks-container.active {
@@ -185,25 +232,94 @@ body.firing {
 
 .white-block {
   position: absolute;
+  left: 0;
   height: 25px;
   background: white;
-  right: 0;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  animation: slideRight 8s ease-in-out infinite;
+  animation: breathe var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+  width: var(--base-width);
 }
 
-@keyframes slideRight {
-  0% {
-    transform: translateX(0);
+/* --- ABOUT TEXT --- */
+#about-text {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 5;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+#about-text.visible {
+  display: flex;
+}
+
+#about-text-inner {
+  width: 100%;
+  padding: 0 30px;
+  box-sizing: border-box;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #fff;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+#about-image {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  filter: invert(1);
+}
+
+#about-text-content {
+  max-width: 800px;
+  color: #fff;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    width: var(--base-width);
   }
   50% {
-    transform: translateX(var(--slide-amount));
+    width: var(--peak-width);
   }
-  100% {
-    transform: translateX(0);
-  }
+}
+
+/* --- CONTACT EMAIL --- */
+#contact-email {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 6;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+#contact-email.visible {
+  display: flex;
+}
+
+#contact-email a {
+  pointer-events: auto;
+  color: #535353;
+  font-size: 11px;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+#contact-email a:hover {
+  color: #ffffff;
 }
 
 /* --- 7. WIDGET simona 50% E DRAGGABLE --- */
@@ -214,7 +330,6 @@ body.firing {
   width: 500px;
   z-index: 800;
   pointer-events: auto;
-  cursor: pointer;
   transition: opacity 0.5s ease, transform 0.5s ease, filter 0.1s;
   display: none;
   opacity: 0;
@@ -253,7 +368,6 @@ body.firing {
   transform: translateX(-50%);
   width: 30px;
   height: 30px;
-  cursor: pointer;
   z-index: 3;
 }
 
@@ -265,7 +379,6 @@ body.firing {
   transform: translateX(-50%);
   width: 30px;
   height: 30px;
-  cursor: pointer;
   z-index: 3;
 }
 
@@ -277,7 +390,6 @@ body.firing {
   width: 130px;
   z-index: 800;
   pointer-events: auto;
-  cursor: move;
   transition: opacity 0.5s ease, transform 0.5s ease, filter 0.1s;
   display: none;
   opacity: 0;
@@ -316,10 +428,10 @@ body.firing {
   background: #000;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0,0,0,0.8);
-  cursor: pointer;
   opacity: 0;
   transform: scale(0.95);
   transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: auto; /* Cliccabili */
 }
 
 /* --- 10. LOGO PAGE --- */
@@ -331,15 +443,17 @@ body.firing {
   height: 100%;
   background: #f5f5f5;
   z-index: 500;
-  display: block;
   opacity: 1;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   overflow: hidden;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 #logo-page.hidden {
-  display: none;
   opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 #logo-page-logo {
@@ -347,8 +461,6 @@ body.firing {
   top: 50%;
   left: 32%;
   transform: translate(-50%, -50%);
-  /* Logo aspect ratio from SVG viewBox: 1911.62:559.76 = 3.416:1 */
-  /* Scale to 105vh height so it touches top and bottom */
   height: 105vh;
   width: auto;
   z-index: 501;
@@ -370,7 +482,6 @@ body.firing {
 
 #logo-page-header span {
   margin: 0;
-  cursor: pointer;
   transition: opacity 0.2s;
   padding: 0 1.5px;
 }
@@ -421,293 +532,56 @@ body.firing {
   line-height: 1;
 }
 
-/* Corner annotations */
-.top-left-corner {
-  top: 8px;
-  left: 8px;
-  flex-direction: column;
-  align-items: flex-start;
-}
+.top-left-corner { top: 8px; left: 8px; flex-direction: column; align-items: flex-start; }
+.top-left-horizontal { top: 20px; left: 8px; flex-direction: row; }
+.top-right-corner { top: 8px; right: 8px; flex-direction: column; align-items: flex-end; }
+.top-right-horizontal { top: 20px; right: 8px; flex-direction: row; }
+.bottom-left-corner { bottom: 8px; left: 8px; flex-direction: column; align-items: flex-start; }
+.bottom-left-horizontal { bottom: 20px; left: 8px; flex-direction: row; }
+.bottom-right-corner { bottom: 8px; right: 8px; flex-direction: column; align-items: flex-end; }
+.bottom-right-horizontal { bottom: 20px; right: 8px; flex-direction: row; }
 
-.top-left-horizontal {
-  top: 20px;
-  left: 8px;
-  flex-direction: row;
-}
+.top-measure-1 { top: 100px; left: 35%; flex-direction: row; }
+.top-measure-2 { top: 150px; left: 45%; flex-direction: row; }
+.top-measure-3 { top: 80px; right: 15%; flex-direction: column; }
+.left-measure-1 { top: 180px; left: 30%; flex-direction: column; }
+.left-measure-2 { top: 280px; left: 28%; flex-direction: column; }
+.left-measure-3 { bottom: 200px; left: 32%; flex-direction: row; }
+.right-measure-1 { top: 10%; right: 10%; flex-direction: column; }
+.right-measure-2 { top: 25%; right: 8%; flex-direction: column; }
+.right-measure-3 { top: 40%; right: 12%; flex-direction: row; }
+.bottom-measure-1 { bottom: 120px; left: 38%; flex-direction: row; }
+.bottom-measure-2 { bottom: 180px; left: 48%; flex-direction: row; }
+.bottom-measure-3 { bottom: 100px; right: 20%; flex-direction: column; }
 
-.top-right-corner {
-  top: 8px;
-  right: 8px;
-  flex-direction: column;
-  align-items: flex-end;
-}
+.scatter-1 { top: 200px; left: 34%; flex-direction: row; }
+.scatter-2 { top: 120px; right: 18%; flex-direction: row; }
+.scatter-3 { bottom: 150px; left: 42%; flex-direction: column; }
+.scatter-4 { bottom: 80px; right: 25%; flex-direction: row; }
+.scatter-5 { top: 35%; left: 36%; flex-direction: row; }
+.scatter-6 { bottom: 35%; left: 40%; flex-direction: row; }
+.scatter-7 { top: 250px; left: 32%; flex-direction: row; }
+.scatter-8 { bottom: 25%; right: 15%; flex-direction: column; }
+.scatter-9 { top: 45%; left: 38%; flex-direction: row; }
+.scatter-10 { top: 30%; right: 20%; flex-direction: column; }
+.scatter-11 { bottom: 220px; left: 44%; flex-direction: row; }
+.scatter-12 { top: 50%; right: 10%; flex-direction: row; }
 
-.top-right-horizontal {
-  top: 20px;
-  right: 8px;
-  flex-direction: row;
-}
+.above-header-1 { top: 380px; left: 28%; flex-direction: column; }
+.above-header-2 { top: 340px; left: 32%; flex-direction: row; }
+.above-header-3 { top: 420px; left: 36%; flex-direction: row; }
+.above-header-4 { top: 360px; left: 26%; flex-direction: column; }
+.above-header-5 { top: 400px; left: 34%; flex-direction: row; }
+.above-header-6 { top: 320px; left: 38%; flex-direction: column; }
 
-.bottom-left-corner {
-  bottom: 8px;
-  left: 8px;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.bottom-left-horizontal {
-  bottom: 20px;
-  left: 8px;
-  flex-direction: row;
-}
-
-.bottom-right-corner {
-  bottom: 8px;
-  right: 8px;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.bottom-right-horizontal {
-  bottom: 20px;
-  right: 8px;
-  flex-direction: row;
-}
-
-/* Top edge measurements - in white center-top area */
-.top-measure-1 {
-  top: 100px;
-  left: 35%;
-  flex-direction: row;
-}
-
-.top-measure-2 {
-  top: 150px;
-  left: 45%;
-  flex-direction: row;
-}
-
-.top-measure-3 {
-  top: 80px;
-  right: 15%;
-  flex-direction: column;
-}
-
-/* Left edge measurements - NOT IN BLACK, in white areas */
-.left-measure-1 {
-  top: 180px;
-  left: 30%;
-  flex-direction: column;
-}
-
-.left-measure-2 {
-  top: 280px;
-  left: 28%;
-  flex-direction: column;
-}
-
-.left-measure-3 {
-  bottom: 200px;
-  left: 32%;
-  flex-direction: row;
-}
-
-/* Right edge measurements - in white right area */
-.right-measure-1 {
-  top: 10%;
-  right: 10%;
-  flex-direction: column;
-}
-
-.right-measure-2 {
-  top: 25%;
-  right: 8%;
-  flex-direction: column;
-}
-
-.right-measure-3 {
-  top: 40%;
-  right: 12%;
-  flex-direction: row;
-}
-
-/* Bottom edge measurements - in white center-bottom */
-.bottom-measure-1 {
-  bottom: 120px;
-  left: 38%;
-  flex-direction: row;
-}
-
-.bottom-measure-2 {
-  bottom: 180px;
-  left: 48%;
-  flex-direction: row;
-}
-
-.bottom-measure-3 {
-  bottom: 100px;
-  right: 20%;
-  flex-direction: column;
-}
-
-/* Scattered measurements - ONLY in white/gray areas */
-.scatter-1 {
-  top: 200px;
-  left: 34%;
-  flex-direction: row;
-}
-
-.scatter-2 {
-  top: 120px;
-  right: 18%;
-  flex-direction: row;
-}
-
-.scatter-3 {
-  bottom: 150px;
-  left: 42%;
-  flex-direction: column;
-}
-
-.scatter-4 {
-  bottom: 80px;
-  right: 25%;
-  flex-direction: row;
-}
-
-.scatter-5 {
-  top: 35%;
-  left: 36%;
-  flex-direction: row;
-}
-
-.scatter-6 {
-  bottom: 35%;
-  left: 40%;
-  flex-direction: row;
-}
-
-.scatter-7 {
-  top: 250px;
-  left: 32%;
-  flex-direction: row;
-}
-
-.scatter-8 {
-  bottom: 25%;
-  right: 15%;
-  flex-direction: column;
-}
-
-.scatter-9 {
-  top: 45%;
-  left: 38%;
-  flex-direction: row;
-}
-
-.scatter-10 {
-  top: 30%;
-  right: 20%;
-  flex-direction: column;
-}
-
-.scatter-11 {
-  bottom: 220px;
-  left: 44%;
-  flex-direction: row;
-}
-
-.scatter-12 {
-  top: 50%;
-  right: 10%;
-  flex-direction: row;
-}
-
-/* Above header annotations - in white area above "Works About Contact" */
-.above-header-1 {
-  top: 380px;
-  left: 28%;
-  flex-direction: column;
-}
-
-.above-header-2 {
-  top: 340px;
-  left: 32%;
-  flex-direction: row;
-}
-
-.above-header-3 {
-  top: 420px;
-  left: 36%;
-  flex-direction: row;
-}
-
-.above-header-4 {
-  top: 360px;
-  left: 26%;
-  flex-direction: column;
-}
-
-.above-header-5 {
-  top: 400px;
-  left: 34%;
-  flex-direction: row;
-}
-
-.above-header-6 {
-  top: 320px;
-  left: 38%;
-  flex-direction: column;
-}
-
-/* Northeast of header annotations - in white right side */
-.northeast-1 {
-  top: 35%;
-  right: 18%;
-  flex-direction: row;
-}
-
-.northeast-2 {
-  top: 22%;
-  right: 14%;
-  flex-direction: row;
-}
-
-.northeast-3 {
-  top: 48%;
-  right: 22%;
-  flex-direction: column;
-}
-
-.northeast-4 {
-  top: 28%;
-  right: 25%;
-  flex-direction: row;
-}
-
-.northeast-5 {
-  top: 55%;
-  right: 16%;
-  flex-direction: row;
-}
-
-.northeast-6 {
-  top: 15%;
-  right: 12%;
-  flex-direction: row;
-}
-
-.northeast-7 {
-  top: 60%;
-  right: 20%;
-  flex-direction: column;
-}
-
-.northeast-8 {
-  top: 38%;
-  right: 28%;
-  flex-direction: row;
-}
+.northeast-1 { top: 35%; right: 18%; flex-direction: row; }
+.northeast-2 { top: 22%; right: 14%; flex-direction: row; }
+.northeast-3 { top: 48%; right: 22%; flex-direction: column; }
+.northeast-4 { top: 28%; right: 25%; flex-direction: row; }
+.northeast-5 { top: 55%; right: 16%; flex-direction: row; }
+.northeast-6 { top: 15%; right: 12%; flex-direction: row; }
+.northeast-7 { top: 60%; right: 20%; flex-direction: column; }
+.northeast-8 { top: 38%; right: 28%; flex-direction: row; }
 
 .resolution-window.visible {
   opacity: 1;
@@ -729,51 +603,39 @@ body.firing {
 
 #window-4k { 
   display: block;
-  top: 0;
-  left: 0;
-  width: 100vw; 
-  height: 100vh; 
-  border-color: #ff0000; 
-  border-width: 1px; 
+  top: 0; left: 0;
+  width: 100vw; height: 100vh; 
+  border-color: #ff0000; border-width: 1px; 
   z-index: 899; 
 }
 
 #window-1080p { 
   display: block;
-  width: 720px; 
-  height: 405px; 
-  border-color: #ff0000; 
-  border-width: 1px; 
+  width: 720px; height: 405px; 
+  border-color: #ff0000; border-width: 1px; 
   z-index: 1000; 
 }
 
 #window-720p { 
   display: block;
-  width: 480px; 
-  height: 270px; 
-  border-color: #ff0000; 
-  border-width: 1px; 
+  width: 480px; height: 270px; 
+  border-color: #ff0000; border-width: 1px; 
   z-index: 1100; 
 }
 
 #window-dvd { 
   display: block;
-  width: 320px; 
-  height: 180px; 
-  border-color: #ff0000; 
-  border-width: 1px; 
+  width: 320px; height: 180px; 
+  border-color: #ff0000; border-width: 1px; 
   z-index: 1200; 
 }
 
 #window-vcd { 
   display: block;
-  width: 210px; 
-  height: 118px; 
-  border-color: #ff0000; 
-  border-width: 1px; 
+  width: 210px; height: 118px; 
+  border-color: #ff0000; border-width: 1px; 
   z-index: 1600; 
-  opacity: 1;
-  transform: scale(1);
+  opacity: 1; transform: scale(1);
 }
 
 .resolution-window iframe { 
@@ -786,21 +648,37 @@ body.firing {
 
 <body>
 
-<!-- SVG Filter per effetto fisheye -->
+<!-- Custom Cursor -->
+<div id="custom-cursor"></div>
+
+<!-- SVG Filter -->
 <svg style="position: absolute; width: 0; height: 0;">
   <defs>
     <filter id="fisheye" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="blur"/>
       <feDisplacementMap in="SourceGraphic" in2="blur" scale="15" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
-    
-    <!-- Distorsione barrel più marcata -->
     <filter id="barrel-distortion">
       <feTurbulence type="fractalNoise" baseFrequency="0.001" numOctaves="1" result="warp" />
       <feDisplacementMap in="SourceGraphic" in2="warp" scale="30" xChannelSelector="R" yChannelSelector="G" />
     </filter>
   </defs>
 </svg>
+
+<!-- ABOUT TEXT -->
+<div id="about-text">
+  <div id="about-text-inner">
+    <img id="about-image" src="assets/Images/3 circle.png" alt="3 Circles">
+    <div id="about-text-content">
+      4K is a creative design studio founded by Lars Larkin, Nelson Gutjahr &amp; Simona Coltello.
+    </div>
+  </div>
+</div>
+
+<!-- CELLULA PAGE -->
+<div id="cellula-page">
+  <img id="cellula-image" src="assets/Images/Group 1000006007.png" alt="Cellula">
+</div>
 
 <!-- WHITE BLOCKS CONTAINER -->
 <div id="white-blocks-container"></div>
@@ -812,265 +690,111 @@ body.firing {
     <span id="logo-works">Works</span>
     <span id="logo-about">About</span>
     <span id="logo-contact">Contact</span>
-    <span id="logo-clients">Clients</span>
+    <span id="logo-cellula">Cellula</span>
   </div>
   <div id="logo-page-resolution">3840 x 2160</div>
   
   <!-- Measurement Annotations -->
-  <!-- Top corners -->
-  <div class="annotation top-left-corner">
-    <span class="arrow arrow-down">↓</span>
-    <span class="measure-text">20</span>
-  </div>
-  <div class="annotation top-left-horizontal">
-    <span class="arrow arrow-right">→</span>
-    <span class="measure-text">20</span>
-  </div>
-  
-  <div class="annotation top-right-corner">
-    <span class="measure-text">20</span>
-    <span class="arrow arrow-down">↓</span>
-  </div>
-  <div class="annotation top-right-horizontal">
-    <span class="measure-text">20</span>
-    <span class="arrow arrow-left">←</span>
-  </div>
-  
-  <!-- Bottom corners -->
-  <div class="annotation bottom-left-corner">
-    <span class="arrow arrow-up">↑</span>
-    <span class="measure-text">20</span>
-  </div>
-  <div class="annotation bottom-left-horizontal">
-    <span class="arrow arrow-right">→</span>
-    <span class="measure-text">20</span>
-  </div>
-  
-  <div class="annotation bottom-right-corner">
-    <span class="measure-text">20</span>
-    <span class="arrow arrow-up">↑</span>
-  </div>
-  <div class="annotation bottom-right-horizontal">
-    <span class="measure-text">20</span>
-    <span class="arrow arrow-left">←</span>
-  </div>
-  
-  <!-- Top edge measurements -->
-  <div class="annotation top-measure-1">
-    <span class="measure-text">384</span>
-    <span class="arrow arrow-left">←</span>
-    <span class="arrow arrow-right">→</span>
-  </div>
-  <div class="annotation top-measure-2">
-    <span class="arrow arrow-left">←</span>
-    <span class="measure-text">768</span>
-    <span class="arrow arrow-right">→</span>
-  </div>
-  <div class="annotation top-measure-3">
-    <span class="arrow arrow-down">↓</span>
-    <span class="measure-text">216</span>
-  </div>
-  
-  <!-- Left edge measurements -->
-  <div class="annotation left-measure-1">
-    <span class="arrow arrow-down">↓</span>
-    <span class="measure-text">432</span>
-    <span class="arrow arrow-up">↑</span>
-  </div>
-  <div class="annotation left-measure-2">
-    <span class="measure-text">1080</span>
-    <span class="arrow arrow-up">↑</span>
-  </div>
-  <div class="annotation left-measure-3">
-    <span class="arrow arrow-right">→</span>
-    <span class="measure-text">192</span>
-  </div>
-  
-  <!-- Right edge measurements -->
-  <div class="annotation right-measure-1">
-    <span class="arrow arrow-down">↓</span>
-    <span class="measure-text">540</span>
-    <span class="arrow arrow-up">↑</span>
-  </div>
-  <div class="annotation right-measure-2">
-    <span class="measure-text">864</span>
-    <span class="arrow arrow-down">↓</span>
-  </div>
-  <div class="annotation right-measure-3">
-    <span class="measure-text">96</span>
-    <span class="arrow arrow-left">←</span>
-  </div>
-  
-  <!-- Bottom edge measurements -->
-  <div class="annotation bottom-measure-1">
-    <span class="arrow arrow-left">←</span>
-    <span class="measure-text">960</span>
-    <span class="arrow arrow-right">→</span>
-  </div>
-  <div class="annotation bottom-measure-2">
-    <span class="measure-text">480</span>
-    <span class="arrow arrow-right">→</span>
-  </div>
-  <div class="annotation bottom-measure-3">
-    <span class="arrow arrow-up">↑</span>
-    <span class="measure-text">108</span>
-  </div>
-  
-  <!-- Additional scattered measurements -->
-  <div class="annotation scatter-1">
-    <span class="measure-text">32</span>
-    <span class="arrow arrow-diagonal-1">↗</span>
-  </div>
-  <div class="annotation scatter-2">
-    <span class="arrow arrow-diagonal-2">↘</span>
-    <span class="measure-text">64</span>
-  </div>
-  <div class="annotation scatter-3">
-    <span class="measure-text">128</span>
-    <span class="arrow arrow-up">↑</span>
-  </div>
-  <div class="annotation scatter-4">
-    <span class="arrow arrow-right">→</span>
-    <span class="measure-text">256</span>
-  </div>
-  <div class="annotation scatter-5">
-    <span class="measure-text">48</span>
-  </div>
-  <div class="annotation scatter-6">
-    <span class="arrow arrow-left">←</span>
-    <span class="measure-text">72</span>
-  </div>
-  <div class="annotation scatter-7">
-    <span class="measure-text">144</span>
-    <span class="arrow arrow-diagonal-1">↗</span>
-  </div>
-  <div class="annotation scatter-8">
-    <span class="arrow arrow-down">↓</span>
-    <span class="measure-text">24</span>
-  </div>
-  <div class="annotation scatter-9">
-    <span class="measure-text">16</span>
-    <span class="arrow arrow-left">←</span>
-    <span class="arrow arrow-right">→</span>
-  </div>
-  <div class="annotation scatter-10">
-    <span class="arrow arrow-up">↑</span>
-    <span class="measure-text">88</span>
-    <span class="arrow arrow-down">↓</span>
-  </div>
-  <div class="annotation scatter-11">
-    <span class="measure-text">320</span>
-  </div>
-  <div class="annotation scatter-12">
-    <span class="arrow arrow-diagonal-2">↘</span>
-    <span class="measure-text">56</span>
-  </div>
-  
-  <!-- Above header annotations -->
-  <div class="annotation above-header-1">
-    <span class="measure-text">112</span>
-    <span class="arrow arrow-down">↓</span>
-  </div>
-  <div class="annotation above-header-2">
-    <span class="arrow arrow-left">←</span>
-    <span class="measure-text">224</span>
-    <span class="arrow arrow-right">→</span>
-  </div>
-  <div class="annotation above-header-3">
-    <span class="measure-text">56</span>
-    <span class="arrow arrow-diagonal-2">↘</span>
-  </div>
-  <div class="annotation above-header-4">
-    <span class="arrow arrow-down">↓</span>
-    <span class="measure-text">168</span>
-  </div>
-  <div class="annotation above-header-5">
-    <span class="measure-text">84</span>
-    <span class="arrow arrow-right">→</span>
-  </div>
-  <div class="annotation above-header-6">
-    <span class="arrow arrow-up">↑</span>
-    <span class="measure-text">42</span>
-    <span class="arrow arrow-down">↓</span>
-  </div>
-  
-  <!-- Northeast of header annotations -->
-  <div class="annotation northeast-1">
-    <span class="measure-text">192</span>
-    <span class="arrow arrow-left">←</span>
-  </div>
-  <div class="annotation northeast-2">
-    <span class="arrow arrow-diagonal-1">↗</span>
-    <span class="measure-text">96</span>
-  </div>
-  <div class="annotation northeast-3">
-    <span class="measure-text">144</span>
-    <span class="arrow arrow-down">↓</span>
-  </div>
-  <div class="annotation northeast-4">
-    <span class="arrow arrow-left">←</span>
-    <span class="measure-text">288</span>
-  </div>
-  <div class="annotation northeast-5">
-    <span class="measure-text">36</span>
-  </div>
-  <div class="annotation northeast-6">
-    <span class="arrow arrow-diagonal-2">↘</span>
-    <span class="measure-text">72</span>
-  </div>
-  <div class="annotation northeast-7">
-    <span class="measure-text">120</span>
-    <span class="arrow arrow-up">↑</span>
-  </div>
-  <div class="annotation northeast-8">
-    <span class="arrow arrow-right">→</span>
-    <span class="measure-text">60</span>
-  </div>
+  <div class="annotation top-left-corner"><span class="arrow">↓</span><span class="measure-text">20</span></div>
+  <div class="annotation top-left-horizontal"><span class="arrow">→</span><span class="measure-text">20</span></div>
+  <div class="annotation top-right-corner"><span class="measure-text">20</span><span class="arrow">↓</span></div>
+  <div class="annotation top-right-horizontal"><span class="measure-text">20</span><span class="arrow">←</span></div>
+  <div class="annotation bottom-left-corner"><span class="arrow">↑</span><span class="measure-text">20</span></div>
+  <div class="annotation bottom-left-horizontal"><span class="arrow">→</span><span class="measure-text">20</span></div>
+  <div class="annotation bottom-right-corner"><span class="measure-text">20</span><span class="arrow">↑</span></div>
+  <div class="annotation bottom-right-horizontal"><span class="measure-text">20</span><span class="arrow">←</span></div>
+
+  <div class="annotation top-measure-1"><span class="measure-text">384</span><span class="arrow">←</span><span class="arrow">→</span></div>
+  <div class="annotation top-measure-2"><span class="arrow">←</span><span class="measure-text">768</span><span class="arrow">→</span></div>
+  <div class="annotation top-measure-3"><span class="arrow">↓</span><span class="measure-text">216</span></div>
+
+  <div class="annotation left-measure-1"><span class="arrow">↓</span><span class="measure-text">432</span><span class="arrow">↑</span></div>
+  <div class="annotation left-measure-2"><span class="measure-text">1080</span><span class="arrow">↑</span></div>
+  <div class="annotation left-measure-3"><span class="arrow">→</span><span class="measure-text">192</span></div>
+
+  <div class="annotation right-measure-1"><span class="arrow">↓</span><span class="measure-text">540</span><span class="arrow">↑</span></div>
+  <div class="annotation right-measure-2"><span class="measure-text">864</span><span class="arrow">↓</span></div>
+  <div class="annotation right-measure-3"><span class="measure-text">96</span><span class="arrow">←</span></div>
+
+  <div class="annotation bottom-measure-1"><span class="arrow">←</span><span class="measure-text">960</span><span class="arrow">→</span></div>
+  <div class="annotation bottom-measure-2"><span class="measure-text">480</span><span class="arrow">→</span></div>
+  <div class="annotation bottom-measure-3"><span class="arrow">↑</span><span class="measure-text">108</span></div>
+
+  <div class="annotation scatter-1"><span class="measure-text">32</span><span class="arrow">↗</span></div>
+  <div class="annotation scatter-2"><span class="arrow">↘</span><span class="measure-text">64</span></div>
+  <div class="annotation scatter-3"><span class="measure-text">128</span><span class="arrow">↑</span></div>
+  <div class="annotation scatter-4"><span class="arrow">→</span><span class="measure-text">256</span></div>
+  <div class="annotation scatter-5"><span class="measure-text">48</span></div>
+  <div class="annotation scatter-6"><span class="arrow">←</span><span class="measure-text">72</span></div>
+  <div class="annotation scatter-7"><span class="measure-text">144</span><span class="arrow">↗</span></div>
+  <div class="annotation scatter-8"><span class="arrow">↓</span><span class="measure-text">24</span></div>
+  <div class="annotation scatter-9"><span class="measure-text">16</span><span class="arrow">←</span><span class="arrow">→</span></div>
+  <div class="annotation scatter-10"><span class="arrow">↑</span><span class="measure-text">88</span><span class="arrow">↓</span></div>
+  <div class="annotation scatter-11"><span class="measure-text">320</span></div>
+  <div class="annotation scatter-12"><span class="arrow">↘</span><span class="measure-text">56</span></div>
+
+  <div class="annotation above-header-1"><span class="measure-text">112</span><span class="arrow">↓</span></div>
+  <div class="annotation above-header-2"><span class="arrow">←</span><span class="measure-text">224</span><span class="arrow">→</span></div>
+  <div class="annotation above-header-3"><span class="measure-text">56</span><span class="arrow">↘</span></div>
+  <div class="annotation above-header-4"><span class="arrow">↓</span><span class="measure-text">168</span></div>
+  <div class="annotation above-header-5"><span class="measure-text">84</span><span class="arrow">→</span></div>
+  <div class="annotation above-header-6"><span class="arrow">↑</span><span class="measure-text">42</span><span class="arrow">↓</span></div>
+
+  <div class="annotation northeast-1"><span class="measure-text">192</span><span class="arrow">←</span></div>
+  <div class="annotation northeast-2"><span class="arrow">↗</span><span class="measure-text">96</span></div>
+  <div class="annotation northeast-3"><span class="measure-text">144</span><span class="arrow">↓</span></div>
+  <div class="annotation northeast-4"><span class="arrow">←</span><span class="measure-text">288</span></div>
+  <div class="annotation northeast-5"><span class="measure-text">36</span></div>
+  <div class="annotation northeast-6"><span class="arrow">↘</span><span class="measure-text">72</span></div>
+  <div class="annotation northeast-7"><span class="measure-text">120</span><span class="arrow">↑</span></div>
+  <div class="annotation northeast-8"><span class="arrow">→</span><span class="measure-text">60</span></div>
 </div>
 
 <!-- TOP BAR -->
 <div id="top">
   <div id="logo"><img src="assets/Logo/logo4k.svg" alt="4K Logo"></div>
-  <div><span id="link-works" style="cursor:pointer;">Works</span> &nbsp; <span id="link-about" style="cursor:pointer;">About</span> &nbsp; <span id="link-contact" style="cursor:pointer;">Contact</span> &nbsp; Cellula</div>
+  <div><span id="link-works" class="hoverable">Works</span> &nbsp; <span id="link-about" class="hoverable">About</span> &nbsp; <span id="link-contact" class="hoverable">Contact</span> &nbsp; <span id="link-cellula" class="hoverable">Cellula</span></div>
 </div>
 
 <!-- CENTRAL LIST -->
 <div id="scroll">
-  <div class="row" onclick="openProject('slamjam')">
-    <div class="col1">Slam Jam</div>
-    <div class="col2">New Balance Campaign</div>
-    <div class="col3">Photography</div>
-    <div class="col4">2025</div>
-  </div>
-  <div class="row" onclick="openProject('exhibition')">
-    <div class="col1">Exhibition Name</div>
-    <div class="col2">Temu Backrooms</div>
-    <div class="col3">Video Game, Installation</div>
-    <div class="col4">2025</div>
-  </div>
-  <div class="row" onclick="openProject('client')">
-    <div class="col1">Client Name</div>
-    <div class="col2">Dress My Nelli</div>
-    <div class="col3">Web</div>
-    <div class="col4">2023</div>
-  </div>
-  <div class="row" onclick="openProject('pessima')">
-    <div class="col1">Pessima</div>
-    <div class="col2">Pessima Magazine</div>
-    <div class="col3">Publishing</div>
-    <div class="col4">2020</div>
-  </div>
-  <div class="row" onclick="openProject('slamjam2')">
-    <div class="col1">Slam Jam</div>
-    <div class="col2">New Balance Campaign</div>
-    <div class="col3">Photography</div>
-    <div class="col4">2025</div>
-  </div>
-  <div class="row" onclick="openProject('exhibition2')">
-    <div class="col1">Exhibition Name</div>
-    <div class="col2">Temu Backrooms</div>
-    <div class="col3">Video Game, Installation</div>
-    <div class="col4">2025</div>
+  <div id="scroll-inner">
+    <div class="row hoverable" onclick="openProject('slamjam')">
+      <div class="col1">Slam Jam</div>
+      <div class="col2">New Balance Campaign</div>
+      <div class="col3">Photography</div>
+      <div class="col4">2025</div>
+    </div>
+    <div class="row hoverable" onclick="openProject('exhibition')">
+      <div class="col1">Exhibition Name</div>
+      <div class="col2">Temu Backrooms</div>
+      <div class="col3">Video Game, Installation</div>
+      <div class="col4">2025</div>
+    </div>
+    <div class="row hoverable" onclick="openProject('client')">
+      <div class="col1">Client Name</div>
+      <div class="col2">Dress My Nelli</div>
+      <div class="col3">Web</div>
+      <div class="col4">2023</div>
+    </div>
+    <div class="row hoverable" onclick="openProject('pessima')">
+      <div class="col1">Pessima</div>
+      <div class="col2">Pessima Magazine</div>
+      <div class="col3">Publishing</div>
+      <div class="col4">2020</div>
+    </div>
+    <div class="row hoverable" onclick="openProject('slamjam2')">
+      <div class="col1">Slam Jam</div>
+      <div class="col2">New Balance Campaign</div>
+      <div class="col3">Photography</div>
+      <div class="col4">2025</div>
+    </div>
+    <div class="row hoverable" onclick="openProject('exhibition2')">
+      <div class="col1">Exhibition Name</div>
+      <div class="col2">Temu Backrooms</div>
+      <div class="col3">Video Game, Installation</div>
+      <div class="col4">2025</div>
+    </div>
   </div>
 </div>
 
@@ -1080,7 +804,7 @@ body.firing {
     <div class="traffic-lights">
       <div class="dot green"></div>
       <div class="dot yellow"></div>
-      <div class="dot red" onclick="closeProject()"></div>
+      <div class="dot red hoverable" onclick="closeProject()"></div>
     </div>
     <div class="modal-image-side"><img src="" id="modal-main-img"></div>
     <div class="modal-info-side">
@@ -1094,8 +818,13 @@ body.firing {
   </div>
 </div>
 
+<!-- CONTACT EMAIL -->
+<div id="contact-email">
+  <a href="mailto:4kstudiohd@gmail.com" class="hoverable">4kstudiohd@gmail.com</a>
+</div>
+
 <!-- WIDGET DOG -->
-<div id="widget-dog">
+<div id="widget-dog" class="hoverable">
   <img src="assets/Widgets/widgetdog.png" alt="Widget Dog">
   <video autoplay muted loop playsinline>
     <source src="widgetvideo.mp4" type="video/mp4">
@@ -1103,13 +832,13 @@ body.firing {
 </div>
 
 <!-- WIDGET simona -->
-<div id="widget-simona">
+<div id="widget-simona" class="hoverable">
   <img src="assets/Widgets/4K WIDGET BY SIMONA.png" alt="Widget Simona">
   <video autoplay muted loop playsinline>
     <source src="widgetvideo.mp4" type="video/mp4">
   </video>
-  <div class="play-area"></div>
-  <div class="stop-area"></div>
+  <div class="play-area hoverable"></div>
+  <div class="stop-area hoverable"></div>
 </div>
 
 <!-- FINESTRE RISOLUZIONI -->
@@ -1118,48 +847,46 @@ body.firing {
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden;width:100vw;height:100vh}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;image-rendering:crisp-edges'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<div id="window-1080p" class="resolution-window visible">
+<div id="window-1080p" class="resolution-window visible hoverable">
   <div class="resolution-label">1080p</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<div id="window-720p" class="resolution-window visible">
+<div id="window-720p" class="resolution-window visible hoverable">
   <div class="resolution-label">720p</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<div id="window-dvd" class="resolution-window visible">
+<div id="window-dvd" class="resolution-window visible hoverable">
   <div class="resolution-label">DVD</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(0.5px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<div id="window-vcd" class="resolution-window visible">
+<div id="window-vcd" class="resolution-window visible hoverable">
   <div class="resolution-label">VCD</div>
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(1px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <script>
-// --- CURSOR STATES ---
-let isMouseDown = false;
-let fireTimeout;
+// --- CUSTOM CURSOR ---
+const customCursor = document.getElementById('custom-cursor');
 
-document.addEventListener('mousedown', () => {
-  isMouseDown = true;
-  document.body.classList.remove('firing');
-  document.body.classList.add('charging');
-  
-  fireTimeout = setTimeout(() => {
-    if (isMouseDown) {
-      document.body.classList.remove('charging');
-      document.body.classList.add('firing');
-    }
-  }, 200);
+document.addEventListener('mousemove', (e) => {
+  customCursor.style.left = e.clientX + 'px';
+  customCursor.style.top = e.clientY + 'px';
 });
 
-document.addEventListener('mouseup', () => {
-  isMouseDown = false;
-  clearTimeout(fireTimeout);
-  document.body.classList.remove('charging', 'firing');
+// Gestione hover effect per elementi interattivi
+const hoverableElements = document.querySelectorAll('.hoverable, #logo-page-header span, a, button, [onclick]');
+
+hoverableElements.forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    document.body.classList.add('cursor-hover');
+  });
+  
+  el.addEventListener('mouseleave', () => {
+    document.body.classList.remove('cursor-hover');
+  });
 });
 
 // --- PROGETTI ---
@@ -1199,6 +926,7 @@ function openProject(id) {
   project.imgs.slice(0, 4).forEach(src => {
     const thumb = document.createElement('img');
     thumb.src = src;
+    thumb.classList.add('hoverable');
     thumb.onclick = () => mainImg.src = src;
     gallery.appendChild(thumb);
   });
@@ -1210,114 +938,163 @@ function closeProject() {
   document.getElementById('project-modal').style.display = 'none';
 }
 
-// --- WORKS CLICK (HOMEPAGE) ---
-document.getElementById('link-works').addEventListener('click', () => {
-  location.reload();
-});
+// --- NAVIGATION STATE MACHINE ---
+let currentPage = null;
 
-// --- LOGO CLICK (SHOW LOGO PAGE) ---
-document.getElementById('logo').addEventListener('click', () => {
-  const logoPage = document.getElementById('logo-page');
-  logoPage.style.display = 'block';
-  logoPage.style.opacity = '1';
-  logoPage.classList.remove('hidden');
-});
-
-// Logo page navigation
-document.addEventListener('click', (e) => {
-  if (e.target.id === 'logo-works') {
-    document.getElementById('logo-page').classList.add('hidden');
-  }
-  if (e.target.id === 'logo-about') {
-    document.getElementById('logo-page').classList.add('hidden');
-    setTimeout(() => document.getElementById('link-about').click(), 100);
-  }
-  if (e.target.id === 'logo-contact') {
-    document.getElementById('logo-page').classList.add('hidden');
-    setTimeout(() => document.getElementById('link-contact').click(), 100);
-  }
-});
-
-// --- CONTACT CLICK TO SHOW WIDGETS ---
-let widgetsVisible = false;
-
-document.getElementById('link-contact').addEventListener('click', () => {
-  if (!widgetsVisible) {
-    widgetSimona.classList.add('visible');
-    
-    setTimeout(() => {
-      widgetDog.classList.add('visible');
-    }, 100);
-    
-    widgetsVisible = true;
-  }
-});
-
-// --- CADUTA LETTERE ABOUT ---
-document.getElementById('link-about').addEventListener('click', () => {
-  const scrollContainer = document.getElementById('scroll');
+function showWorks() {
+  currentPage = 'works';
+  document.getElementById('scroll').style.display = 'flex';
   const blocksContainer = document.getElementById('white-blocks-container');
-  
-  // Hide scroll content
-  scrollContainer.style.display = 'none';
-  
-  // Show white blocks
+  blocksContainer.classList.remove('active');
+  blocksContainer.innerHTML = '';
+  document.getElementById('about-text').classList.remove('visible');
+  document.getElementById('cellula-page').classList.remove('visible');
+  document.getElementById('widget-simona').classList.remove('visible');
+  document.getElementById('widget-dog').classList.remove('visible');
+  document.getElementById('contact-email').classList.remove('visible');
+}
+
+function showAbout() {
+  currentPage = 'about';
+  document.getElementById('scroll').style.display = 'none';
+  document.getElementById('widget-simona').classList.remove('visible');
+  document.getElementById('widget-dog').classList.remove('visible');
+  document.getElementById('contact-email').classList.remove('visible');
+  document.getElementById('cellula-page').classList.remove('visible');
+  document.getElementById('about-text').classList.add('visible');
+  const blocksContainer = document.getElementById('white-blocks-container');
   blocksContainer.classList.add('active');
   blocksContainer.innerHTML = '';
-  
-  // Create white blocks stacked from top to bottom
+
   const blockHeight = 25;
-  const containerHeight = window.innerHeight - (window.innerHeight * 0.18);
-  const blockCount = Math.floor(containerHeight / blockHeight);
-  
-  // Split into two pyramids
-  const halfPoint = Math.floor(blockCount / 2);
-  
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  const startY  = -vh;
+  const endY    =  vh * 2;
+  const totalH  = endY - startY;
+  const blockCount = Math.ceil(totalH / blockHeight);
+
   for (let i = 0; i < blockCount; i++) {
     const block = document.createElement('div');
     block.className = 'white-block';
-    
-    // Position from top, stacking blocks with no gaps
-    const top = i * blockHeight;
-    block.style.top = top + 'px';
-    
-    // Determine which pyramid and position within it
-    let isFirstPyramid = i < halfPoint;
-    let pyramidPosition;
-    
-    if (isFirstPyramid) {
-      // First pyramid: grows from top (0) to middle
-      pyramidPosition = i / halfPoint; // 0 to 1
-    } else {
-      // Second pyramid: shrinks from middle to bottom
-      pyramidPosition = (blockCount - 1 - i) / (blockCount - halfPoint); // 1 to 0
-    }
-    
-    // Width based on pyramid position (creates staircase effect)
-    const minWidth = 100;
-    const maxWidth = 650;
-    const width = minWidth + (pyramidPosition * (maxWidth - minWidth));
-    block.style.width = width + 'px';
-    
-    // Start at right edge
-    block.style.right = '0';
-    
-    // Slide amount increases with width (longer blocks slide more)
-    const slideAmount = 50 + (pyramidPosition * 350); // 50-400px
-    block.style.setProperty('--slide-amount', slideAmount + 'px');
-    
-    // Synchronized timing within each pyramid
-    // Blocks close together have similar timing
-    const baseTime = 8;
-    const timeVariation = Math.sin(pyramidPosition * Math.PI) * 2; // Smooth variation
-    const duration = baseTime + timeVariation;
-    block.style.animationDuration = duration + 's';
-    
-    // Delay creates wave effect within pyramid
-    const delay = pyramidPosition * 2;
-    block.style.animationDelay = delay + 's';
-    
+
+    const y = startY + i * blockHeight;
+    block.style.top = y + 'px';
+
+    const t = y / vh;
+
+    const baseWidth = vw * (0.15 + t * 0.70);
+
+    const breathAmount = vw * (0.03 + 0.04 * Math.sin(i * 0.7));
+    const peakWidth = baseWidth + breathAmount;
+
+    block.style.setProperty('--base-width', baseWidth + 'px');
+    block.style.setProperty('--peak-width', peakWidth + 'px');
+
+    const duration = 6 + 3 * Math.sin(i * 0.3);
+    block.style.setProperty('--duration', duration + 's');
+
+    const delay = (i * 0.15) % 4;
+    block.style.setProperty('--delay', '-' + delay + 's');
+
     blocksContainer.appendChild(block);
+  }
+}
+
+function showContact() {
+  currentPage = 'contact';
+  document.getElementById('scroll').style.display = 'none';
+  const blocksContainer = document.getElementById('white-blocks-container');
+  blocksContainer.classList.remove('active');
+  blocksContainer.innerHTML = '';
+  document.getElementById('about-text').classList.remove('visible');
+  document.getElementById('cellula-page').classList.remove('visible');
+  document.getElementById('widget-simona').classList.add('visible');
+  document.getElementById('contact-email').classList.add('visible');
+  setTimeout(() => {
+    document.getElementById('widget-dog').classList.add('visible');
+  }, 100);
+}
+
+function showCellula() {
+  currentPage = 'cellula';
+  document.getElementById('scroll').style.display = 'none';
+  const blocksContainer = document.getElementById('white-blocks-container');
+  blocksContainer.classList.remove('active');
+  blocksContainer.innerHTML = '';
+  document.getElementById('about-text').classList.remove('visible');
+  document.getElementById('widget-simona').classList.remove('visible');
+  document.getElementById('widget-dog').classList.remove('visible');
+  document.getElementById('contact-email').classList.remove('visible');
+  document.getElementById('cellula-page').classList.add('visible');
+}
+
+// --- LOGO PAGE HELPERS ---
+function showLogoPage() {
+  document.getElementById('logo-page').classList.remove('hidden');
+}
+
+function hideLogoPage() {
+  document.getElementById('logo-page').classList.add('hidden');
+}
+
+// --- TOP BAR LINKS ---
+document.getElementById('link-works').addEventListener('click', (e) => {
+  e.stopPropagation();
+  showWorks();
+});
+
+document.getElementById('link-about').addEventListener('click', (e) => {
+  e.stopPropagation();
+  showAbout();
+});
+
+document.getElementById('link-contact').addEventListener('click', (e) => {
+  e.stopPropagation();
+  showContact();
+});
+
+document.getElementById('link-cellula').addEventListener('click', (e) => {
+  e.stopPropagation();
+  showCellula();
+});
+
+// --- LOGO CLICK (GO TO WORKS) ---
+document.getElementById('logo').addEventListener('click', (e) => {
+  e.stopPropagation();
+  showWorks();
+});
+
+// --- LOGO PAGE HEADER LINKS ---
+document.getElementById('logo-works').addEventListener('click', (e) => {
+  e.stopPropagation();
+  hideLogoPage();
+  showWorks();
+});
+
+document.getElementById('logo-about').addEventListener('click', (e) => {
+  e.stopPropagation();
+  hideLogoPage();
+  showAbout();
+});
+
+document.getElementById('logo-contact').addEventListener('click', (e) => {
+  e.stopPropagation();
+  hideLogoPage();
+  showContact();
+});
+
+document.getElementById('logo-cellula').addEventListener('click', (e) => {
+  e.stopPropagation();
+  hideLogoPage();
+  showCellula();
+});
+
+// Click logo page background to dismiss
+document.getElementById('logo-page').addEventListener('click', (e) => {
+  if (e.target.id === 'logo-page' || e.target.id === 'logo-page-logo' || e.target.id === 'logo-page-resolution') {
+    hideLogoPage();
   }
 });
 
@@ -1328,9 +1105,6 @@ document.getElementById('window-vcd').addEventListener('click', (e) => {
   e.stopPropagation();
   
   if (!resolutionsOpen) {
-    widgetSimona.style.zIndex = '800';
-    widgetDog.style.zIndex = '800';
-    
     const dvd = document.getElementById('window-dvd');
     const w720 = document.getElementById('window-720p');
     const w1080 = document.getElementById('window-1080p');
@@ -1360,9 +1134,6 @@ document.getElementById('window-vcd').addEventListener('click', (e) => {
 
 document.addEventListener('click', (e) => {
   if (resolutionsOpen && !e.target.closest('#window-vcd')) {
-    widgetSimona.style.zIndex = '1500';
-    widgetDog.style.zIndex = '1500';
-    
     const w4k = document.getElementById('window-4k');
     const w1080 = document.getElementById('window-1080p');
     const w720 = document.getElementById('window-720p');
