@@ -14,8 +14,9 @@ html, body {
   color: #535353; 
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
   height: 100%; width: 100%;
-  overflow: hidden !important;
-  cursor: none; /* Nasconde il cursore di default */
+  overflow-x: hidden;
+  cursor: none;
+  scroll-behavior: smooth;
 }
 
 /* --- CUSTOM CURSOR --- */
@@ -38,23 +39,13 @@ body.cursor-hover #custom-cursor {
   border-color: #00ff88;
 }
 
-/* Rimuove tutti i cursor pointer per mantenere solo il cursore custom */
 a, button, [onclick], .hoverable, #logo-page-header span {
   cursor: none !important;
 }
 
-/* --- 2. BACKGROUND & FADE --- */
-#bg {
-  display: none;
-}
-
-#fade {
-  display: none;
-}
-
 /* --- 3. TOP BAR --- */
 #top {
-  position: absolute;
+  position: fixed;
   top: 30px; 
   left: 30px; 
   right: 30px;
@@ -68,18 +59,25 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   filter: invert(33%) sepia(0%) saturate(0%) brightness(95%) contrast(88%);
 }
 
-/* --- 4. LISTA CENTRALE — CENTERED --- */
-#scroll {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 5;
-  display: none; /* Modificato da flex a none */
-  flex-direction: column;
+/* --- MAIN CONTAINER --- */
+#main-container {
+  position: relative;
+  width: 100%;
+}
+
+/* --- SECTION STYLING --- */
+.section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+/* --- 4. WORKS SECTION --- */
+#works-section {
+  padding: 0;
 }
 
 #scroll-inner {
@@ -89,7 +87,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   line-height: 1.4;
 }
 
-#scroll .row {
+#scroll-inner .row {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
@@ -99,18 +97,77 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   border-bottom: 1px solid #1a1a1a;
 }
 
-#scroll .row:hover { 
+#scroll-inner .row:hover { 
   color: #ffffff;
   border-bottom-color: #333;
 }
-#scroll .row:hover .col3 { color: #00ff00; }
-#scroll .row:hover .col4 { color: #00ff00; }
-#scroll .col1 { flex: 1; text-align: left; }
-#scroll .col2 { flex: 1; text-align: center; }
-#scroll .col3 { flex: 1; text-align: right; color: #535353; transition: color 0.2s ease; padding-right: 40px; }
-#scroll .col4 { flex: 0 0 60px; text-align: right; color: #535353; transition: color 0.2s ease; }
+#scroll-inner .row:hover .col3 { color: #00ff00; }
+#scroll-inner .row:hover .col4 { color: #00ff00; }
+#scroll-inner .col1 { flex: 1; text-align: left; }
+#scroll-inner .col2 { flex: 1; text-align: center; }
+#scroll-inner .col3 { flex: 1; text-align: right; color: #535353; transition: color 0.2s ease; padding-right: 40px; }
+#scroll-inner .col4 { flex: 0 0 60px; text-align: right; color: #535353; transition: color 0.2s ease; }
 
-/* --- 5. MODAL (GALLERY EDGE-TO-EDGE) --- */
+/* --- 5. ABOUT SECTION --- */
+#about-section {
+  position: relative;
+}
+
+#about-text-inner {
+  width: 100%;
+  padding: 0 30px;
+  box-sizing: border-box;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #535353;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+  z-index: 5;
+}
+
+#about-image {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  filter: invert(33%) sepia(0%) saturate(0%) brightness(95%) contrast(88%);
+}
+
+#about-text-content {
+  max-width: 800px;
+  color: #535353;
+}
+
+/* --- 6. CONTACT SECTION --- */
+#contact-section {
+  position: relative;
+}
+
+#contact-email-content {
+  position: relative;
+  z-index: 6;
+}
+
+#contact-email-content a {
+  pointer-events: auto;
+  color: #535353;
+  font-size: 11px;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+#contact-email-content a:hover {
+  color: #ffffff;
+}
+
+/* --- 7. MODAL --- */
 #project-modal {
   display: none; 
   position: fixed;
@@ -156,7 +213,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 .subtitle { font-size: 11px; margin-top: 5px; margin-bottom: 25px; opacity: 0.5; }
 .description { font-size: 11px; line-height: 1.6; color: #535353; }
 
-/* GALLERY CHE COPRE TUTTO IL FONDO SENZA SPAZI */
 #modal-gallery {
   display: flex;
   width: 100%; 
@@ -183,20 +239,11 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 .yellow { background: #ffbd2e; }
 .red { background: #ff5f56; }
 
-/* --- 6. CADUTA LETTERE ABOUT --- */
-.fall-letter {
-  position: absolute;
-  color: #535353;
-  font-size: 11px;
-  pointer-events: none;
-  z-index: 9999;
-}
-
 /* --- CELLULA PAGE --- */
 #cellula-page {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 5;
+  z-index: 5000;
   display: none;
   align-items: center;
   justify-content: center;
@@ -206,6 +253,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 
 #cellula-page.visible {
   display: flex;
+  pointer-events: auto;
 }
 
 #cellula-image {
@@ -214,116 +262,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   height: auto;
 }
 
-/* --- WHITE BLOCKS ANIMATION --- */
-#white-blocks-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 4;
-  display: none;
-  overflow: visible;
-}
-
-#white-blocks-container.active {
-  display: block;
-}
-
-.white-block {
-  position: absolute;
-  left: 0;
-  height: 25px;
-  background: white;
-  animation: breathe var(--duration) ease-in-out infinite;
-  animation-delay: var(--delay);
-  width: var(--base-width);
-}
-
-/* --- ABOUT TEXT --- */
-#about-text {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 5;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  mix-blend-mode: difference;
-}
-
-#about-text.visible {
-  display: flex;
-}
-
-#about-text-inner {
-  width: 100%;
-  padding: 0 30px;
-  box-sizing: border-box;
-  font-size: 11px;
-  line-height: 1.6;
-  color: #fff;
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-}
-
-#about-image {
-  max-width: 300px;
-  width: 100%;
-  height: auto;
-  filter: invert(1);
-}
-
-#about-text-content {
-  max-width: 800px;
-  color: #fff;
-}
-
-@keyframes breathe {
-  0%, 100% {
-    width: var(--base-width);
-  }
-  50% {
-    width: var(--peak-width);
-  }
-}
-
-/* --- CONTACT EMAIL --- */
-#contact-email {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 6;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-#contact-email.visible {
-  display: flex;
-}
-
-#contact-email a {
-  pointer-events: auto;
-  color: #535353;
-  font-size: 11px;
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-#contact-email a:hover {
-  color: #ffffff;
-}
-
-/* --- 7. WIDGET simona 50% E DRAGGABLE --- */
+/* --- 8. WIDGETS --- */
 #widget-simona {
   position: fixed;
   bottom: 250px;
@@ -331,16 +270,12 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   width: 500px;
   z-index: 800;
   pointer-events: auto;
-  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.1s;
+  transition: filter 0.1s;
   display: none;
-  opacity: 0;
-  transform: scale(0.9);
 }
 
 #widget-simona.visible {
   display: block;
-  opacity: 1;
-  transform: scale(1);
 }
 
 #widget-simona:hover {
@@ -361,7 +296,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   pointer-events: none;
 }
 
-/* Play button area (triangolo play) */
 #widget-simona .play-area {
   position: absolute;
   top: 72px;
@@ -372,7 +306,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   z-index: 3;
 }
 
-/* Stop button area (quadrato stop) */
 #widget-simona .stop-area {
   position: absolute;
   top: 108px;
@@ -383,7 +316,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   z-index: 3;
 }
 
-/* --- 8. WIDGET DOG 50% E DRAGGABLE --- */
 #widget-dog {
   position: fixed;
   bottom: 30px;
@@ -391,16 +323,12 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   width: 130px;
   z-index: 800;
   pointer-events: auto;
-  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.1s;
+  transition: filter 0.1s;
   display: none;
-  opacity: 0;
-  transform: scale(0.9);
 }
 
 #widget-dog.visible {
   display: block;
-  opacity: 1;
-  transform: scale(1);
 }
 
 #widget-dog:hover {
@@ -420,24 +348,19 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   filter: contrast(1.05) brightness(0.95);
 }
 
-/* --- 8B. WIDGET POSITIVE RADIO --- */
 #widget-positive-radio {
   position: fixed;
   top: 50%;
   right: 30px;
-  transform: translateY(-50%) scale(0.9);
+  transform: translateY(-50%);
   width: 260px;
   z-index: 800;
   pointer-events: auto;
-  transition: opacity 0.5s ease, transform 0.5s ease;
   display: none;
-  opacity: 0;
 }
 
 #widget-positive-radio.visible {
   display: block;
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
 }
 
 #widget-positive-radio img { 
@@ -467,7 +390,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   pointer-events: auto;
 }
 
-/* --- 9. FINESTRE RISOLUZIONI --- */
+/* --- 9. RESOLUTION WINDOWS --- */
 .resolution-window {
   position: fixed;
   bottom: 0;
@@ -479,157 +402,8 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   opacity: 0;
   transform: scale(0.95);
   transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: auto; /* Cliccabili */
-}
-
-/* --- 10. LOGO PAGE --- */
-#logo-page {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #f5f5f5;
-  z-index: 500;
-  opacity: 1;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  overflow: hidden;
-  visibility: visible;
   pointer-events: auto;
 }
-
-#logo-page.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-#logo-page-logo {
-  position: absolute;
-  top: 50%;
-  left: 32%;
-  transform: translate(-50%, -50%);
-  height: 105vh;
-  width: auto;
-  z-index: 501;
-}
-
-#logo-page-header {
-  position: absolute;
-  top: 67%;
-  left: 28%;
-  transform: translate(-50%, -50%);
-  background: transparent;
-  padding: 6px 18px;
-  z-index: 502;
-  font-size: 11px;
-  color: #000;
-  white-space: nowrap;
-  letter-spacing: -0.03em;
-}
-
-#logo-page-header span {
-  margin: 0;
-  transition: opacity 0.2s;
-  padding: 0 1.5px;
-}
-
-#logo-page-header span:first-child {
-  padding-left: 0;
-}
-
-#logo-page-header span:last-child {
-  padding-right: 0;
-}
-
-#logo-page-header span:hover {
-  opacity: 0.6;
-}
-
-#logo-page-resolution {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 11px;
-  color: #000;
-  z-index: 502;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-}
-
-/* --- MEASUREMENT ANNOTATIONS --- */
-.annotation {
-  position: absolute;
-  font-size: 7px;
-  color: #000;
-  z-index: 503;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-}
-
-.annotation .arrow {
-  font-size: 8px;
-  line-height: 1;
-}
-
-.annotation .measure-text {
-  line-height: 1;
-}
-
-.top-left-corner { top: 8px; left: 8px; flex-direction: column; align-items: flex-start; }
-.top-left-horizontal { top: 20px; left: 8px; flex-direction: row; }
-.top-right-corner { top: 8px; right: 8px; flex-direction: column; align-items: flex-end; }
-.top-right-horizontal { top: 20px; right: 8px; flex-direction: row; }
-.bottom-left-corner { bottom: 8px; left: 8px; flex-direction: column; align-items: flex-start; }
-.bottom-left-horizontal { bottom: 20px; left: 8px; flex-direction: row; }
-.bottom-right-corner { bottom: 8px; right: 8px; flex-direction: column; align-items: flex-end; }
-.bottom-right-horizontal { bottom: 20px; right: 8px; flex-direction: row; }
-
-.top-measure-1 { top: 100px; left: 35%; flex-direction: row; }
-.top-measure-2 { top: 150px; left: 45%; flex-direction: row; }
-.top-measure-3 { top: 80px; right: 15%; flex-direction: column; }
-.left-measure-1 { top: 180px; left: 30%; flex-direction: column; }
-.left-measure-2 { top: 280px; left: 28%; flex-direction: column; }
-.left-measure-3 { bottom: 200px; left: 32%; flex-direction: row; }
-.right-measure-1 { top: 10%; right: 10%; flex-direction: column; }
-.right-measure-2 { top: 25%; right: 8%; flex-direction: column; }
-.right-measure-3 { top: 40%; right: 12%; flex-direction: row; }
-.bottom-measure-1 { bottom: 120px; left: 38%; flex-direction: row; }
-.bottom-measure-2 { bottom: 180px; left: 48%; flex-direction: row; }
-.bottom-measure-3 { bottom: 100px; right: 20%; flex-direction: column; }
-
-.scatter-1 { top: 200px; left: 34%; flex-direction: row; }
-.scatter-2 { top: 120px; right: 18%; flex-direction: row; }
-.scatter-3 { bottom: 150px; left: 42%; flex-direction: column; }
-.scatter-4 { bottom: 80px; right: 25%; flex-direction: row; }
-.scatter-5 { top: 35%; left: 36%; flex-direction: row; }
-.scatter-6 { bottom: 35%; left: 40%; flex-direction: row; }
-.scatter-7 { top: 250px; left: 32%; flex-direction: row; }
-.scatter-8 { bottom: 25%; right: 15%; flex-direction: column; }
-.scatter-9 { top: 45%; left: 38%; flex-direction: row; }
-.scatter-10 { top: 30%; right: 20%; flex-direction: column; }
-.scatter-11 { bottom: 220px; left: 44%; flex-direction: row; }
-.scatter-12 { top: 50%; right: 10%; flex-direction: row; }
-
-.above-header-1 { top: 380px; left: 28%; flex-direction: column; }
-.above-header-2 { top: 340px; left: 32%; flex-direction: row; }
-.above-header-3 { top: 420px; left: 36%; flex-direction: row; }
-.above-header-4 { top: 360px; left: 26%; flex-direction: column; }
-.above-header-5 { top: 400px; left: 34%; flex-direction: row; }
-.above-header-6 { top: 320px; left: 38%; flex-direction: column; }
-
-.northeast-1 { top: 35%; right: 18%; flex-direction: row; }
-.northeast-2 { top: 22%; right: 14%; flex-direction: row; }
-.northeast-3 { top: 48%; right: 22%; flex-direction: column; }
-.northeast-4 { top: 28%; right: 25%; flex-direction: row; }
-.northeast-5 { top: 55%; right: 16%; flex-direction: row; }
-.northeast-6 { top: 15%; right: 12%; flex-direction: row; }
-.northeast-7 { top: 60%; right: 20%; flex-direction: column; }
-.northeast-8 { top: 38%; right: 28%; flex-direction: row; }
 
 .resolution-window.visible {
   opacity: 1;
@@ -691,6 +465,101 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   border: none; 
   pointer-events: none; 
 }
+
+/* --- 10. LOGO PAGE --- */
+#logo-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+  z-index: 500;
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow: hidden;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#logo-page.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#logo-page-logo {
+  position: absolute;
+  top: 50%;
+  left: 32%;
+  transform: translate(-50%, -50%);
+  height: 105vh;
+  width: auto;
+  z-index: 501;
+}
+
+#logo-page-header {
+  position: absolute;
+  top: 67%;
+  left: 28%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  padding: 6px 18px;
+  z-index: 502;
+  font-size: 11px;
+  color: #000;
+  white-space: nowrap;
+  letter-spacing: -0.03em;
+}
+
+#logo-page-header span {
+  margin: 0;
+  transition: opacity 0.2s;
+  padding: 0 1.5px;
+}
+
+#logo-page-header span:hover {
+  opacity: 0.6;
+}
+
+#logo-page-resolution {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 11px;
+  color: #000;
+  z-index: 502;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+/* --- ANNOTATIONS --- */
+.annotation {
+  position: absolute;
+  font-size: 7px;
+  color: #000;
+  z-index: 503;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.annotation .arrow { font-size: 8px; line-height: 1; }
+.annotation .measure-text { line-height: 1; }
+
+.top-left-corner { top: 8px; left: 8px; flex-direction: column; align-items: flex-start; }
+.top-left-horizontal { top: 20px; left: 8px; flex-direction: row; }
+.top-right-corner { top: 8px; right: 8px; flex-direction: column; align-items: flex-end; }
+.top-right-horizontal { top: 20px; right: 8px; flex-direction: row; }
+.bottom-left-corner { bottom: 8px; left: 8px; flex-direction: column; align-items: flex-start; }
+.bottom-left-horizontal { bottom: 20px; left: 8px; flex-direction: row; }
+.bottom-right-corner { bottom: 8px; right: 8px; flex-direction: column; align-items: flex-end; }
+.bottom-right-horizontal { bottom: 20px; right: 8px; flex-direction: row; }
+
+.scatter-1 { top: 200px; left: 34%; flex-direction: row; }
+.scatter-2 { top: 120px; right: 18%; flex-direction: row; }
+.scatter-3 { bottom: 150px; left: 42%; flex-direction: column; }
 </style>
 </head>
 
@@ -698,38 +567,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 
 <!-- Custom Cursor -->
 <div id="custom-cursor"></div>
-
-<!-- SVG Filter -->
-<svg style="position: absolute; width: 0; height: 0;">
-  <defs>
-    <filter id="fisheye" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="blur"/>
-      <feDisplacementMap in="SourceGraphic" in2="blur" scale="15" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="barrel-distortion">
-      <feTurbulence type="fractalNoise" baseFrequency="0.001" numOctaves="1" result="warp" />
-      <feDisplacementMap in="SourceGraphic" in2="warp" scale="30" xChannelSelector="R" yChannelSelector="G" />
-    </filter>
-  </defs>
-</svg>
-
-<!-- ABOUT TEXT -->
-<div id="about-text">
-  <div id="about-text-inner">
-    <img id="about-image" src="assets/Images/3 circle.png" alt="3 Circles">
-    <div id="about-text-content">
-      4K is a creative design studio founded by Lars Larkin, Nelson Gutjahr &amp; Simona Coltello.
-    </div>
-  </div>
-</div>
-
-<!-- CELLULA PAGE -->
-<div id="cellula-page">
-  <img id="cellula-image" src="assets/Images/Group 1000006007.png" alt="Cellula">
-</div>
-
-<!-- WHITE BLOCKS CONTAINER -->
-<div id="white-blocks-container"></div>
 
 <!-- LOGO PAGE -->
 <div id="logo-page">
@@ -742,60 +579,10 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   </div>
   <div id="logo-page-resolution">3840 x 2160</div>
   
-  <!-- Measurement Annotations -->
   <div class="annotation top-left-corner"><span class="arrow">↓</span><span class="measure-text">20</span></div>
   <div class="annotation top-left-horizontal"><span class="arrow">→</span><span class="measure-text">20</span></div>
-  <div class="annotation top-right-corner"><span class="measure-text">20</span><span class="arrow">↓</span></div>
-  <div class="annotation top-right-horizontal"><span class="measure-text">20</span><span class="arrow">←</span></div>
-  <div class="annotation bottom-left-corner"><span class="arrow">↑</span><span class="measure-text">20</span></div>
-  <div class="annotation bottom-left-horizontal"><span class="arrow">→</span><span class="measure-text">20</span></div>
-  <div class="annotation bottom-right-corner"><span class="measure-text">20</span><span class="arrow">↑</span></div>
-  <div class="annotation bottom-right-horizontal"><span class="measure-text">20</span><span class="arrow">←</span></div>
-
-  <div class="annotation top-measure-1"><span class="measure-text">384</span><span class="arrow">←</span><span class="arrow">→</span></div>
-  <div class="annotation top-measure-2"><span class="arrow">←</span><span class="measure-text">768</span><span class="arrow">→</span></div>
-  <div class="annotation top-measure-3"><span class="arrow">↓</span><span class="measure-text">216</span></div>
-
-  <div class="annotation left-measure-1"><span class="arrow">↓</span><span class="measure-text">432</span><span class="arrow">↑</span></div>
-  <div class="annotation left-measure-2"><span class="measure-text">1080</span><span class="arrow">↑</span></div>
-  <div class="annotation left-measure-3"><span class="arrow">→</span><span class="measure-text">192</span></div>
-
-  <div class="annotation right-measure-1"><span class="arrow">↓</span><span class="measure-text">540</span><span class="arrow">↑</span></div>
-  <div class="annotation right-measure-2"><span class="measure-text">864</span><span class="arrow">↓</span></div>
-  <div class="annotation right-measure-3"><span class="measure-text">96</span><span class="arrow">←</span></div>
-
-  <div class="annotation bottom-measure-1"><span class="arrow">←</span><span class="measure-text">960</span><span class="arrow">→</span></div>
-  <div class="annotation bottom-measure-2"><span class="measure-text">480</span><span class="arrow">→</span></div>
-  <div class="annotation bottom-measure-3"><span class="arrow">↑</span><span class="measure-text">108</span></div>
-
   <div class="annotation scatter-1"><span class="measure-text">32</span><span class="arrow">↗</span></div>
   <div class="annotation scatter-2"><span class="arrow">↘</span><span class="measure-text">64</span></div>
-  <div class="annotation scatter-3"><span class="measure-text">128</span><span class="arrow">↑</span></div>
-  <div class="annotation scatter-4"><span class="arrow">→</span><span class="measure-text">256</span></div>
-  <div class="annotation scatter-5"><span class="measure-text">48</span></div>
-  <div class="annotation scatter-6"><span class="arrow">←</span><span class="measure-text">72</span></div>
-  <div class="annotation scatter-7"><span class="measure-text">144</span><span class="arrow">↗</span></div>
-  <div class="annotation scatter-8"><span class="arrow">↓</span><span class="measure-text">24</span></div>
-  <div class="annotation scatter-9"><span class="measure-text">16</span><span class="arrow">←</span><span class="arrow">→</span></div>
-  <div class="annotation scatter-10"><span class="arrow">↑</span><span class="measure-text">88</span><span class="arrow">↓</span></div>
-  <div class="annotation scatter-11"><span class="measure-text">320</span></div>
-  <div class="annotation scatter-12"><span class="arrow">↘</span><span class="measure-text">56</span></div>
-
-  <div class="annotation above-header-1"><span class="measure-text">112</span><span class="arrow">↓</span></div>
-  <div class="annotation above-header-2"><span class="arrow">←</span><span class="measure-text">224</span><span class="arrow">→</span></div>
-  <div class="annotation above-header-3"><span class="measure-text">56</span><span class="arrow">↘</span></div>
-  <div class="annotation above-header-4"><span class="arrow">↓</span><span class="measure-text">168</span></div>
-  <div class="annotation above-header-5"><span class="measure-text">84</span><span class="arrow">→</span></div>
-  <div class="annotation above-header-6"><span class="arrow">↑</span><span class="measure-text">42</span><span class="arrow">↓</span></div>
-
-  <div class="annotation northeast-1"><span class="measure-text">192</span><span class="arrow">←</span></div>
-  <div class="annotation northeast-2"><span class="arrow">↗</span><span class="measure-text">96</span></div>
-  <div class="annotation northeast-3"><span class="measure-text">144</span><span class="arrow">↓</span></div>
-  <div class="annotation northeast-4"><span class="arrow">←</span><span class="measure-text">288</span></div>
-  <div class="annotation northeast-5"><span class="measure-text">36</span></div>
-  <div class="annotation northeast-6"><span class="arrow">↘</span><span class="measure-text">72</span></div>
-  <div class="annotation northeast-7"><span class="measure-text">120</span><span class="arrow">↑</span></div>
-  <div class="annotation northeast-8"><span class="arrow">→</span><span class="measure-text">60</span></div>
 </div>
 
 <!-- TOP BAR -->
@@ -804,46 +591,61 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   <div><span id="link-works" class="hoverable">Works</span> &nbsp; <span id="link-about" class="hoverable">About</span> &nbsp; <span id="link-contact" class="hoverable">Contact</span> &nbsp; <span id="link-cellula" class="hoverable">Cellula</span></div>
 </div>
 
-<!-- CENTRAL LIST -->
-<div id="scroll">
-  <div id="scroll-inner">
-    <div class="row hoverable" onclick="openProject('slamjam')">
-      <div class="col1">Slam Jam</div>
-      <div class="col2">New Balance Campaign</div>
-      <div class="col3">Photography</div>
-      <div class="col4">2025</div>
-    </div>
-    <div class="row hoverable" onclick="openProject('exhibition')">
-      <div class="col1">Exhibition Name</div>
-      <div class="col2">Temu Backrooms</div>
-      <div class="col3">Video Game, Installation</div>
-      <div class="col4">2025</div>
-    </div>
-    <div class="row hoverable" onclick="openProject('client')">
-      <div class="col1">Client Name</div>
-      <div class="col2">Dress My Nelli</div>
-      <div class="col3">Web</div>
-      <div class="col4">2023</div>
-    </div>
-    <div class="row hoverable" onclick="openProject('pessima')">
-      <div class="col1">Pessima</div>
-      <div class="col2">Pessima Magazine</div>
-      <div class="col3">Publishing</div>
-      <div class="col4">2020</div>
-    </div>
-    <div class="row hoverable" onclick="openProject('slamjam2')">
-      <div class="col1">Slam Jam</div>
-      <div class="col2">New Balance Campaign</div>
-      <div class="col3">Photography</div>
-      <div class="col4">2025</div>
-    </div>
-    <div class="row hoverable" onclick="openProject('exhibition2')">
-      <div class="col1">Exhibition Name</div>
-      <div class="col2">Temu Backrooms</div>
-      <div class="col3">Video Game, Installation</div>
-      <div class="col4">2025</div>
+<!-- MAIN CONTAINER -->
+<div id="main-container">
+  
+  <!-- WORKS SECTION -->
+  <div id="works-section" class="section">
+    <div id="scroll-inner">
+      <div class="row hoverable" onclick="openProject('slamjam')">
+        <div class="col1">Slam Jam</div>
+        <div class="col2">New Balance Campaign</div>
+        <div class="col3">Photography</div>
+        <div class="col4">2025</div>
+      </div>
+      <div class="row hoverable" onclick="openProject('exhibition')">
+        <div class="col1">Exhibition Name</div>
+        <div class="col2">Temu Backrooms</div>
+        <div class="col3">Video Game, Installation</div>
+        <div class="col4">2025</div>
+      </div>
+      <div class="row hoverable" onclick="openProject('client')">
+        <div class="col1">Client Name</div>
+        <div class="col2">Dress My Nelli</div>
+        <div class="col3">Web</div>
+        <div class="col4">2023</div>
+      </div>
+      <div class="row hoverable" onclick="openProject('pessima')">
+        <div class="col1">Pessima</div>
+        <div class="col2">Pessima Magazine</div>
+        <div class="col3">Publishing</div>
+        <div class="col4">2020</div>
+      </div>
     </div>
   </div>
+
+  <!-- ABOUT SECTION -->
+  <div id="about-section" class="section">
+    <div id="about-text-inner">
+      <img id="about-image" src="assets/Images/3 circle.png" alt="3 Circles">
+      <div id="about-text-content">
+        4K is a creative design studio founded by Lars Larkin, Nelson Gutjahr &amp; Simona Coltello.
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <div id="contact-section" class="section">
+    <div id="contact-email-content">
+      <a href="mailto:4kstudiohd@gmail.com" class="hoverable">4kstudiohd@gmail.com</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- CELLULA PAGE -->
+<div id="cellula-page">
+  <img id="cellula-image" src="assets/Images/Group 1000006007.png" alt="Cellula">
 </div>
 
 <!-- MODAL -->
@@ -866,12 +668,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   </div>
 </div>
 
-<!-- CONTACT EMAIL -->
-<div id="contact-email">
-  <a href="mailto:4kstudiohd@gmail.com" class="hoverable">4kstudiohd@gmail.com</a>
-</div>
-
-<!-- WIDGET DOG -->
+<!-- WIDGETS -->
 <div id="widget-dog" class="hoverable">
   <img src="assets/Widgets/widgetdog.png" alt="Widget Dog">
   <video autoplay muted loop playsinline>
@@ -879,7 +676,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   </video>
 </div>
 
-<!-- WIDGET simona -->
 <div id="widget-simona" class="hoverable">
   <img src="assets/Widgets/4K WIDGET BY SIMONA.png" alt="Widget Simona">
   <video autoplay muted loop playsinline>
@@ -889,18 +685,17 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   <div class="stop-area hoverable"></div>
 </div>
 
-<!-- WIDGET POSITIVE RADIO -->
 <div id="widget-positive-radio" class="hoverable">
   <img src="assets/Widgets/positive-radio-player-silver_w-shadows.png" alt="Widget Positive Radio">
-  <div class="video-wrap frame-silver">
-    <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/T4s8trguRX8?si=1WhBZmQPeNs-7Qjs&autoplay=1&mute=1&loop=1&playlist=T4s8trguRX8" title="YouTube video"></iframe>
+  <div class="video-wrap">
+    <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" src="https://www.youtube.com/embed/T4s8trguRX8?si=1WhBZmQPeNs-7Qjs&autoplay=1&mute=1&loop=1&playlist=T4s8trguRX8"></iframe>
   </div>
 </div>
 
-<!-- FINESTRE RISOLUZIONI -->
+<!-- RESOLUTION WINDOWS -->
 <div id="window-4k" class="resolution-window visible">
   <div class="resolution-label">4K</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden;width:100vw;height:100vh}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;image-rendering:crisp-edges'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <div id="window-1080p" class="resolution-window visible hoverable">
@@ -924,28 +719,98 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 </div>
 
 <script>
-// --- CUSTOM CURSOR ---
+// CUSTOM CURSOR
 const customCursor = document.getElementById('custom-cursor');
-
 document.addEventListener('mousemove', (e) => {
   customCursor.style.left = e.clientX + 'px';
   customCursor.style.top = e.clientY + 'px';
 });
 
-// Gestione hover effect per elementi interattivi
-const hoverableElements = document.querySelectorAll('.hoverable, #logo-page-header span, a, button, [onclick]');
-
-hoverableElements.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    document.body.classList.add('cursor-hover');
-  });
-  
-  el.addEventListener('mouseleave', () => {
-    document.body.classList.remove('cursor-hover');
-  });
+document.querySelectorAll('.hoverable, #logo-page-header span, a, button, [onclick]').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
 });
 
-// --- PROGETTI ---
+// SCROLL NAVIGATION
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function hideLogoPage() {
+  document.getElementById('logo-page').classList.add('hidden');
+}
+
+function hideCellula() {
+  document.getElementById('cellula-page').classList.remove('visible');
+}
+
+function showWorks() {
+  hideLogoPage();
+  hideCellula();
+  scrollToSection('works-section');
+}
+
+function showAbout() {
+  hideLogoPage();
+  hideCellula();
+  scrollToSection('about-section');
+}
+
+function showContact() {
+  hideLogoPage();
+  hideCellula();
+  scrollToSection('contact-section');
+}
+
+function showCellula() {
+  hideLogoPage();
+  document.getElementById('cellula-page').classList.add('visible');
+}
+
+// EVENT LISTENERS
+document.getElementById('link-works').addEventListener('click', (e) => { e.preventDefault(); showWorks(); });
+document.getElementById('link-about').addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
+document.getElementById('link-contact').addEventListener('click', (e) => { e.preventDefault(); showContact(); });
+document.getElementById('link-cellula').addEventListener('click', (e) => { e.preventDefault(); showCellula(); });
+
+// LOGO CLICK - CYCLES THROUGH WIDGETS
+let widgetState = 0; // 0 = none, 1 = dog, 2 = simona, 3 = positive radio
+
+document.getElementById('logo').addEventListener('click', (e) => { 
+  e.preventDefault(); 
+  
+  // Cycle through widget states
+  widgetState = (widgetState + 1) % 4;
+  
+  // Hide all widgets first
+  document.getElementById('widget-dog').classList.remove('visible');
+  document.getElementById('widget-simona').classList.remove('visible');
+  document.getElementById('widget-positive-radio').classList.remove('visible');
+  
+  // Show widgets based on state
+  if (widgetState >= 1) {
+    document.getElementById('widget-dog').classList.add('visible');
+  }
+  if (widgetState >= 2) {
+    document.getElementById('widget-simona').classList.add('visible');
+  }
+  if (widgetState >= 3) {
+    document.getElementById('widget-positive-radio').classList.add('visible');
+  }
+});
+
+document.getElementById('logo-works').addEventListener('click', (e) => { e.preventDefault(); showWorks(); });
+document.getElementById('logo-about').addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
+document.getElementById('logo-contact').addEventListener('click', (e) => { e.preventDefault(); showContact(); });
+document.getElementById('logo-cellula').addEventListener('click', (e) => { e.preventDefault(); showCellula(); });
+
+document.getElementById('logo-page').addEventListener('click', (e) => {
+  if (e.target.id === 'logo-page' || e.target.id === 'logo-page-logo' || e.target.id === 'logo-page-resolution') {
+    hideLogoPage();
+  }
+});
+
+// PROJECTS
 const projectsData = {
   'slamjam': {
     title: 'SLAM JAM X NEW BALANCE',
@@ -955,18 +820,12 @@ const projectsData = {
   }
 };
 
-// --- MODAL ---
 function openProject(id) {
   const project = projectsData[id] || { 
     title: id.toUpperCase(), 
     subtitle: 'Project Info', 
     desc: 'Description coming soon...', 
-    imgs: [
-      'https://via.placeholder.com/600x600/111?text=1', 
-      'https://via.placeholder.com/600x600/222?text=2', 
-      'https://via.placeholder.com/600x600/333?text=3', 
-      'https://via.placeholder.com/600x600/444?text=4'
-    ] 
+    imgs: ['https://via.placeholder.com/600x600/111?text=1', 'https://via.placeholder.com/600x600/222?text=2', 'https://via.placeholder.com/600x600/333?text=3', 'https://via.placeholder.com/600x600/444?text=4'] 
   };
 
   document.getElementById('modal-title').innerText = project.title;
@@ -976,7 +835,6 @@ function openProject(id) {
   const mainImg = document.getElementById('modal-main-img');
   const gallery = document.getElementById('modal-gallery');
   gallery.innerHTML = "";
-  
   mainImg.src = project.imgs[0];
   
   project.imgs.slice(0, 4).forEach(src => {
@@ -994,357 +852,109 @@ function closeProject() {
   document.getElementById('project-modal').style.display = 'none';
 }
 
-// --- NAVIGATION STATE MACHINE ---
-let currentPage = null;
-
-function showWorks() {
-  currentPage = 'works';
-  document.getElementById('scroll').style.display = 'flex';
-  const blocksContainer = document.getElementById('white-blocks-container');
-  blocksContainer.classList.remove('active');
-  blocksContainer.innerHTML = '';
-  document.getElementById('about-text').classList.remove('visible');
-  document.getElementById('cellula-page').classList.remove('visible');
-  document.getElementById('widget-simona').classList.remove('visible');
-  document.getElementById('widget-dog').classList.remove('visible');
-  document.getElementById('widget-positive-radio').classList.remove('visible');
-  document.getElementById('contact-email').classList.remove('visible');
-}
-
-function showAbout() {
-  currentPage = 'about';
-  document.getElementById('scroll').style.display = 'none';
-  document.getElementById('widget-simona').classList.remove('visible');
-  document.getElementById('widget-dog').classList.remove('visible');
-  document.getElementById('widget-positive-radio').classList.remove('visible');
-  document.getElementById('contact-email').classList.remove('visible');
-  document.getElementById('cellula-page').classList.remove('visible');
-  document.getElementById('about-text').classList.add('visible');
-  const blocksContainer = document.getElementById('white-blocks-container');
-  blocksContainer.classList.add('active');
-  blocksContainer.innerHTML = '';
-
-  const blockHeight = 25;
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-
-  const startY  = -vh;
-  const endY    =  vh * 2;
-  const totalH  = endY - startY;
-  const blockCount = Math.ceil(totalH / blockHeight);
-
-  for (let i = 0; i < blockCount; i++) {
-    const block = document.createElement('div');
-    block.className = 'white-block';
-
-    const y = startY + i * blockHeight;
-    block.style.top = y + 'px';
-
-    const t = y / vh;
-
-    const baseWidth = vw * (0.15 + t * 0.70);
-
-    const breathAmount = vw * (0.03 + 0.04 * Math.sin(i * 0.7));
-    const peakWidth = baseWidth + breathAmount;
-
-    block.style.setProperty('--base-width', baseWidth + 'px');
-    block.style.setProperty('--peak-width', peakWidth + 'px');
-
-    const duration = 6 + 3 * Math.sin(i * 0.3);
-    block.style.setProperty('--duration', duration + 's');
-
-    const delay = (i * 0.15) % 4;
-    block.style.setProperty('--delay', '-' + delay + 's');
-
-    blocksContainer.appendChild(block);
-  }
-}
-
-function showContact() {
-  currentPage = 'contact';
-  document.getElementById('scroll').style.display = 'none';
-  const blocksContainer = document.getElementById('white-blocks-container');
-  blocksContainer.classList.remove('active');
-  blocksContainer.innerHTML = '';
-  document.getElementById('about-text').classList.remove('visible');
-  document.getElementById('cellula-page').classList.remove('visible');
-  document.getElementById('widget-simona').classList.add('visible');
-  document.getElementById('widget-positive-radio').classList.add('visible');
-  document.getElementById('contact-email').classList.add('visible');
-  setTimeout(() => {
-    document.getElementById('widget-dog').classList.add('visible');
-  }, 100);
-}
-
-function showCellula() {
-  currentPage = 'cellula';
-  document.getElementById('scroll').style.display = 'none';
-  const blocksContainer = document.getElementById('white-blocks-container');
-  blocksContainer.classList.remove('active');
-  blocksContainer.innerHTML = '';
-  document.getElementById('about-text').classList.remove('visible');
-  document.getElementById('widget-simona').classList.remove('visible');
-  document.getElementById('widget-dog').classList.remove('visible');
-  document.getElementById('widget-positive-radio').classList.remove('visible');
-  document.getElementById('contact-email').classList.remove('visible');
-  document.getElementById('cellula-page').classList.add('visible');
-}
-
-// --- LOGO PAGE HELPERS ---
-function showLogoPage() {
-  document.getElementById('logo-page').classList.remove('hidden');
-}
-
-function hideLogoPage() {
-  document.getElementById('logo-page').classList.add('hidden');
-}
-
-// --- TOP BAR LINKS ---
-document.getElementById('link-works').addEventListener('click', (e) => {
-  e.stopPropagation();
-  showWorks();
-});
-
-document.getElementById('link-about').addEventListener('click', (e) => {
-  e.stopPropagation();
-  showAbout();
-});
-
-document.getElementById('link-contact').addEventListener('click', (e) => {
-  e.stopPropagation();
-  showContact();
-});
-
-document.getElementById('link-cellula').addEventListener('click', (e) => {
-  e.stopPropagation();
-  showCellula();
-});
-
-// --- LOGO CLICK (GO TO WORKS) ---
-document.getElementById('logo').addEventListener('click', (e) => {
-  e.stopPropagation();
-  showWorks();
-});
-
-// --- LOGO PAGE HEADER LINKS ---
-document.getElementById('logo-works').addEventListener('click', (e) => {
-  e.stopPropagation();
-  hideLogoPage();
-  showWorks();
-});
-
-document.getElementById('logo-about').addEventListener('click', (e) => {
-  e.stopPropagation();
-  hideLogoPage();
-  showAbout();
-});
-
-document.getElementById('logo-contact').addEventListener('click', (e) => {
-  e.stopPropagation();
-  hideLogoPage();
-  showContact();
-});
-
-document.getElementById('logo-cellula').addEventListener('click', (e) => {
-  e.stopPropagation();
-  hideLogoPage();
-  showCellula();
-});
-
-// Click logo page background to dismiss
-document.getElementById('logo-page').addEventListener('click', (e) => {
-  if (e.target.id === 'logo-page' || e.target.id === 'logo-page-logo' || e.target.id === 'logo-page-resolution') {
-    hideLogoPage();
-  }
-});
-
-// --- CLICK RESOLUTION WINDOWS ---
+// RESOLUTION WINDOWS
 let resolutionsOpen = true;
 
 document.getElementById('window-vcd').addEventListener('click', (e) => {
   e.stopPropagation();
-  
   if (!resolutionsOpen) {
-    const dvd = document.getElementById('window-dvd');
-    const w720 = document.getElementById('window-720p');
-    const w1080 = document.getElementById('window-1080p');
-    const w4k = document.getElementById('window-4k');
-    
-    dvd.style.display = 'block';
-    setTimeout(() => dvd.classList.add('visible'), 10);
-    
-    setTimeout(() => {
-      w720.style.display = 'block';
-      setTimeout(() => w720.classList.add('visible'), 10);
-    }, 150);
-    
-    setTimeout(() => {
-      w1080.style.display = 'block';
-      setTimeout(() => w1080.classList.add('visible'), 10);
-    }, 300);
-    
-    setTimeout(() => {
-      w4k.style.display = 'block';
-      setTimeout(() => w4k.classList.add('visible'), 10);
-    }, 450);
-    
+    [document.getElementById('window-dvd'), document.getElementById('window-720p'), document.getElementById('window-1080p'), document.getElementById('window-4k')].forEach((w, i) => {
+      setTimeout(() => {
+        w.style.display = 'block';
+        setTimeout(() => w.classList.add('visible'), 10);
+      }, i * 150);
+    });
     resolutionsOpen = true;
   }
 });
 
 document.addEventListener('click', (e) => {
   if (resolutionsOpen && !e.target.closest('#window-vcd')) {
-    const w4k = document.getElementById('window-4k');
-    const w1080 = document.getElementById('window-1080p');
-    const w720 = document.getElementById('window-720p');
-    const dvd = document.getElementById('window-dvd');
-    
-    w4k.classList.remove('visible');
-    setTimeout(() => w4k.style.display = 'none', 400);
-    
-    setTimeout(() => {
-      w1080.classList.remove('visible');
-      setTimeout(() => w1080.style.display = 'none', 400);
-    }, 150);
-    
-    setTimeout(() => {
-      w720.classList.remove('visible');
-      setTimeout(() => w720.style.display = 'none', 400);
-    }, 300);
-    
-    setTimeout(() => {
-      dvd.classList.remove('visible');
-      setTimeout(() => dvd.style.display = 'none', 400);
-    }, 450);
-    
+    [document.getElementById('window-4k'), document.getElementById('window-1080p'), document.getElementById('window-720p'), document.getElementById('window-dvd')].forEach((w, i) => {
+      setTimeout(() => {
+        w.classList.remove('visible');
+        setTimeout(() => w.style.display = 'none', 400);
+      }, i * 150);
+    });
     resolutionsOpen = false;
   }
 });
 
-// --- AUDIO PLAYER ---
+// AUDIO
 const audio = new Audio('assets/Music/Sonia Whittingham - Sweet Sensation.mp3');
+const barkingAudio = new Audio('assets/Music/barking.mp3');
 let isPlaying = false;
 
-const barkingAudio = new Audio('assets/Music/barking.mp3');
-
-// --- DRAG WIDGET SIMONA ---
+// WIDGET DRAGGING
 const widgetSimona = document.getElementById('widget-simona');
-let isDraggingSimona = false, offsetXSimona = 0, offsetYSimona = 0;
-let hasMoved = false;
+const widgetDog = document.getElementById('widget-dog');
+const widgetRadio = document.getElementById('widget-positive-radio');
 
-const playArea = widgetSimona.querySelector('.play-area');
-const stopArea = widgetSimona.querySelector('.stop-area');
+let dragState = { simona: false, dog: false, radio: false };
+let offset = { simona: {x:0,y:0}, dog: {x:0,y:0}, radio: {x:0,y:0} };
+let moved = { simona: false, dog: false, radio: false };
 
-widgetSimona.addEventListener('click', (e) => {
-  if (!hasMoved && !e.target.classList.contains('play-area') && !e.target.classList.contains('stop-area')) {
-    if (isPlaying) {
-      audio.pause();
-      isPlaying = false;
-    } else {
-      audio.play();
-      isPlaying = true;
-    }
+widgetSimona.addEventListener('click', () => {
+  if (!moved.simona) {
+    isPlaying ? audio.pause() : audio.play();
+    isPlaying = !isPlaying;
   }
-  hasMoved = false;
+  moved.simona = false;
 });
 
-playArea.addEventListener('click', (e) => {
+widgetSimona.querySelector('.play-area').addEventListener('click', (e) => {
   e.stopPropagation();
   audio.play();
   isPlaying = true;
 });
 
-stopArea.addEventListener('click', (e) => {
+widgetSimona.querySelector('.stop-area').addEventListener('click', (e) => {
   e.stopPropagation();
   audio.pause();
   audio.currentTime = 0;
   isPlaying = false;
 });
 
-widgetSimona.addEventListener('mousedown', e => {
-  if (e.target.classList.contains('play-area') || e.target.classList.contains('stop-area')) return;
-  isDraggingSimona = true;
-  hasMoved = false;
-  offsetXSimona = e.clientX - widgetSimona.getBoundingClientRect().left;
-  offsetYSimona = e.clientY - widgetSimona.getBoundingClientRect().top;
-  widgetSimona.style.transition = 'none';
-  e.preventDefault();
-});
-
-document.addEventListener('mousemove', e => {
-  if (!isDraggingSimona) return;
-  hasMoved = true;
-  e.preventDefault();
-  widgetSimona.style.left = e.clientX - offsetXSimona + 'px';
-  widgetSimona.style.top = e.clientY - offsetYSimona + 'px';
-  widgetSimona.style.bottom = 'auto';
-});
-
-document.addEventListener('mouseup', () => {
-  isDraggingSimona = false;
-});
-
-// --- DRAG WIDGET DOG ---
-const widgetDog = document.getElementById('widget-dog');
-let isDraggingDog = false, offsetXDog = 0, offsetYDog = 0;
-let hasMovedDog = false;
-
-widgetDog.addEventListener('click', (e) => {
-  if (!hasMovedDog) {
+widgetDog.addEventListener('click', () => {
+  if (!moved.dog) {
     barkingAudio.currentTime = 0;
     barkingAudio.play();
   }
-  hasMovedDog = false;
+  moved.dog = false;
 });
 
-widgetDog.addEventListener('mousedown', e => {
-  isDraggingDog = true;
-  hasMovedDog = false;
-  offsetXDog = e.clientX - widgetDog.getBoundingClientRect().left;
-  offsetYDog = e.clientY - widgetDog.getBoundingClientRect().top;
-  widgetDog.style.transition = 'none';
-  e.preventDefault();
-});
+function setupDrag(widget, name) {
+  widget.addEventListener('mousedown', e => {
+    if (name === 'simona' && (e.target.classList.contains('play-area') || e.target.classList.contains('stop-area'))) return;
+    dragState[name] = true;
+    moved[name] = false;
+    const rect = widget.getBoundingClientRect();
+    offset[name] = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    widget.style.transition = 'none';
+    e.preventDefault();
+  });
+}
+
+setupDrag(widgetSimona, 'simona');
+setupDrag(widgetDog, 'dog');
+setupDrag(widgetRadio, 'radio');
 
 document.addEventListener('mousemove', e => {
-  if (!isDraggingDog) return;
-  hasMovedDog = true;
-  e.preventDefault();
-  widgetDog.style.left = e.clientX - offsetXDog + 'px';
-  widgetDog.style.top = e.clientY - offsetYDog + 'px';
-  widgetDog.style.bottom = 'auto';
+  ['simona', 'dog', 'radio'].forEach(name => {
+    if (dragState[name]) {
+      moved[name] = true;
+      const widget = name === 'simona' ? widgetSimona : name === 'dog' ? widgetDog : widgetRadio;
+      widget.style.left = e.clientX - offset[name].x + 'px';
+      widget.style.top = e.clientY - offset[name].y + 'px';
+      widget.style.bottom = 'auto';
+      widget.style.right = 'auto';
+      widget.style.transform = name === 'radio' ? 'scale(1)' : '';
+    }
+  });
 });
 
 document.addEventListener('mouseup', () => {
-  isDraggingDog = false;
-});
-
-// --- DRAG WIDGET POSITIVE RADIO ---
-const widgetPositiveRadio = document.getElementById('widget-positive-radio');
-let isDraggingPositiveRadio = false, offsetXPositiveRadio = 0, offsetYPositiveRadio = 0;
-let hasMovedPositiveRadio = false;
-
-widgetPositiveRadio.addEventListener('mousedown', e => {
-  isDraggingPositiveRadio = true;
-  hasMovedPositiveRadio = false;
-  offsetXPositiveRadio = e.clientX - widgetPositiveRadio.getBoundingClientRect().left;
-  offsetYPositiveRadio = e.clientY - widgetPositiveRadio.getBoundingClientRect().top;
-  widgetPositiveRadio.style.transition = 'none';
-  e.preventDefault();
-});
-
-document.addEventListener('mousemove', e => {
-  if (!isDraggingPositiveRadio) return;
-  hasMovedPositiveRadio = true;
-  e.preventDefault();
-  widgetPositiveRadio.style.left = e.clientX - offsetXPositiveRadio + 'px';
-  widgetPositiveRadio.style.top = e.clientY - offsetYPositiveRadio + 'px';
-  widgetPositiveRadio.style.right = 'auto';
-  widgetPositiveRadio.style.transform = 'scale(1)';
-});
-
-document.addEventListener('mouseup', () => {
-  isDraggingPositiveRadio = false;
+  dragState.simona = dragState.dog = dragState.radio = false;
 });
 </script>
 
