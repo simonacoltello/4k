@@ -419,6 +419,56 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   filter: contrast(1.05) brightness(0.95);
 }
 
+/* --- 8B. WIDGET POSITIVE RADIO --- */
+#widget-positive-radio {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%) scale(0.9);
+  width: 130px;
+  z-index: 800;
+  pointer-events: auto;
+  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.1s;
+  display: none;
+  opacity: 0;
+}
+
+#widget-positive-radio.visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+#widget-positive-radio:hover {
+  filter: hue-rotate(270deg) saturate(2);
+}
+
+#widget-positive-radio img { 
+  width: 100%; 
+  display: block; 
+  position: relative;
+  z-index: 2;
+}
+
+#widget-positive-radio .video-wrap {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 79px;
+  height: 92.5px;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+#widget-positive-radio .video-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 13px;
+  pointer-events: auto;
+}
+
 /* --- 9. FINESTRE RISOLUZIONI --- */
 .resolution-window {
   position: fixed;
@@ -841,6 +891,14 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   <div class="stop-area hoverable"></div>
 </div>
 
+<!-- WIDGET POSITIVE RADIO -->
+<div id="widget-positive-radio" class="hoverable">
+  <img src="assets/Widgets/positive-radio-player-silver_w-shadows.png" alt="Widget Positive Radio">
+  <div class="video-wrap frame-silver">
+    <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/T4s8trguRX8?si=1WhBZmQPeNs-7Qjs" title="YouTube video"></iframe>
+  </div>
+</div>
+
 <!-- FINESTRE RISOLUZIONI -->
 <div id="window-4k" class="resolution-window visible">
   <div class="resolution-label">4K</div>
@@ -951,6 +1009,7 @@ function showWorks() {
   document.getElementById('cellula-page').classList.remove('visible');
   document.getElementById('widget-simona').classList.remove('visible');
   document.getElementById('widget-dog').classList.remove('visible');
+  document.getElementById('widget-positive-radio').classList.remove('visible');
   document.getElementById('contact-email').classList.remove('visible');
 }
 
@@ -959,6 +1018,7 @@ function showAbout() {
   document.getElementById('scroll').style.display = 'none';
   document.getElementById('widget-simona').classList.remove('visible');
   document.getElementById('widget-dog').classList.remove('visible');
+  document.getElementById('widget-positive-radio').classList.remove('visible');
   document.getElementById('contact-email').classList.remove('visible');
   document.getElementById('cellula-page').classList.remove('visible');
   document.getElementById('about-text').classList.add('visible');
@@ -1011,6 +1071,7 @@ function showContact() {
   document.getElementById('about-text').classList.remove('visible');
   document.getElementById('cellula-page').classList.remove('visible');
   document.getElementById('widget-simona').classList.add('visible');
+  document.getElementById('widget-positive-radio').classList.add('visible');
   document.getElementById('contact-email').classList.add('visible');
   setTimeout(() => {
     document.getElementById('widget-dog').classList.add('visible');
@@ -1026,6 +1087,7 @@ function showCellula() {
   document.getElementById('about-text').classList.remove('visible');
   document.getElementById('widget-simona').classList.remove('visible');
   document.getElementById('widget-dog').classList.remove('visible');
+  document.getElementById('widget-positive-radio').classList.remove('visible');
   document.getElementById('contact-email').classList.remove('visible');
   document.getElementById('cellula-page').classList.add('visible');
 }
@@ -1257,6 +1319,34 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseup', () => {
   isDraggingDog = false;
+});
+
+// --- DRAG WIDGET POSITIVE RADIO ---
+const widgetPositiveRadio = document.getElementById('widget-positive-radio');
+let isDraggingPositiveRadio = false, offsetXPositiveRadio = 0, offsetYPositiveRadio = 0;
+let hasMovedPositiveRadio = false;
+
+widgetPositiveRadio.addEventListener('mousedown', e => {
+  isDraggingPositiveRadio = true;
+  hasMovedPositiveRadio = false;
+  offsetXPositiveRadio = e.clientX - widgetPositiveRadio.getBoundingClientRect().left;
+  offsetYPositiveRadio = e.clientY - widgetPositiveRadio.getBoundingClientRect().top;
+  widgetPositiveRadio.style.transition = 'none';
+  e.preventDefault();
+});
+
+document.addEventListener('mousemove', e => {
+  if (!isDraggingPositiveRadio) return;
+  hasMovedPositiveRadio = true;
+  e.preventDefault();
+  widgetPositiveRadio.style.left = e.clientX - offsetXPositiveRadio + 'px';
+  widgetPositiveRadio.style.top = e.clientY - offsetYPositiveRadio + 'px';
+  widgetPositiveRadio.style.right = 'auto';
+  widgetPositiveRadio.style.transform = 'scale(1)';
+});
+
+document.addEventListener('mouseup', () => {
+  isDraggingPositiveRadio = false;
 });
 </script>
 
