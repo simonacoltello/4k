@@ -56,7 +56,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 #top div, #top #logo { pointer-events: auto; }
 #logo img {
   height: 30px;
-  filter: invert(42%) sepia(0%) saturate(0%) brightness(100%) contrast(88%);
+  filter: invert(42%) sepia(0%) saturate(0%) brightness(98%) contrast(88%);
 }
 
 /* --- MAIN CONTAINER --- */
@@ -489,100 +489,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   pointer-events: none; 
 }
 
-/* --- 11. LOGO PAGE --- */
-#logo-page {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #f5f5f5;
-  z-index: 500;
-  opacity: 1;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  overflow: hidden;
-  visibility: visible;
-  pointer-events: auto;
-}
 
-#logo-page.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-#logo-page-logo {
-  position: absolute;
-  top: 50%;
-  left: 32%;
-  transform: translate(-50%, -50%);
-  height: 105vh;
-  width: auto;
-  z-index: 501;
-}
-
-#logo-page-header {
-  position: absolute;
-  top: 67%;
-  left: 28%;
-  transform: translate(-50%, -50%);
-  background: transparent;
-  padding: 6px 18px;
-  z-index: 502;
-  font-size: 11px;
-  color: #000;
-  white-space: nowrap;
-  letter-spacing: -0.03em;
-}
-
-#logo-page-header span {
-  margin: 0;
-  transition: opacity 0.2s;
-  padding: 0 1.5px;
-}
-
-#logo-page-header span:hover {
-  opacity: 0.6;
-}
-
-#logo-page-resolution {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 11px;
-  color: #000;
-  z-index: 502;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-}
-
-/* --- ANNOTATIONS --- */
-.annotation {
-  position: absolute;
-  font-size: 7px;
-  color: #000;
-  z-index: 503;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.annotation .arrow { font-size: 8px; line-height: 1; }
-.annotation .measure-text { line-height: 1; }
-
-.top-left-corner { top: 8px; left: 8px; flex-direction: column; align-items: flex-start; }
-.top-left-horizontal { top: 20px; left: 8px; flex-direction: row; }
-.top-right-corner { top: 8px; right: 8px; flex-direction: column; align-items: flex-end; }
-.top-right-horizontal { top: 20px; right: 8px; flex-direction: row; }
-.bottom-left-corner { bottom: 8px; left: 8px; flex-direction: column; align-items: flex-start; }
-.bottom-left-horizontal { bottom: 20px; left: 8px; flex-direction: row; }
-.bottom-right-corner { bottom: 8px; right: 8px; flex-direction: column; align-items: flex-end; }
-.bottom-right-horizontal { bottom: 20px; right: 8px; flex-direction: row; }
-
-.scatter-1 { top: 200px; left: 34%; flex-direction: row; }
-.scatter-2 { top: 120px; right: 18%; flex-direction: row; }
-.scatter-3 { bottom: 150px; left: 42%; flex-direction: column; }
 </style>
 </head>
 
@@ -590,23 +497,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 
 <!-- Custom Cursor -->
 <div id="custom-cursor"></div>
-
-<!-- LOGO PAGE -->
-<div id="logo-page">
-  <img id="logo-page-logo" src="assets/Logo/logo4k.svg" alt="4K Logo">
-  <div id="logo-page-header">
-    <span id="logo-works">Works</span>
-    <span id="logo-about">About</span>
-    <span id="logo-contact">Contact</span>
-    <span id="logo-cellula">Cellula</span>
-  </div>
-  <div id="logo-page-resolution">3840 x 2160</div>
-  
-  <div class="annotation top-left-corner"><span class="arrow">↓</span><span class="measure-text">20</span></div>
-  <div class="annotation top-left-horizontal"><span class="arrow">→</span><span class="measure-text">20</span></div>
-  <div class="annotation scatter-1"><span class="measure-text">32</span><span class="arrow">↗</span></div>
-  <div class="annotation scatter-2"><span class="arrow">↘</span><span class="measure-text">64</span></div>
-</div>
 
 <!-- TOP BAR -->
 <div id="top">
@@ -631,18 +521,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
         <div class="col2">New Balance Campaign</div>
         <div class="col3">Photography</div>
         <div class="col4">2025</div>
-      </div>
-      <div class="row hoverable" onclick="openProject('exhibition')">
-        <div class="col1">Exhibition Name</div>
-        <div class="col2">Temu Backrooms</div>
-        <div class="col3">Video Game, Installation</div>
-        <div class="col4">2025</div>
-      </div>
-      <div class="row hoverable" onclick="openProject('client')">
-        <div class="col1">Client Name</div>
-        <div class="col2">Dress My Nelli</div>
-        <div class="col3">Web</div>
-        <div class="col4">2023</div>
       </div>
       <div class="row hoverable" onclick="openProject('pessima')">
         <div class="col1">Pessima</div>
@@ -762,32 +640,23 @@ document.querySelectorAll('.hoverable, #logo-page-header span, a, button, [oncli
   el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
 });
 
-// SCROLL NAVIGATION
 function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function hideLogoPage() {
-  document.getElementById('logo-page').classList.add('hidden');
-}
-
 function showWorks() {
-  hideLogoPage();
   scrollToSection('works-section');
 }
 
 function showAbout() {
-  hideLogoPage();
   scrollToSection('about-section');
 }
 
 function showContact() {
-  hideLogoPage();
   scrollToSection('contact-section');
 }
 
 function showCellula() {
-  hideLogoPage();
   scrollToSection('cellula-section');
 }
 
@@ -820,17 +689,6 @@ document.getElementById('logo').addEventListener('click', (e) => {
   }
   if (widgetState >= 3) {
     document.getElementById('widget-positive-radio').classList.add('visible');
-  }
-});
-
-document.getElementById('logo-works').addEventListener('click', (e) => { e.preventDefault(); showWorks(); });
-document.getElementById('logo-about').addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
-document.getElementById('logo-contact').addEventListener('click', (e) => { e.preventDefault(); showContact(); });
-document.getElementById('logo-cellula').addEventListener('click', (e) => { e.preventDefault(); showCellula(); });
-
-document.getElementById('logo-page').addEventListener('click', (e) => {
-  if (e.target.id === 'logo-page' || e.target.id === 'logo-page-logo' || e.target.id === 'logo-page-resolution') {
-    hideLogoPage();
   }
 });
 
@@ -957,6 +815,8 @@ document.getElementById('window-vcd').addEventListener('click', (e) => {
       }, i * 150);
     });
     resolutionsOpen = true;
+  } else {
+    showWorks();
   }
 });
 
