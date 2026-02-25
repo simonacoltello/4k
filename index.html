@@ -2,913 +2,751 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>4K Studio</title>
-<link rel="icon" type="image/svg+xml" href="assets/Logo/logo4k.svg">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-
+<title>Simona Coltello</title>
 <style>
-/* --- 1. RESET & BASICS --- */
-html, body {
-  margin: 0; padding: 0;
-  background: black;
-  color: #6a6a6a; 
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
-  height: 100%; width: 100%;
-  overflow-x: hidden;
-  cursor: none;
+/* --- RESET & BASICS --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
   scroll-behavior: smooth;
 }
 
-/* --- CUSTOM CURSOR --- */
-#custom-cursor {
+body {
+  background: #fff;
+  color: #000;
+  font-family: 'founders-grotesk', "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 39px;
+  overflow-x: hidden;
+}
+
+/* --- FIXED LOGO --- */
+#fixed-logo {
   position: fixed;
-  width: 8px;
-  height: 8px;
-  background: transparent;
-  border: 1px solid #08FF00;
-  pointer-events: none;
-  z-index: 10000;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.15s ease, height 0.15s ease, border-color 0.15s ease;
-  mix-blend-mode: difference;
-}
-
-body.cursor-hover #custom-cursor {
-  width: 16px;
-  height: 16px;
-  border-color: #00ff88;
-}
-
-a, button, [onclick], .hoverable, #logo-page-header span {
-  cursor: none !important;
-}
-
-/* --- 3. TOP BAR --- */
-#top {
-  position: fixed;
-  top: 30px; 
-  left: 30px; 
-  right: 30px;
-  display: flex; justify-content: space-between; align-items: center;
-  z-index: 10; font-size: 11px;
+  z-index: 9999;
   pointer-events: none;
-}
-#top div, #top #logo { pointer-events: auto; }
-#logo img {
-  height: 30px;
-  filter: invert(42%) sepia(0%) saturate(0%) brightness(98%) contrast(88%);
+  mix-blend-mode: exclusion;
+  background: transparent;
+  transition: opacity 0.3s ease;
 }
 
-/* --- MAIN CONTAINER --- */
-#main-container {
-  position: relative;
+#fixed-logo img {
+  max-width: 300px;
   width: 100%;
+  height: auto;
+  filter: invert(1) brightness(2);
+  display: block;
 }
 
-/* --- SECTION STYLING --- */
-.section {
+
+
+/* --- SECTIONS --- */
+section {
   min-height: 100vh;
-  width: 100%;
+  padding: 100px 30px 60px 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+
 }
 
-/* --- 4. WORKS SECTION --- */
-#works-section {
+#curation {
+  flex-direction: column;
+  padding: 60px 0;
+  background: #fff;
+}
+
+#graphic-design {
+  flex-direction: column;
+  padding: 60px 0;
+  background: #fafafa;
+}
+
+#art-direction {
+  flex-direction: column;
+  padding: 60px 0;
+  background: #fff;
+}
+
+#photography {
+  flex-direction: column;
+  padding: 60px 0;
+  background: #fafafa;
+}
+
+section h2 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  align-self: flex-start;
+  padding: 0 30px;
+  width: 100%;
+}
+
+/* --- HERO SECTION --- */
+#hero {
+  flex-direction: column;
+  text-align: center;
+  padding-top: 60px;
+  background: #fff;
+}
+
+#hero h1 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+#hero .subtitle {
+  font-size: 10px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 40px;
+  margin-top: 180px;
+  font-weight: 400;
+}
+
+#hero .bio {
+  max-width: 800px;
+  font-size: 32px;
+  line-height: 39px;
+  color: #333;
+  font-weight: normal;
+}
+
+/* --- ABOUT SECTION --- */
+#about {
+  flex-direction: column;
+  align-items: flex-start;
+  background: #fff;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+#about h2 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   padding: 0;
 }
 
-#scroll-inner {
+#about .content {
+  max-width: 1000px;
+  width: 100%;
+}
+
+#about .bio-text {
+  font-size: 32px;
+  line-height: 39px;
+  color: #333;
+  margin-bottom: 40px;
+  font-weight: normal;
+}
+
+#about .collaborations {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+#about .collab-section h3 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+#about .collab-section p {
+  font-size: 32px;
+  line-height: 39px;
+  color: #333;
+  font-weight: normal;
+}
+
+/* --- PROJECTS SECTION --- */
+#projects {
+  flex-direction: column;
+  padding: 100px 30px;
+}
+
+#projects h2 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 60px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  align-self: flex-start;
+}
+
+/* --- PROJECTS SECTION --- */
+#projects {
+  flex-direction: column;
+  padding: 100px 30px;
+}
+
+#projects h2 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 60px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  align-self: flex-start;
+}
+
+.project {
+  width: 100%;
+  position: relative;
+  margin-bottom: 0;
+  overflow: visible;
+}
+
+.project-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #e8e8e8;
+  overflow: hidden;
+  display: block;
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.4s ease;
+}
+
+.project.active .project-image img {
+  opacity: 0;
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 60px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.project.active .project-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.project-overlay h3 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.project-overlay .role {
+  font-size: 32px;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.project-overlay p {
+  font-size: 32px;
+  line-height: 1.2;
+  color: #000;
+  font-weight: normal;
+  width: 100%;
+}
+
+/* --- CENTERED PREVIEW IMAGE --- */
+#project-preview {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  z-index: 9999;
+  width: 300px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#project-preview.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#project-preview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- ALL TEXT BLACK --- */
+* { color: #000; }
+a { color: #000; }
+#hero .subtitle { color: #000; }
+#about .bio-text { color: #000; }
+section h2 { color: #000; }
+#contact a { color: #000; }
+#contact a:hover { color: #555; }
+
+/* --- PESSIMA GALLERY --- */
+#pessima {
+  flex-direction: column;
+  padding: 60px 0;
+  background: #fff;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+#pessima h2 {
+  padding: 0 30px;
+  width: 100%;
+}
+
+.gallery-scroll {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
   width: 100%;
   padding: 0 30px;
+  gap: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   box-sizing: border-box;
+}
+
+.gallery-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-item {
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery-item-info {
+  padding: 12px 0 0 0;
+}
+
+.gallery-item-info h3 {
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.gallery-item-info .role {
+  font-size: 11px;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   line-height: 1.4;
 }
 
-#scroll-inner .row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  font-size: 11px;
-  transition: all 0.3s ease;
-  color: #6a6a6a;
-  border-bottom: 1px solid #1a1a1a;
-  position: relative;
-}
-
-#scroll-inner .row:hover { 
-  color: #ffffff;
-  border-bottom-color: #333;
-}
-#scroll-inner .row:hover .col3 { color: #00ff00; }
-#scroll-inner .row:hover .col4 { color: #00ff00; }
-#scroll-inner .col1 { flex: 1 1 0; text-align: left; }
-#scroll-inner .col2 { flex: 0 0 auto; text-align: center; position: absolute; left: 50%; transform: translateX(-50%); }
-#scroll-inner .col3 { flex: 1 1 0; text-align: right; padding-right: 10px; color: #6a6a6a; transition: color 0.2s ease; }
-#scroll-inner .col4 { flex: 0 0 60px; text-align: right; color: #6a6a6a; transition: color 0.2s ease; }
-
-/* --- 5. ABOUT SECTION --- */
-#about-section {
-  position: relative;
-}
-
-#about-text-inner {
-  width: 100%;
-  padding: 0 30px;
-  box-sizing: border-box;
-  font-size: 11px;
-  line-height: 1.6;
-  color: #6a6a6a;
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  text-align: center;
-  display: flex;
+/* --- CONTACT SECTION --- */
+#contact {
   flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  position: relative;
-  z-index: 5;
+  background: #fafafa;
+  text-align: center;
 }
 
-#about-image {
-  max-width: 450px;
-  width: 100%;
-  height: auto;
-  filter: invert(42%) sepia(0%) saturate(0%) brightness(100%) contrast(88%);
+#contact h2 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-#about-text-content {
-  max-width: 800px;
-  color: #6a6a6a;
-}
-
-/* --- 6. CONTACT SECTION --- */
-#contact-section {
-  position: relative;
-}
-
-#contact-email-content {
-  position: relative;
-  z-index: 6;
-}
-
-#contact-email-content a {
-  pointer-events: auto;
-  color: #6a6a6a;
-  font-size: 11px;
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
-  font-weight: 300;
+#contact a {
+  color: #000;
   text-decoration: none;
+  font-size: 32px;
   transition: color 0.2s ease;
-}
-
-#contact-email-content a:hover {
-  color: #ffffff;
-}
-
-/* --- 7. CELLULA SECTION --- */
-#cellula-section {
-  position: relative;
-}
-
-#cellula-content {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#cellula-image {
-  max-width: 500px;
-  width: 100%;
-  height: auto;
-}
-
-/* --- 8. MODAL --- */
-#project-modal {
-  display: none; 
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0); 
-  z-index: 2000;
-  justify-content: center; align-items: center;
-}
-
-.modal-content {
-  background: #000;
-  border: 1px solid #333;
-  width: 90%; 
-  max-width: 1100px;
-  height: 60vh; 
-  display: flex; 
-  position: relative;
-  box-shadow: 0 0 50px rgba(0,0,0,1);
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.modal-content.fullscreen {
-  width: 95vw;
-  height: 90vh;
-  max-width: none;
-}
-
-.modal-image-side { 
-  flex: 1.3; 
-  border-right: 1px solid #333; 
-  background: #111;
-  transition: all 0.3s ease;
-}
-.modal-image-side img { width: 100%; height: 100%; object-fit: cover; }
-
-.modal-content.fullscreen .modal-image-side img,
-.modal-content.fullscreen .modal-image-side video {
-  object-fit: contain;
-}
-
-.modal-info-side { 
-  flex: 1; 
-  display: flex;
-  flex-direction: column; 
-  text-align: left;
-  background: #000;
-  transition: all 0.3s ease;
-}
-
-.modal-content.fullscreen .modal-info-side {
-  display: none;
-}
-
-.modal-content.fullscreen .modal-image-side {
-  flex: 1.3;
-  border-right: none;
-}
-
-.text-container { 
-  padding: 50px 40px; 
-  flex-grow: 1; 
-}
-.modal-info-side h2 { font-size: 11px; font-weight: 300; margin: 0; color: #888; text-transform: uppercase; }
-.subtitle { font-size: 11px; margin-top: 5px; margin-bottom: 25px; opacity: 0.5; }
-.description { font-size: 11px; line-height: 1.6; color: #6a6a6a; white-space: pre-line; }
-
-#modal-gallery {
-  display: flex;
-  width: 100%; 
-  height: 110px; 
-  border-top: 1px solid #333;
-  margin: 0; 
-  padding: 0;
-}
-
-#modal-gallery img,
-#modal-gallery video {
-  width: 25%; 
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.5;
-  transition: 0.2s;
-  border-right: 1px solid #333;
-}
-#modal-gallery img:last-child,
-#modal-gallery video:last-child { border-right: none; }
-#modal-gallery img:hover,
-#modal-gallery video:hover { opacity: 1; }
-
-.traffic-lights { position: absolute; top: 15px; right: 15px; display: flex; gap: 6px; z-index: 10; }
-.dot { width: 10px; height: 10px; border-radius: 50%; }
-.green { background: #27c93f; }
-.yellow { background: #ffbd2e; }
-.red { background: #ff5f56; }
-
-/* --- 9. WIDGETS --- */
-#widget-simona {
-  position: fixed;
-  bottom: 250px;
-  left: 30px;
-  width: 500px;
-  z-index: 800;
-  pointer-events: auto;
-  transition: filter 0.1s;
-  display: none;
-}
-
-#widget-simona.visible {
   display: block;
+  margin-bottom: 10px;
+  font-weight: normal;
 }
 
-#widget-simona:hover {
-  filter: hue-rotate(180deg) saturate(1.5);
-}
-#widget-simona img { width: 100%; display: block; }
-#widget-simona video {
-  position: absolute;
-  top: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 79px;
-  height: 92.5px;
-  object-fit: cover;
-  border-radius: 13px;
-  z-index: 2;
-  filter: contrast(1.05) brightness(0.95);
-  pointer-events: none;
+#contact a:hover {
+  color: #555;
 }
 
-#widget-simona .play-area {
-  position: absolute;
-  top: 72px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 30px;
-  z-index: 3;
-}
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  #hero h1 {
+    font-size: 32px;
+  }
+  
+  .project {
+    grid-template-columns: 1fr;
+  }
+  
+  .project:nth-child(even) .project-info {
+    order: 0;
+  }
+  
+  #about .collaborations {
+    grid-template-columns: 1fr;
+  }
 
-#widget-simona .stop-area {
-  position: absolute;
-  top: 108px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 30px;
-  z-index: 3;
+  #top {
+    width: calc(100% - 20px);
+  }
 }
-
-#widget-dog {
-  position: fixed;
-  bottom: 30px;
-  left: 30px;
-  width: 130px;
-  z-index: 800;
-  pointer-events: auto;
-  transition: filter 0.1s;
-  display: none;
-}
-
-#widget-dog.visible {
-  display: block;
-}
-
-#widget-dog:hover {
-  filter: hue-rotate(90deg) saturate(2);
-}
-#widget-dog img { width: 100%; display: block; }
-#widget-dog video {
-  position: absolute;
-  top: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 79px;
-  height: 92.5px;
-  object-fit: cover;
-  border-radius: 13px;
-  z-index: 2;
-  filter: contrast(1.05) brightness(0.95);
-}
-
-#widget-positive-radio {
-  position: fixed;
-  top: 50%;
-  right: 30px;
-  transform: translateY(-50%);
-  width: 260px;
-  z-index: 800;
-  pointer-events: auto;
-  display: none;
-}
-
-#widget-positive-radio.visible {
-  display: block;
-}
-
-#widget-positive-radio img { 
-  width: 100%; 
-  display: block; 
-  position: relative;
-  z-index: 3;
-  pointer-events: none;
-}
-
-#widget-positive-radio .video-wrap {
-  position: absolute;
-  top: 1px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 230px;
-  height: 150px;
-  z-index: 1;
-  pointer-events: auto;
-}
-
-#widget-positive-radio .video-wrap iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 6px;
-  pointer-events: auto;
-}
-
-/* --- 10. RESOLUTION WINDOWS --- */
-.resolution-window {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  border: 1px solid;
-  background: #000;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.8);
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: auto;
-}
-
-.resolution-window.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.resolution-label {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 11px;
-  color: #888;
-  background: rgba(0,0,0,0.7);
-  padding: 2px 5px;
-  border-radius: 3px;
-  z-index: 10;
-  pointer-events: none;
-}
-
-#window-4k { 
-  display: block;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh; 
-  border-color: #ff0000; border-width: 1px; 
-  z-index: 899; 
-}
-
-#window-1080p { 
-  display: block;
-  width: 720px; height: 405px; 
-  border-color: #ff0000; border-width: 1px; 
-  z-index: 1000; 
-}
-
-#window-720p { 
-  display: block;
-  width: 480px; height: 270px; 
-  border-color: #ff0000; border-width: 1px; 
-  z-index: 1100; 
-}
-
-#window-dvd { 
-  display: block;
-  width: 320px; height: 180px; 
-  border-color: #ff0000; border-width: 1px; 
-  z-index: 1200; 
-}
-
-#window-vcd { 
-  display: block;
-  width: 210px; height: 118px; 
-  border-color: #ff0000; border-width: 1px; 
-  z-index: 1600; 
-  opacity: 1; transform: scale(1);
-}
-
-.resolution-window iframe { 
-  width: 100%; height: 100%; 
-  border: none; 
-  pointer-events: none; 
-}
-
-
 </style>
 </head>
 
 <body>
-
-<!-- Custom Cursor -->
-<div id="custom-cursor"></div>
-
-<!-- TOP BAR -->
-<div id="top">
-  <div id="logo"><img src="assets/Logo/logo4k.svg" alt="4K Logo"></div>
-  <div><span id="link-works" class="hoverable">Works</span> &nbsp; <span id="link-about" class="hoverable">About</span> &nbsp; <span id="link-contact" class="hoverable">Contact</span> &nbsp; <span id="link-cellula" class="hoverable">Cellula</span></div>
+<div id="fixed-logo">
+  <img src="assetsc/logosc.png" alt="Simona Coltello">
 </div>
+<div id="page-wrapper">
 
-<!-- MAIN CONTAINER -->
-<div id="main-container">
-  
-  <!-- WORKS SECTION -->
-  <div id="works-section" class="section">
-    <div id="scroll-inner">
-      <div class="row hoverable" onclick="openProject('hglf')">
-        <div class="col1">HGLF</div>
-        <div class="col2">Website and Ecommerce Design</div>
-        <div class="col3">Web, Photography</div>
-        <div class="col4">2025</div>
-      </div>
-      <div class="row hoverable" onclick="openProject('slamjam')">
-        <div class="col1">Slam Jam</div>
-        <div class="col2">New Balance Campaign</div>
-        <div class="col3">Photography</div>
-        <div class="col4">2025</div>
-      </div>
-      <div class="row hoverable" onclick="openProject('pessima')">
-        <div class="col1">Pessima</div>
-        <div class="col2">Pessima Magazine Vol.2</div>
-        <div class="col3">Publishing</div>
-        <div class="col4">2024</div>
+<!-- HERO SECTION -->
+<section id="hero">
+  <div class="subtitle">Curator • Graphic Designer • Web Developer • Photographer</div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about">
+  <h2>About</h2>
+  <div class="content">
+    <div class="bio-text">
+      Simona Coltello (1998, She/They) is a curator and creative director of Pessima.<br><br>
+      She has curated 20+ exhibitions and events since 2020, most recently producing 4K: Touching Grass in Ultra HD, a collective exhibit that reflected on artificial means of utopian life featuring international artists such as Eva & Franco Mattes, Alfred Francis Pietroni, Jenia Filatova and many more.
+    </div>
+  </div>
+</section>
+
+<!-- PESSIMA SECTION -->
+<section id="pessima">
+  <h2>Pessima</h2>
+  <div class="gallery-scroll">
+
+    <div class="gallery-item">
+      <img src="assetsc/DSC01081.jpg" alt="Jenna Marvin">
+      <div class="gallery-item-info">
+        <h3>Jenna Marvin</h3>
+        <div class="role">Vol. 2 • 2024 • Paris, France</div>
       </div>
     </div>
-  </div>
 
-  <!-- ABOUT SECTION -->
-  <div id="about-section" class="section">
-    <div id="about-text-inner">
-      <img id="about-image" src="assets/Images/3 circle.png" alt="3 Circles">
-      <div id="about-text-content">
-        4K is a creative design studio founded by Lars Larkin, Nelson Gutjahr &amp; Simona Coltello.
+    <div class="gallery-item">
+      <img src="assetsc/Image 7-16-24 at 6.55 PM (2).jpeg" alt="Vampy">
+      <div class="gallery-item-info">
+        <h3>Vampy</h3>
+        <div class="role">Vol. 2 • 2024 • Los Angeles</div>
       </div>
     </div>
-  </div>
 
-  <!-- CONTACT SECTION -->
-  <div id="contact-section" class="section">
-    <div id="contact-email-content">
-      <a href="/cdn-cgi/l/email-protection#e6d28d959293828f898e82a6818b878f8ac885898b" class="hoverable"><span class="__cf_email__" data-cfemail="98acf3ebecedfcf1f7f0fcd8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span></a>
-    </div>
-  </div>
-
-  <!-- CELLULA SECTION -->
-  <div id="cellula-section" class="section">
-    <div id="cellula-content">
-      <img id="cellula-image" src="assets/Images/Group 1000006007.png" alt="Cellula">
-    </div>
-  </div>
-
-</div>
-
-<!-- MODAL -->
-<div id="project-modal" onclick="closeProject()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <div class="traffic-lights">
-      <div class="dot green hoverable" onclick="toggleFullscreen(event)"></div>
-      <div class="dot yellow hoverable" onclick="closeProject()"></div>
-      <div class="dot red hoverable" onclick="closeProject()"></div>
-    </div>
-    <div class="modal-image-side"><img src="" id="modal-main-img"></div>
-    <div class="modal-info-side">
-      <div class="text-container">
-          <h2 id="modal-title"></h2>
-          <p class="subtitle" id="modal-subtitle"></p>
-          <p class="description" id="modal-desc"></p>
+    <div class="gallery-item">
+      <img src="assetsc/PESSIMA 32f.png" alt="2dual">
+      <div class="gallery-item-info">
+        <h3>2dual</h3>
+        <div class="role">Vol. 2 • 2024 • Melbourne, Australia</div>
       </div>
-      <div id="modal-gallery"></div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assetsc/DSC04012.jpeg" alt="Opia">
+      <div class="gallery-item-info">
+        <h3>Opia</h3>
+        <div class="role">Vol. 2 • 2024 • Milan, Italy</div>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assetsc/WhatsApp Image 2025-01-30 at 16.49.06.jpeg" alt="Aun Helden">
+      <div class="gallery-item-info">
+        <h3>Aun Helden</h3>
+        <div class="role">Vol. 1 • 2023 • Brazil</div>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assetsc/phil00301 copia.jpg" alt="Ivy Chilelli">
+      <div class="gallery-item-info">
+        <h3>Ivy Chilelli</h3>
+        <div class="role">Vol. 1 • 2023 • Milan, Italy</div>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assetsc/DSC01637.JPG" alt="Enya">
+      <div class="gallery-item-info">
+        <h3>Enya</h3>
+        <div class="role">Vol. 0 • 2021 • Milan, Italy</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CURATION SECTION -->
+<section id="curation">
+  <h2>Curation</h2>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="assetsc/20250410_103929.jpg" alt="4K: Touching Grass in Ultra HD">
+    </div>
+    <div class="project-overlay">
+      <h3>4K: Touching Grass in Ultra HD</h3>
+      <div class="role">Curator • 2025</div>
+      <p>A collective exhibition reflecting on artificial means of utopian life. Digital Art, Early AI and 3D sculpture explored dystopian imaginaries. Featured artists: Eva & Franco Mattes, Alfred Francis Pietroni, Jenia Filatova, Lars Larkin, Nelson Gutjahr, and more. BiM Milano, March-April 2025.</p>
     </div>
   </div>
-</div>
-
-<!-- WIDGETS -->
-<div id="widget-dog" class="hoverable">
-  <img src="assets/Widgets/widgetdog.png" alt="Widget Dog">
-  <video autoplay muted loop playsinline>
-    <source src="widgetvideo.mp4" type="video/mp4">
-  </video>
-</div>
-
-<div id="widget-simona" class="hoverable">
-  <img src="assets/Widgets/4K WIDGET BY SIMONA.png" alt="Widget Simona">
-  <video autoplay muted loop playsinline>
-    <source src="widgetvideo.mp4" type="video/mp4">
-  </video>
-  <div class="play-area hoverable"></div>
-  <div class="stop-area hoverable"></div>
-</div>
-
-<div id="widget-positive-radio" class="hoverable">
-  <img src="assets/Widgets/positive-radio-player-silver_w-shadows.png" alt="Widget Positive Radio">
-  <div class="video-wrap">
-    <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" src="https://www.youtube.com/embed/T4s8trguRX8?si=1WhBZmQPeNs-7Qjs&autoplay=1&mute=1&loop=1&playlist=T4s8trguRX8"></iframe>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="assetsc/DSC03973-scaled.jpg" alt="Opia by Opia">
+    </div>
+    <div class="project-overlay">
+      <h3>Opia by Opia</h3>
+      <div class="role">Curator • 2024</div>
+      <p>Solo exhibition by artist Opia exploring themes of identity and transformation through performance and installation. BiM Milano, October 2024.</p>
+    </div>
   </div>
-</div>
-
-<!-- RESOLUTION WINDOWS -->
-<div id="window-4k" class="resolution-window visible">
-  <div class="resolution-label">4K</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
-</div>
-
-<div id="window-1080p" class="resolution-window visible hoverable">
-  <div class="resolution-label">1080p</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
-</div>
-
-<div id="window-720p" class="resolution-window visible hoverable">
-  <div class="resolution-label">720p</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
-</div>
-
-<div id="window-dvd" class="resolution-window visible hoverable">
-  <div class="resolution-label">DVD</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(0.5px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
-</div>
-
-<div id="window-vcd" class="resolution-window visible hoverable">
-  <div class="resolution-label">VCD</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(1px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
-</div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// CUSTOM CURSOR
-const customCursor = document.getElementById('custom-cursor');
-document.addEventListener('mousemove', (e) => {
-  customCursor.style.left = e.clientX + 'px';
-  customCursor.style.top = e.clientY + 'px';
-});
-
-document.querySelectorAll('.hoverable, #logo-page-header span, a, button, [onclick]').forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-});
-
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function showWorks() {
-  scrollToSection('works-section');
-}
-
-function showAbout() {
-  scrollToSection('about-section');
-}
-
-function showContact() {
-  scrollToSection('contact-section');
-}
-
-function showCellula() {
-  scrollToSection('cellula-section');
-}
-
-// EVENT LISTENERS
-document.getElementById('link-works').addEventListener('click', (e) => { e.preventDefault(); showWorks(); });
-document.getElementById('link-about').addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
-document.getElementById('link-contact').addEventListener('click', (e) => { e.preventDefault(); showContact(); });
-document.getElementById('link-cellula').addEventListener('click', (e) => { e.preventDefault(); showCellula(); });
-
-// LOGO CLICK - CYCLES THROUGH WIDGETS
-let widgetState = 0; // 0 = none, 1 = dog, 2 = simona, 3 = positive radio
-
-document.getElementById('logo').addEventListener('click', (e) => { 
-  e.preventDefault(); 
   
-  // Cycle through widget states
-  widgetState = (widgetState + 1) % 4;
+  <div class="project">
+    <div class="project-image">
+      <img src="assetsc/_DSF5861c.jpg" alt="Apokalypsis Eschaton">
+    </div>
+    <div class="project-overlay">
+      <h3>Apokalypsis Eschaton</h3>
+      <div class="role">Curator • 2024</div>
+      <p>Solo exhibition by Lux Aeterna exploring apocalyptic themes and transformation. Co-curated with Marte Gastaldello. Fondoluogo, February 2024.</p>
+    </div>
+  </div>
   
-  // Hide all widgets first
-  document.getElementById('widget-dog').classList.remove('visible');
-  document.getElementById('widget-simona').classList.remove('visible');
-  document.getElementById('widget-positive-radio').classList.remove('visible');
-  
-  // Show widgets based on state
-  if (widgetState >= 1) {
-    document.getElementById('widget-dog').classList.add('visible');
-  }
-  if (widgetState >= 2) {
-    document.getElementById('widget-simona').classList.add('visible');
-  }
-  if (widgetState >= 3) {
-    document.getElementById('widget-positive-radio').classList.add('visible');
-  }
-});
+  <div class="project">
+    <div class="project-image">
+      <img src="assetsc/DSF2263-scaled.jpg" alt="Devonian Mater">
+    </div>
+    <div class="project-overlay">
+      <h3>Devonian Mater</h3>
+      <div class="role">Curator • 2023</div>
+      <p>Solo exhibition by Ivy Chilelli exploring biomechanics and the evolving body through sculpture and installation. BiM Milano, December 2023.</p>
+    </div>
+  </div>
+</section>
 
-// PROJECTS
-const projectsData = {
-  'hglf': {
-    title: 'HG / LF',
-    subtitle: 'A project curated by Simona Coltello',
-    desc: 'HG / LF is a home base of dissent- an agglomerate where atelier and community converge. Driven by a synthesis of provocation, confusion, error and subversive imagination, HG / LF creates wearable armor-forms of protection designed to safeguard the most vulnerable areas of the body from an oppressive and hostile social order.',
-    imgs: ['assets/Images/Clients/hglf/hglf1.mp4', 'assets/Images/Clients/hglf/hglf2.png', 'assets/Images/Clients/hglf/hglf3.png', 'assets/Images/Clients/hglf/hglf4.jpg']
-  },
-  'slamjam': {
-    title: 'SLAM JAM X NEW BALANCE',
-    subtitle: 'A project curated by Lars',
-    desc: 'Inspired by ancient greek mythology explores the reasons one person would choose to become freelancer.',
-    imgs: ['assets/Images/Clients/Slamjam/1.jpg', 'assets/Images/Clients/Slamjam/2.jpg', 'assets/Images/Clients/Slamjam/3.jpg', 'assets/Images/Clients/Slamjam/4.jpg']
-  },
-  'pessima': {
-    title: 'PESSIMA MAGAZINE VOL.2',
-    subtitle: 'A project curated by Simona Coltello',
-    desc: 'Pessima is an annual, independent magazine that explores and represents Trans* identities.\n\nFeaturing: Jenna Marvin (RUS), 2 dual (AUS), Opia (UK), Lux Aeterna (ITA), E.R. Fightmaster (USA), Vampy (USA)\n\nSewn Binding – 300 pages, 8 editorials, 50+ artists involved – A4',
-    imgs: ['assets/Images/Clients/Pessima/pessima1.jpg', 'assets/Images/Clients/Pessima/pessima2.jpeg', 'assets/Images/Clients/Pessima/pessima3.jpg', 'assets/Images/Clients/Pessima/pessima4.png']
-  }
-};
-
-function openProject(id) {
-  const project = projectsData[id] || { 
-    title: id.toUpperCase(), 
-    subtitle: 'Project Info', 
-    desc: 'Description coming soon...', 
-    imgs: ['https://via.placeholder.com/600x600/111?text=1', 'https://via.placeholder.com/600x600/222?text=2', 'https://via.placeholder.com/600x600/333?text=3', 'https://via.placeholder.com/600x600/444?text=4'] 
-  };
-
-  document.getElementById('modal-title').innerText = project.title;
-  document.getElementById('modal-subtitle').innerText = project.subtitle;
-  document.getElementById('modal-desc').innerText = project.desc;
+<!-- GRAPHIC DESIGN SECTION -->
+<section id="graphic-design">
+  <h2>Graphic Design</h2>
   
-  const mainImg = document.getElementById('modal-main-img');
-  const gallery = document.getElementById('modal-gallery');
-  gallery.innerHTML = "";
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23fff' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23000' font-family='Arial' font-size='36' font-weight='300'%3EPESSIMA%3C/text%3E%3C/svg%3E" alt="Pessima Magazine">
+    </div>
+    <div class="project-overlay">
+      <h3>Pessima Magazine</h3>
+      <div class="role">Creative Director & Chief Editor • 2020-Present</div>
+      <p>Trans Art* Magazine & Non Profit Association. Annual publication exploring Trans* identities. 300 pages, 8 editorials, 50+ artists per volume. Sewn binding, A4 format. Featured: Jenna Marvin, 2 dual, Opia, Lux Aeterna, E.R. Fightmaster, Vampy.</p>
+    </div>
+  </div>
   
-  // Check if first item is video or image
-  const firstSrc = project.imgs[0];
-  if (firstSrc.endsWith('.mp4') || firstSrc.endsWith('.webm') || firstSrc.endsWith('.mov')) {
-    mainImg.outerHTML = '<video id="modal-main-img" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"><source src="' + firstSrc + '" type="video/mp4"></video>';
-  } else {
-    if (mainImg.tagName === 'VIDEO') {
-      mainImg.outerHTML = '<img src="" id="modal-main-img">';
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23f0f0f0' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23000' font-family='Arial' font-size='28' font-weight='300'%3EAutostraddle%3C/text%3E%3C/svg%3E" alt="Autostraddle Magazine">
+    </div>
+    <div class="project-overlay">
+      <h3>Autostraddle Magazine</h3>
+      <div class="role">Art Direction & Graphic Design</div>
+      <p>Editorial design and art direction for features exploring LGBTQ+ culture, identity, and contemporary issues for the independent queer publication.</p>
+    </div>
+  </div>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23fff' font-family='Arial' font-size='32' font-weight='300'%3EPOSTERS%3C/text%3E%3C/svg%3E" alt="Exhibition Posters">
+    </div>
+    <div class="project-overlay">
+      <h3>Exhibition Graphics</h3>
+      <div class="role">Graphic Designer</div>
+      <p>Visual identity and promotional materials for 20+ exhibitions and events including 4K, Pessima releases, Euphoria, and various artist showcases. 2020-Present.</p>
+    </div>
+  </div>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23fff' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23000' font-family='Arial' font-size='28' font-weight='300'%3ELOGOS%3C/text%3E%3C/svg%3E" alt="Logo Design">
+    </div>
+    <div class="project-overlay">
+      <h3>Brand Identity</h3>
+      <div class="role">Logo Designer</div>
+      <p>Logo and brand identity design for Pessima, Sperm Studios, 4K, Marciona, GIU, and various cultural projects.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ART DIRECTION SECTION -->
+<section id="art-direction">
+  <h2>Art Direction</h2>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23fff' font-family='Arial' font-size='28' font-weight='300'%3EHGLF%3C/text%3E%3C/svg%3E" alt="HGLF">
+    </div>
+    <div class="project-overlay">
+      <h3>HG / LF</h3>
+      <div class="role">Creative Direction</div>
+      <p>A home base of dissent—an agglomerate where atelier and community converge. Creating wearable armor-forms of protection designed to safeguard vulnerable areas from oppressive social order. Project curated by Simona Coltello.</p>
+    </div>
+  </div>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23f0f0f0' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23000' font-family='Arial' font-size='20' font-weight='300'%3ECOLLABORATIONS%3C/text%3E%3C/svg%3E" alt="Brand Collaborations">
+    </div>
+    <div class="project-overlay">
+      <h3>Brand Collaborations</h3>
+      <div class="role">Art Direction</div>
+      <p>Creative direction for brands including HGLF, Iuter, Octopus, Marcelo Burlon, For Them, Magliano, and cultural institutions like BASE Milano, NABA, Manifattura Tabacchi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOGRAPHY SECTION -->
+<section id="photography">
+  <h2>Photography</h2>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23fff' font-family='Arial' font-size='28' font-weight='300'%3EEDITORIAL%3C/text%3E%3C/svg%3E" alt="Editorial Photography">
+    </div>
+    <div class="project-overlay">
+      <h3>Editorial Photoshoots</h3>
+      <div class="role">Art Director & Producer</div>
+      <p>Art direction and production for editorial photoshoots exploring themes of transformation, identity, and post-human aesthetics. Featured in Pessima Magazine and various publications.</p>
+    </div>
+  </div>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23fff' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23000' font-family='Arial' font-size='24' font-weight='300'%3EARTIST PORTRAITS%3C/text%3E%3C/svg%3E" alt="Artist Documentation">
+    </div>
+    <div class="project-overlay">
+      <h3>Artist Documentation</h3>
+      <div class="role">Photographer & Art Director</div>
+      <p>Documentation and portrait photography for artists including Gena Marvin, Salvia, Alfred Francis Pietroni, Opia, Vampy, Bones Tan Jones, and more.</p>
+    </div>
+  </div>
+  
+  <div class="project">
+    <div class="project-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23f0f0f0' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23000' font-family='Arial' font-size='24' font-weight='300'%3EEXHIBITIONS%3C/text%3E%3C/svg%3E" alt="Exhibition Photography">
+    </div>
+    <div class="project-overlay">
+      <h3>Exhibition Photography</h3>
+      <div class="role">Photographer</div>
+      <p>Documentation of exhibitions and events including installation views, performances, and opening receptions for BiM Milano, BASE Milano, and independent spaces.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact">
+  <h2>Get in Touch</h2>
+  <a href="mailto:simonacoltello@gmail.com">simonacoltello@gmail.com</a>
+  <a href="https://www.instagram.com/simonacoltello" target="_blank">Instagram</a>
+</section>
+
+<!-- PROJECT PREVIEW -->
+<div id="project-preview">
+  <img id="preview-img" src="" alt="">
+</div>
+
+<script>
+const preview = document.getElementById('project-preview');
+const previewImg = document.getElementById('preview-img');
+const fixedLogo = document.getElementById('fixed-logo');
+let activeProject = null;
+
+document.querySelectorAll('.project').forEach(project => {
+  project.addEventListener('click', () => {
+    if (activeProject === project) {
+      closePreview(project);
+      return;
     }
-    document.getElementById('modal-main-img').src = firstSrc;
-  }
-  
-  project.imgs.slice(0, 4).forEach(src => {
-    const isVideo = src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov');
-    
-    if (isVideo) {
-      const thumbVideo = document.createElement('video');
-      thumbVideo.autoplay = true;
-      thumbVideo.muted = true;
-      thumbVideo.loop = true;
-      thumbVideo.playsInline = true;
-      thumbVideo.style.width = '25%';
-      thumbVideo.style.height = '100%';
-      thumbVideo.style.objectFit = 'cover';
-      thumbVideo.style.opacity = '0.5';
-      thumbVideo.style.transition = '0.2s';
-      thumbVideo.style.borderRight = '1px solid #333';
-      thumbVideo.classList.add('hoverable');
-      
-      const source = document.createElement('source');
-      source.src = src;
-      source.type = 'video/mp4';
-      thumbVideo.appendChild(source);
-      
-      thumbVideo.onmouseenter = () => thumbVideo.style.opacity = '1';
-      thumbVideo.onmouseleave = () => thumbVideo.style.opacity = '0.5';
-      
-      thumbVideo.onclick = () => {
-        const mainEl = document.getElementById('modal-main-img');
-        mainEl.outerHTML = '<video id="modal-main-img" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"><source src="' + src + '" type="video/mp4"></video>';
-      };
-      
-      gallery.appendChild(thumbVideo);
-    } else {
-      const thumb = document.createElement('img');
-      thumb.src = src;
-      thumb.classList.add('hoverable');
-      thumb.onclick = () => {
-        const mainEl = document.getElementById('modal-main-img');
-        if (mainEl.tagName === 'VIDEO') {
-          mainEl.outerHTML = '<img src="" id="modal-main-img">';
-        }
-        document.getElementById('modal-main-img').src = src;
-      };
-      gallery.appendChild(thumb);
-    }
-  });
+    if (activeProject) activeProject.classList.remove('active');
+    activeProject = project;
+    project.classList.add('active');
 
-  document.getElementById('project-modal').style.display = 'flex';
-}
-
-function closeProject() {
-  document.getElementById('project-modal').style.display = 'none';
-  // Remove fullscreen class when closing
-  document.querySelector('.modal-content').classList.remove('fullscreen');
-}
-
-function toggleFullscreen(event) {
-  event.stopPropagation();
-  const modalContent = document.querySelector('.modal-content');
-  modalContent.classList.toggle('fullscreen');
-}
-
-// RESOLUTION WINDOWS
-let resolutionsOpen = true;
-
-document.getElementById('window-vcd').addEventListener('click', (e) => {
-  e.stopPropagation();
-  if (!resolutionsOpen) {
-    [document.getElementById('window-dvd'), document.getElementById('window-720p'), document.getElementById('window-1080p'), document.getElementById('window-4k')].forEach((w, i) => {
-      setTimeout(() => {
-        w.style.display = 'block';
-        setTimeout(() => w.classList.add('visible'), 10);
-      }, i * 150);
-    });
-    resolutionsOpen = true;
-  } else {
-    showWorks();
-  }
-});
-
-document.addEventListener('click', (e) => {
-  if (resolutionsOpen && !e.target.closest('#window-vcd')) {
-    [document.getElementById('window-4k'), document.getElementById('window-1080p'), document.getElementById('window-720p'), document.getElementById('window-dvd')].forEach((w, i) => {
-      setTimeout(() => {
-        w.classList.remove('visible');
-        setTimeout(() => w.style.display = 'none', 400);
-      }, i * 150);
-    });
-    resolutionsOpen = false;
-  }
-});
-
-// AUDIO
-const audio = new Audio('assets/Music/Sonia Whittingham - Sweet Sensation.mp3');
-const barkingAudio = new Audio('assets/Music/barking.mp3');
-let isPlaying = false;
-
-// WIDGET DRAGGING
-const widgetSimona = document.getElementById('widget-simona');
-const widgetDog = document.getElementById('widget-dog');
-const widgetRadio = document.getElementById('widget-positive-radio');
-
-let dragState = { simona: false, dog: false, radio: false };
-let offset = { simona: {x:0,y:0}, dog: {x:0,y:0}, radio: {x:0,y:0} };
-let moved = { simona: false, dog: false, radio: false };
-
-widgetSimona.addEventListener('click', () => {
-  if (!moved.simona) {
-    isPlaying ? audio.pause() : audio.play();
-    isPlaying = !isPlaying;
-  }
-  moved.simona = false;
-});
-
-widgetSimona.querySelector('.play-area').addEventListener('click', (e) => {
-  e.stopPropagation();
-  audio.play();
-  isPlaying = true;
-});
-
-widgetSimona.querySelector('.stop-area').addEventListener('click', (e) => {
-  e.stopPropagation();
-  audio.pause();
-  audio.currentTime = 0;
-  isPlaying = false;
-});
-
-widgetDog.addEventListener('click', () => {
-  if (!moved.dog) {
-    barkingAudio.currentTime = 0;
-    barkingAudio.play();
-  }
-  moved.dog = false;
-});
-
-function setupDrag(widget, name) {
-  widget.addEventListener('mousedown', e => {
-    if (name === 'simona' && (e.target.classList.contains('play-area') || e.target.classList.contains('stop-area'))) return;
-    dragState[name] = true;
-    moved[name] = false;
-    const rect = widget.getBoundingClientRect();
-    offset[name] = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    widget.style.transition = 'none';
-    e.preventDefault();
-  });
-}
-
-setupDrag(widgetSimona, 'simona');
-setupDrag(widgetDog, 'dog');
-setupDrag(widgetRadio, 'radio');
-
-document.addEventListener('mousemove', e => {
-  ['simona', 'dog', 'radio'].forEach(name => {
-    if (dragState[name]) {
-      moved[name] = true;
-      const widget = name === 'simona' ? widgetSimona : name === 'dog' ? widgetDog : widgetRadio;
-      widget.style.left = e.clientX - offset[name].x + 'px';
-      widget.style.top = e.clientY - offset[name].y + 'px';
-      widget.style.bottom = 'auto';
-      widget.style.right = 'auto';
-      widget.style.transform = name === 'radio' ? 'scale(1)' : '';
-    }
+    const img = project.querySelector('.project-image img');
+    previewImg.src = img ? img.src : '';
+    fixedLogo.style.opacity = '0';
+    preview.classList.add('visible');
   });
 });
 
-document.addEventListener('mouseup', () => {
-  dragState.simona = dragState.dog = dragState.radio = false;
+preview.addEventListener('click', () => {
+  if (activeProject) closePreview(activeProject);
+});
+
+function closePreview(project) {
+  project.classList.remove('active');
+  preview.classList.remove('visible');
+  fixedLogo.style.opacity = '1';
+  activeProject = null;
+}
+
+window.addEventListener('scroll', () => {
+  if (!activeProject) return;
+  const rect = activeProject.getBoundingClientRect();
+  if (rect.bottom < 0 || rect.top > window.innerHeight) {
+    closePreview(activeProject);
+  }
 });
 </script>
-
+</div><!-- end page-wrapper -->
 </body>
 </html>
