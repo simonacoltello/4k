@@ -510,14 +510,26 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   <!-- WORKS SECTION -->
   <div id="works-section" class="section">
     <div id="scroll-inner">
+      <div class="row hoverable" onclick="openProject('slipmode')">
+        <div class="col1">Slipmode x Arc'teryx Italia</div>
+        <div class="col2">Event Photography &amp; Documentation</div>
+        <div class="col3">Photography</div>
+        <div class="col4">2026</div>
+      </div>
+      <div class="row hoverable" onclick="openProject('trashgirls800')">
+        <div class="col1">Trashgirls800</div>
+        <div class="col2">Event Photography &amp; Documentation</div>
+        <div class="col3">Photography</div>
+        <div class="col4">2026</div>
+      </div>
       <div class="row hoverable" onclick="openProject('cursormag')">
-        <div class="col1">Cursor Mag</div>
+        <div class="col1">Cursor</div>
         <div class="col2">Event Photography &amp; Documentation</div>
         <div class="col3">Photography</div>
         <div class="col4">2026</div>
       </div>
       <div class="row hoverable" onclick="openProject('hglf')">
-        <div class="col1">HGLF</div>
+        <div class="col1">HG-LF</div>
         <div class="col2">Website and Ecommerce Design</div>
         <div class="col3">Web, Photography</div>
         <div class="col4">2025</div>
@@ -542,7 +554,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
     <div id="about-text-inner">
       <img id="about-image" src="assets/Images/3 circle.png" alt="3 Circles">
       <div id="about-text-content">
-        4K is a creative design studio founded by Lars Larkin, Nelson Gutjahr &amp; Simona Coltello.
+        4K is a creative design studio based in Milan, Copenhagen &amp; Berlin.
       </div>
     </div>
   </div>
@@ -701,7 +713,7 @@ document.getElementById('logo').addEventListener('click', (e) => {
 // PROJECTS
 const projectsData = {
   'hglf': {
-    title: 'HG / LF',
+    title: 'HG-LF',
     subtitle: 'A project curated by Simona Coltello',
     desc: 'HG / LF is a home base of dissent- an agglomerate where atelier and community converge. Driven by a synthesis of provocation, confusion, error and subversive imagination, HG / LF creates wearable armor-forms of protection designed to safeguard the most vulnerable areas of the body from an oppressive and hostile social order.',
     imgs: ['assets/Images/Clients/hglf/hglf1.mp4', 'assets/Images/Clients/hglf/hglf2.png', 'assets/Images/Clients/hglf/hglf3.png', 'assets/Images/Clients/hglf/hglf4.jpg']
@@ -713,10 +725,22 @@ const projectsData = {
     imgs: ['assets/Images/Clients/Slamjam/1.jpg', 'assets/Images/Clients/Slamjam/2.jpg', 'assets/Images/Clients/Slamjam/3.jpg', 'assets/Images/Clients/Slamjam/4.jpg']
   },
   'cursormag': {
-    title: 'CURSOR MAG',
+    title: 'CURSOR',
     subtitle: 'A project curated by Simona Coltello',
     desc: 'Cursor is a cyberfeminist micro magazine & series of events based in Copenhagen. Event Photography & Documentation.',
     imgs: ['assets/Images/Clients/Cursomag/cursor1.jpg', 'assets/Images/Clients/Cursomag/cursor 2.jpg', 'assets/Images/Clients/Cursomag/cursor3.jpg', 'assets/Images/Clients/Cursomag/cursor4.jpg']
+  },
+  'slipmode': {
+    title: "SLIPMODE X ARC'TERYX ITALIA",
+    subtitle: 'Event Photography & Documentation',
+    desc: "Photography documentation of the series of collaboration between milanese collective Slipmode & sport brand Arc'teryx.",
+    imgs: ['assets/Images/Clients/Slipmode/slip1.jpg', 'assets/Images/Clients/Slipmode/slip2.jpg', 'assets/Images/Clients/Slipmode/slip3.jpg', 'assets/Images/Clients/Slipmode/slip4.jpg']
+  },
+  'trashgirls800': {
+    title: 'TRASHGIRLS800',
+    subtitle: 'Event Photography & Documentation',
+    desc: 'Trashgirls800 is a Aarhus and Copenhagen based FLINTA project that opens radical confrontation about the toxicity of the fashion industry, extreme waste and initiatives towards sustainable upcycling.',
+    imgs: ['assets/Images/Clients/Trashgirls/trash1.jpg', 'assets/Images/Clients/Trashgirls/trash2.jpg', 'assets/Images/Clients/Trashgirls/trash3.jpg', 'assets/Images/Clients/Trashgirls/trash4.jpg']
   },
   'pessima': {
     title: 'PESSIMA MAGAZINE VOL.2',
