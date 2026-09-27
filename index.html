@@ -182,7 +182,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 }
 
 #cellula-image {
-  max-width: 500px;
+  max-width: 700px;
   width: 100%;
   height: auto;
 }
@@ -516,9 +516,15 @@ a, button, [onclick], .hoverable, #logo-page-header span {
         <div class="col3">Web, Photography</div>
         <div class="col4">2025</div>
       </div>
-      <div class="row hoverable" onclick="openProject('slamjam')">
+      <div class="row hoverable" onclick="openProject('slamjam')" style="display:none;">
         <div class="col1">Slam Jam</div>
         <div class="col2">New Balance Campaign</div>
+        <div class="col3">Photography</div>
+        <div class="col4">2025</div>
+      </div>
+      <div class="row hoverable" onclick="openProject('cursormag')">
+        <div class="col1">Cursor Mag</div>
+        <div class="col2">Event Photography &amp; Documentation</div>
         <div class="col3">Photography</div>
         <div class="col4">2025</div>
       </div>
@@ -544,14 +550,14 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   <!-- CONTACT SECTION -->
   <div id="contact-section" class="section">
     <div id="contact-email-content">
-      <a href="/cdn-cgi/l/email-protection#e6d28d959293828f898e82a6818b878f8ac885898b" class="hoverable"><span class="__cf_email__" data-cfemail="98acf3ebecedfcf1f7f0fcd8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span></a>
+      <a href="mailto:4kstudiohd@gmail.com" class="hoverable">4kstudiohd@gmail.com</a>
     </div>
   </div>
 
   <!-- CELLULA SECTION -->
   <div id="cellula-section" class="section">
     <div id="cellula-content">
-      <img id="cellula-image" src="assets/Images/Group 1000006007.png" alt="Cellula">
+      <video id="cellula-image" src="assets/Images/videocellulateaser.mp4" autoplay loop muted playsinline></video>
     </div>
   </div>
 
@@ -627,7 +633,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(1px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // CUSTOM CURSOR
 const customCursor = document.getElementById('custom-cursor');
 document.addEventListener('mousemove', (e) => {
@@ -705,6 +711,12 @@ const projectsData = {
     subtitle: 'A project curated by Lars',
     desc: 'Inspired by ancient greek mythology explores the reasons one person would choose to become freelancer.',
     imgs: ['assets/Images/Clients/Slamjam/1.jpg', 'assets/Images/Clients/Slamjam/2.jpg', 'assets/Images/Clients/Slamjam/3.jpg', 'assets/Images/Clients/Slamjam/4.jpg']
+  },
+  'cursormag': {
+    title: 'CURSOR MAG',
+    subtitle: 'A project curated by Simona Coltello',
+    desc: 'Cursor is a cyberfeminist micro magazine & series of events based in Copenhagen. Event Photography & Documentation.',
+    imgs: ['assets/Images/Clients/Cursomag/cursor1.jpg', 'assets/Images/Clients/Cursomag/cursor 2.jpg', 'assets/Images/Clients/Cursomag/cursor3.jpg', 'assets/Images/Clients/Cursomag/cursor4.jpg']
   },
   'pessima': {
     title: 'PESSIMA MAGAZINE VOL.2',
