@@ -567,6 +567,22 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   #window-720p { width: 336px; height: 189px; }
   #window-dvd { width: 208px; height: 117px; }
   #window-vcd { width: 105px; height: 59px; }
+
+  /* Big Simona widget (Sweet Sensation) overflows a phone screen at 500px wide;
+     shrink it from its bottom-left anchor so it stays fully on screen */
+  #widget-simona {
+    transform: scale(0.5);
+    transform-origin: bottom left;
+  }
+
+  /* YouTube radio widget: sit above the Simona widget when they overlap,
+     move it to the left side, and shrink it just slightly */
+  #widget-positive-radio {
+    z-index: 850;
+    left: 20px;
+    right: auto;
+    transform: translateY(-50%) scale(0.85);
+  }
 }
 
 </style>
@@ -1005,36 +1021,65 @@ widgetDog.addEventListener('click', () => {
 });
 
 function setupDrag(widget, name) {
-  widget.addEventListener('mousedown', e => {
-    if (name === 'simona' && (e.target.classList.contains('play-area') || e.target.classList.contains('stop-area'))) return;
+  function startDrag(clientX, clientY, target) {
+    if (name === 'simona' && (target.classList.contains('play-area') || target.classList.contains('stop-area'))) return;
     dragState[name] = true;
     moved[name] = false;
     const rect = widget.getBoundingClientRect();
-    offset[name] = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    offset[name] = { x: clientX - rect.left, y: clientY - rect.top };
     widget.style.transition = 'none';
+  }
+
+  widget.addEventListener('mousedown', e => {
+    startDrag(e.clientX, e.clientY, e.target);
     e.preventDefault();
   });
+
+  widget.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    if (!t) return;
+    startDrag(t.clientX, t.clientY, e.target);
+  }, { passive: true });
 }
 
 setupDrag(widgetSimona, 'simona');
 setupDrag(widgetDog, 'dog');
 setupDrag(widgetRadio, 'radio');
 
-document.addEventListener('mousemove', e => {
+function moveWidgets(clientX, clientY) {
+  let anyDragging = false;
   ['simona', 'dog', 'radio'].forEach(name => {
     if (dragState[name]) {
+      anyDragging = true;
       moved[name] = true;
       const widget = name === 'simona' ? widgetSimona : name === 'dog' ? widgetDog : widgetRadio;
-      widget.style.left = e.clientX - offset[name].x + 'px';
-      widget.style.top = e.clientY - offset[name].y + 'px';
+      widget.style.left = clientX - offset[name].x + 'px';
+      widget.style.top = clientY - offset[name].y + 'px';
       widget.style.bottom = 'auto';
       widget.style.right = 'auto';
-      widget.style.transform = name === 'radio' ? 'scale(1)' : '';
+      widget.style.transform = name === 'radio'
+        ? (window.innerWidth <= 768 ? 'scale(0.85)' : 'scale(1)')
+        : (name === 'simona' && window.innerWidth <= 768 ? 'scale(0.5)' : '');
     }
   });
+  return anyDragging;
+}
+
+document.addEventListener('mousemove', e => {
+  moveWidgets(e.clientX, e.clientY);
 });
 
+document.addEventListener('touchmove', e => {
+  const t = e.touches[0];
+  if (!t) return;
+  if (moveWidgets(t.clientX, t.clientY)) e.preventDefault();
+}, { passive: false });
+
 document.addEventListener('mouseup', () => {
+  dragState.simona = dragState.dog = dragState.radio = false;
+});
+
+document.addEventListener('touchend', () => {
   dragState.simona = dragState.dog = dragState.radio = false;
 });
 </script>
