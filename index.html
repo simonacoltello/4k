@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4K Studio</title>
 <link rel="icon" type="image/svg+xml" href="assets/Logo/logo4k.svg">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -448,8 +449,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 
 #window-4k { 
   display: block;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh; 
+  top: 0; left: 0; right: 0; bottom: 0;
   border-color: #ff0000; border-width: 1px; 
   z-index: 899; 
 }
@@ -484,11 +484,84 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 }
 
 .resolution-window iframe { 
+  display: block;
   width: 100%; height: 100%; 
   border: none; 
   pointer-events: none; 
 }
 
+
+/* --- 9. MOBILE ADAPTIVE (does not affect desktop) --- */
+@media (max-width: 768px) {
+
+  /* Bigger, more readable text everywhere */
+  #top { font-size: 15px; }
+  #about-text-inner { font-size: 15px; }
+  #contact-email-content a { font-size: 16px; }
+  .modal-info-side h2 { font-size: 15px; }
+  .subtitle { font-size: 13px; }
+  .description { font-size: 14px; }
+
+  /* Works list: stack columns instead of cramming them side by side,
+     since the enlarged text no longer fits on one line */
+  #scroll-inner .row {
+    font-size: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 14px 0;
+  }
+  #scroll-inner .col1 { flex: none; }
+  #scroll-inner .col2 {
+    position: static;
+    left: auto;
+    transform: none;
+    text-align: left;
+    opacity: 0.6;
+  }
+  #scroll-inner .col3,
+  #scroll-inner .col4 {
+    flex: none;
+    text-align: left;
+    padding-right: 0;
+  }
+
+  /* Project modal: stack image above info instead of side-by-side,
+     so photos keep a natural horizontal crop instead of a tall vertical one */
+  .modal-content {
+    flex-direction: column;
+    width: 92%;
+    height: auto;
+    max-height: 85vh;
+  }
+  .modal-content.fullscreen {
+    width: 96vw;
+    height: 92vh;
+  }
+  .modal-image-side {
+    flex: none;
+    width: 100%;
+    height: 42vw;
+    max-height: 260px;
+    border-right: none;
+    border-bottom: 1px solid #333;
+  }
+  .modal-content.fullscreen .modal-image-side {
+    flex: 1;
+    width: 100%;
+    height: auto;
+    max-height: none;
+  }
+  .modal-info-side {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .text-container {
+    padding: 24px 20px;
+  }
+  #modal-gallery { height: 80px; }
+}
 
 </style>
 </head>
@@ -622,27 +695,27 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 <!-- RESOLUTION WINDOWS -->
 <div id="window-4k" class="resolution-window visible">
   <div class="resolution-label">4K</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <div id="window-1080p" class="resolution-window visible hoverable">
   <div class="resolution-label">1080p</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <div id="window-720p" class="resolution-window visible hoverable">
   <div class="resolution-label">720p</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <div id="window-dvd" class="resolution-window visible hoverable">
   <div class="resolution-label">DVD</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(0.5px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(0.5px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <div id="window-vcd" class="resolution-window visible hoverable">
   <div class="resolution-label">VCD</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(1px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(1px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <script>
@@ -840,6 +913,20 @@ function toggleFullscreen(event) {
 
 // RESOLUTION WINDOWS
 let resolutionsOpen = true;
+
+// Force #window-4k to always match the real visible viewport size,
+// since fixed-position elements with vw/vh or inset:0 don't always
+// resize correctly on mobile when the browser's address bar shows/hides.
+function fitWindow4k() {
+  const w = document.getElementById('window-4k');
+  if (!w) return;
+  w.style.width = window.innerWidth + 'px';
+  w.style.height = window.innerHeight + 'px';
+}
+fitWindow4k();
+window.addEventListener('resize', fitWindow4k);
+window.addEventListener('orientationchange', fitWindow4k);
+
 
 document.getElementById('window-vcd').addEventListener('click', (e) => {
   e.stopPropagation();
