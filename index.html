@@ -738,6 +738,18 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   <!-- WORKS SECTION -->
   <div id="works-section" class="section">
     <div id="scroll-inner">
+      <div class="row hoverable" onclick="openProject('formelevated')">
+        <div class="col1">FORM x Elevated Archive</div>
+        <div class="col2">Ecommerce Photoshoot</div>
+        <div class="col3">Photography</div>
+        <div class="col4">2026</div>
+      </div>
+      <div class="row hoverable" onclick="openProject('formoption')">
+        <div class="col1">FORM x Option Archive</div>
+        <div class="col2">Ecommerce Photoshoot</div>
+        <div class="col3">Photography</div>
+        <div class="col4">2026</div>
+      </div>
       <div class="row hoverable" onclick="openProject('lusvardiart')">
         <div class="col1">Lusvardi Art</div>
         <div class="col2">Logo and Book Design</div>
@@ -1093,6 +1105,18 @@ document.addEventListener('keydown', (e) => {
 
 // PROJECTS
 const projectsData = {
+  'formelevated': {
+    title: 'FORM X ELEVATED ARCHIVE',
+    subtitle: 'Ecommerce Photoshoot',
+    desc: 'FORM is a portal to fashion\'s memory. A place to shop archival objects, uncover the histories behind them, and trace the lives they carried before you.\n\nElevated Archives is a Milan vintage store on Corso di Porta Ticinese, curated to offer particularly rare and sought-after pieces.',
+    imgs: ['assets/Images/Clients/FormElevatedArchive/elevated1.jpg', 'assets/Images/Clients/FormElevatedArchive/elevated2.jpg', 'assets/Images/Clients/FormElevatedArchive/elevated3.jpg', 'assets/Images/Clients/FormElevatedArchive/elevated4.jpg']
+  },
+  'formoption': {
+    title: 'FORM X OPTION ARCHIVE',
+    subtitle: 'Ecommerce Photoshoot',
+    desc: 'FORM is a portal to fashion\'s memory. A place to shop archival objects, uncover the histories behind them, and trace the lives they carried before you.\n\nOption is a fashion platform founded to provide the finest selection of high-quality, second-hand luxury designer items to conscious, fashion-forward individuals.',
+    imgs: ['assets/Images/Clients/FormOptionArchive/option1.jpg', 'assets/Images/Clients/FormOptionArchive/option2.jpg', 'assets/Images/Clients/FormOptionArchive/option3.jpg', 'assets/Images/Clients/FormOptionArchive/option4.jpg']
+  },
   'hglf': {
     title: 'HG-LF',
     subtitle: 'A project curated by Simona Coltello',
