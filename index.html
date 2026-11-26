@@ -76,6 +76,22 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   position: relative;
 }
 
+/* --- 3b. RSVP SECTION --- */
+#rsvp-section {
+  padding: 0;
+  height: 100vh;
+  height: 100dvh;
+  background: transparent;
+  overflow: hidden;
+}
+#rsvp-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
 /* --- 4. WORKS SECTION --- */
 #works-section {
   padding: 0;
@@ -729,33 +745,50 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 <!-- TOP BAR -->
 <div id="top">
   <div id="logo"><img src="assets/Logo/logo4k.svg" alt="4K Logo"></div>
-  <div><span id="link-works" class="hoverable">Works</span> &nbsp; <span id="link-exhibitions" class="hoverable">Exhibitions</span> &nbsp; <span id="link-cellula" class="hoverable">Cellula</span> &nbsp; <span id="link-about" class="hoverable">About</span> &nbsp; <span id="link-contact" class="hoverable">Contact</span></div>
+  <div><span id="link-rsvp" class="hoverable">RSVP</span> &nbsp; <span id="link-works" class="hoverable">Works</span> &nbsp; <span id="link-exhibitions" class="hoverable">Exhibitions</span> &nbsp; <span id="link-cellula" class="hoverable">Cellula</span> &nbsp; <span id="link-about" class="hoverable">About</span> &nbsp; <span id="link-contact" class="hoverable">Contact</span></div>
 </div>
 
 <!-- MAIN CONTAINER -->
 <div id="main-container">
+
+  <!-- RSVP SECTION -->
+  <div id="rsvp-section" class="section">
+    <img id="rsvp-image" fetchpriority="high" decoding="async" src="assets/Images/rsvp.webp" alt="4K &amp; Local Service present: Oh, I Thought Nothing Could Go Wrong, BiM Milano, 11/12">
+  </div>
   
   <!-- WORKS SECTION -->
   <div id="works-section" class="section">
     <div id="scroll-inner">
+      <div class="row hoverable" onclick="openProject('cursormag')">
+        <div class="col1">Cursor</div>
+        <div class="col2">Event Photography &amp; Documentation</div>
+        <div class="col3">Photography</div>
+        <div class="col4">2026</div>
+      </div>
+      <!-- HIDDEN FOR NOW: FORM x Elevated Archive
       <div class="row hoverable" onclick="openProject('formelevated')">
         <div class="col1">FORM x Elevated Archive</div>
         <div class="col2">Ecommerce Photoshoot</div>
         <div class="col3">Photography</div>
         <div class="col4">2026</div>
       </div>
+      -->
+      <!-- HIDDEN FOR NOW: FORM x Option Archive
       <div class="row hoverable" onclick="openProject('formoption')">
         <div class="col1">FORM x Option Archive</div>
         <div class="col2">Ecommerce Photoshoot</div>
         <div class="col3">Photography</div>
         <div class="col4">2026</div>
       </div>
+      -->
+      <!-- HIDDEN FOR NOW: Lusvardi Art
       <div class="row hoverable" onclick="openProject('lusvardiart')">
         <div class="col1">Lusvardi Art</div>
         <div class="col2">Logo and Book Design</div>
         <div class="col3">Publishing</div>
         <div class="col4">2026</div>
       </div>
+      -->
       <div class="row hoverable" onclick="openProject('slipmode')">
         <div class="col1">Slipmode x Arc'teryx Italia</div>
         <div class="col2">Event Photography &amp; Documentation</div>
@@ -764,12 +797,6 @@ a, button, [onclick], .hoverable, #logo-page-header span {
       </div>
       <div class="row hoverable" onclick="openProject('trashgirls8000')">
         <div class="col1">Trashgirls8000</div>
-        <div class="col2">Event Photography &amp; Documentation</div>
-        <div class="col3">Photography</div>
-        <div class="col4">2026</div>
-      </div>
-      <div class="row hoverable" onclick="openProject('cursormag')">
-        <div class="col1">Cursor</div>
         <div class="col2">Event Photography &amp; Documentation</div>
         <div class="col3">Photography</div>
         <div class="col4">2026</div>
@@ -786,12 +813,14 @@ a, button, [onclick], .hoverable, #logo-page-header span {
         <div class="col3">Branding, Publishing</div>
         <div class="col4">2025</div>
       </div>
+      <!-- HIDDEN FOR NOW: For Them
       <div class="row hoverable" onclick="openProject('forthem')">
         <div class="col1">For Them</div>
         <div class="col2">Merch Design</div>
         <div class="col3">Design</div>
         <div class="col4">2025</div>
       </div>
+      -->
       <!-- HIDDEN FOR NOW: Slam Jam
       <div class="row hoverable" onclick="openProject('slamjam')">
         <div class="col1">Slam Jam</div>
@@ -800,12 +829,14 @@ a, button, [onclick], .hoverable, #logo-page-header span {
         <div class="col4">2025</div>
       </div>
       -->
+      <!-- HIDDEN FOR NOW: Pessima
       <div class="row hoverable" onclick="openProject('pessima')">
         <div class="col1">Pessima</div>
         <div class="col2">Pessima Magazine Vol.2</div>
         <div class="col3">Publishing</div>
         <div class="col4">2024</div>
       </div>
+      -->
     </div>
   </div>
 
@@ -856,7 +887,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
   <!-- CELLULA SECTION -->
   <div id="cellula-section" class="section">
     <div id="cellula-content">
-      <video id="cellula-image" src="assets/Images/videocellulateaser.mp4" autoplay loop muted playsinline></video>
+      <video id="cellula-image" data-src="assets/Images/videocellulateaser.mp4" preload="none" loop muted playsinline></video>
     </div>
   </div>
 
@@ -865,7 +896,7 @@ a, button, [onclick], .hoverable, #logo-page-header span {
     <div id="about-text-inner">
       <img id="about-image" src="assets/Images/3 circle.png" alt="3 Circles">
       <div id="about-text-content">
-        4K is a creative design studio based in Milan, Copenhagen &amp; Berlin.
+        4K is a creative design studio specialized in Editorial Design, Event Documentation and Web Design, based in Milan &amp; Copenhagen.
       </div>
     </div>
   </div>
@@ -917,16 +948,12 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 <!-- WIDGETS -->
 <div id="widget-dog" class="hoverable">
   <img src="assets/Widgets/widgetdog.png" alt="Widget Dog">
-  <video autoplay muted loop playsinline>
-    <source src="widgetvideo.mp4" type="video/mp4">
-  </video>
+  <video muted loop playsinline preload="none" data-src="widgetvideo.mp4"></video>
 </div>
 
 <div id="widget-simona" class="hoverable">
   <img src="assets/Widgets/4K WIDGET BY SIMONA.png" alt="Widget Simona">
-  <video autoplay muted loop playsinline>
-    <source src="widgetvideo.mp4" type="video/mp4">
-  </video>
+  <video muted loop playsinline preload="none" data-src="widgetvideo.mp4"></video>
   <div class="play-area hoverable"></div>
   <div class="stop-area hoverable"></div>
 </div>
@@ -934,34 +961,34 @@ a, button, [onclick], .hoverable, #logo-page-header span {
 <div id="widget-positive-radio" class="hoverable">
   <img src="assets/Widgets/positive-radio-player-silver_w-shadows.png" alt="Widget Positive Radio">
   <div class="video-wrap">
-    <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" src="https://www.youtube.com/embed/T4s8trguRX8?si=1WhBZmQPeNs-7Qjs&autoplay=1&mute=1&loop=1&playlist=T4s8trguRX8"></iframe>
+    <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" data-src="https://www.youtube.com/embed/T4s8trguRX8?si=1WhBZmQPeNs-7Qjs&autoplay=1&mute=1&loop=1&playlist=T4s8trguRX8"></iframe>
   </div>
 </div>
 
 <!-- RESOLUTION WINDOWS -->
 <div id="window-4k" class="resolution-window visible">
   <div class="resolution-label">4K</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline preload='auto' style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video><script>var v=document.querySelector('video');function ok(){parent.postMessage('hero-playing','*')}if(!v.paused&&v.readyState>2){ok()}else{v.addEventListener('playing',ok,{once:true})}</script></body></html>"></iframe>
 </div>
 
 <div id="window-1080p" class="resolution-window visible hoverable">
   <div class="resolution-label">1080p</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe data-srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <div id="window-720p" class="resolution-window visible hoverable">
   <div class="resolution-label">720p</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe data-srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover'><source src='assets/Video/beeonflower-small.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <div id="window-dvd" class="resolution-window visible hoverable">
   <div class="resolution-label">DVD</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(0.5px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe data-srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(0.5px)'><source src='assets/Video/beeonflower-small.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <div id="window-vcd" class="resolution-window visible hoverable">
   <div class="resolution-label">VCD</div>
-  <iframe srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(1px)'><source src='assets/Video/beeonflower.mp4' type='video/mp4'></video></body></html>"></iframe>
+  <iframe data-srcdoc="<!DOCTYPE html><html><head><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}</style></head><body><video autoplay muted loop playsinline style='width:100%;height:100%;object-fit:cover;filter:blur(1px)'><source src='assets/Video/beeonflower-small.mp4' type='video/mp4'></video></body></html>"></iframe>
 </div>
 
 <script>
@@ -979,6 +1006,10 @@ document.querySelectorAll('.hoverable, #logo-page-header span, a, button, [oncli
 
 function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showRsvp() {
+  scrollToSection('rsvp-section');
 }
 
 function showWorks() {
@@ -1002,11 +1033,49 @@ function showCellula() {
 }
 
 // EVENT LISTENERS
+document.getElementById('link-rsvp').addEventListener('click', (e) => { e.preventDefault(); showRsvp(); });
 document.getElementById('link-works').addEventListener('click', (e) => { e.preventDefault(); showWorks(); });
 document.getElementById('link-about').addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
 document.getElementById('link-contact').addEventListener('click', (e) => { e.preventDefault(); showContact(); });
 document.getElementById('link-exhibitions').addEventListener('click', (e) => { e.preventDefault(); showExhibitions(); });
 document.getElementById('link-cellula').addEventListener('click', (e) => { e.preventDefault(); showCellula(); });
+
+// STAGED VIDEO LOADING
+// 1) the full-screen 4K window loads first, on its own
+// 2) once it is playing, the 4 small windows load (they reuse the cached file)
+// 3) then the Cellula teaser is loaded, and only plays while on screen
+// Widgets (dog / Simona / radio) load the first time they are shown.
+let stage2Started = false;
+function startStage2() {
+  if (stage2Started) return;
+  stage2Started = true;
+  document.querySelectorAll('iframe[data-srcdoc]').forEach(f => { f.srcdoc = f.dataset.srcdoc; });
+  setTimeout(loadCellula, 1500);
+}
+window.addEventListener('message', (e) => { if (e.data === 'hero-playing') startStage2(); });
+window.addEventListener('load', () => setTimeout(startStage2, 8000)); // fallback if the message never arrives
+
+function loadCellula() {
+  const v = document.getElementById('cellula-image');
+  if (!v || v.dataset.loaded) return;
+  v.dataset.loaded = '1';
+  v.src = v.dataset.src;
+  v.preload = 'auto';
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(en => { en.isIntersecting ? v.play().catch(() => {}) : v.pause(); });
+    }, { threshold: 0.1 }).observe(v);
+  } else {
+    v.play().catch(() => {});
+  }
+}
+
+function loadWidgetMedia(widget) {
+  const v = widget.querySelector('video[data-src]');
+  if (v) { v.src = v.dataset.src; v.removeAttribute('data-src'); v.play().catch(() => {}); }
+  const f = widget.querySelector('iframe[data-src]');
+  if (f) { f.src = f.dataset.src; f.removeAttribute('data-src'); }
+}
 
 // LOGO CLICK - CYCLES THROUGH WIDGETS
 let widgetState = 0; // 0 = none, 1 = dog, 2 = simona, 3 = positive radio
@@ -1025,12 +1094,15 @@ document.getElementById('logo').addEventListener('click', (e) => {
   // Show widgets based on state
   if (widgetState >= 1) {
     document.getElementById('widget-dog').classList.add('visible');
+    loadWidgetMedia(document.getElementById('widget-dog'));
   }
   if (widgetState >= 2) {
     document.getElementById('widget-simona').classList.add('visible');
+    loadWidgetMedia(document.getElementById('widget-simona'));
   }
   if (widgetState >= 3) {
     document.getElementById('widget-positive-radio').classList.add('visible');
+    loadWidgetMedia(document.getElementById('widget-positive-radio'));
   }
 });
 
@@ -1107,67 +1179,67 @@ document.addEventListener('keydown', (e) => {
 const projectsData = {
   'formelevated': {
     title: 'FORM X ELEVATED ARCHIVE',
-    subtitle: 'Ecommerce Photoshoot',
+    subtitle: 'Photography by Simona Coltello',
     desc: 'FORM is a portal to fashion\'s memory. A place to shop archival objects, uncover the histories behind them, and trace the lives they carried before you.\n\nElevated Archives is a Milan vintage store on Corso di Porta Ticinese, curated to offer particularly rare and sought-after pieces.',
     imgs: ['assets/Images/Clients/FormElevatedArchive/elevated1.jpg', 'assets/Images/Clients/FormElevatedArchive/elevated2.jpg', 'assets/Images/Clients/FormElevatedArchive/elevated3.jpg', 'assets/Images/Clients/FormElevatedArchive/elevated4.jpg']
   },
   'formoption': {
     title: 'FORM X OPTION ARCHIVE',
-    subtitle: 'Ecommerce Photoshoot',
+    subtitle: 'Photography by Simona Coltello',
     desc: 'FORM is a portal to fashion\'s memory. A place to shop archival objects, uncover the histories behind them, and trace the lives they carried before you.\n\nOption is a fashion platform founded to provide the finest selection of high-quality, second-hand luxury designer items to conscious, fashion-forward individuals.',
     imgs: ['assets/Images/Clients/FormOptionArchive/option1.jpg', 'assets/Images/Clients/FormOptionArchive/option2.jpg', 'assets/Images/Clients/FormOptionArchive/option3.jpg', 'assets/Images/Clients/FormOptionArchive/option4.jpg']
   },
   'hglf': {
     title: 'HG-LF',
-    subtitle: 'A project curated by Simona Coltello',
+    subtitle: 'Web Design and Photography by Simona Coltello',
     desc: 'HG / LF is a home base of dissent- an agglomerate where atelier and community converge. Driven by a synthesis of provocation, confusion, error and subversive imagination, HG / LF creates wearable armor-forms of protection designed to safeguard the most vulnerable areas of the body from an oppressive and hostile social order.',
     imgs: ['assets/Images/Clients/hglf/hglf1.mp4', 'assets/Images/Clients/hglf/hglf2.png', 'assets/Images/Clients/hglf/hglf3.png', 'assets/Images/Clients/hglf/hglf4.jpg']
   },
   'autostraddle': {
     title: 'AUTOSTRADDLE',
-    subtitle: 'Art Direction and Graphic Design',
+    subtitle: 'Art Direction and Graphic Design by Simona Coltello',
     desc: 'Autostraddle is an independent queer and trans online magazine founded in 2009, long known for its community of queer women and LGBTQ+ readers. In 2025 the brand launched its first print magazine and refreshed its visual identity across print and social media.',
     imgs: ['assets/Images/Clients/Autostraddle/autostraddle1.jpg', 'assets/Images/Clients/Autostraddle/autostraddle2.jpg', 'assets/Images/Clients/Autostraddle/autostraddle3.jpg', 'assets/Images/Clients/Autostraddle/autostraddle4.jpg']
   },
   'forthem': {
     title: 'FOR THEM',
-    subtitle: 'Merch Design',
+    subtitle: 'Photography by Simona Coltello',
     desc: 'For Them is a New York-based queer and trans wellness brand known for its chest binders and gender-affirming products designed with the queer community.',
     imgs: ['assets/Images/Clients/ForThem/forthem1.jpg', 'assets/Images/Clients/ForThem/forthem2.jpg', 'assets/Images/Clients/ForThem/forthem3.jpg', 'assets/Images/Clients/ForThem/forthem4.jpg']
   },
   'lusvardiart': {
     title: 'LUSVARDI ART',
-    subtitle: 'Logo and Book Design',
+    subtitle: 'Photography by Simona Coltello',
     desc: 'Lusvardi Art is a contemporary art gallery in Milan founded by artists Laura Lusvardi and Alessandro Rauschmann, hosting solo and group exhibitions spanning painting, sculpture and performance.',
     imgs: ['assets/Images/Clients/LusvardiArt/lusvardi1.jpg', 'assets/Images/Clients/LusvardiArt/lusvardi2.jpg', 'assets/Images/Clients/LusvardiArt/lusvardi3.jpg', 'assets/Images/Clients/LusvardiArt/lusvardi4.jpg']
   },
   'slamjam': {
     title: 'SLAM JAM X NEW BALANCE',
-    subtitle: 'A project curated by Lars',
+    subtitle: 'Photography by Simona Coltello',
     desc: 'Inspired by ancient greek mythology explores the reasons one person would choose to become freelancer.',
     imgs: ['assets/Images/Clients/Slamjam/1.jpg', 'assets/Images/Clients/Slamjam/2.jpg', 'assets/Images/Clients/Slamjam/3.jpg', 'assets/Images/Clients/Slamjam/4.jpg']
   },
   'cursormag': {
     title: 'CURSOR',
-    subtitle: 'A project curated by Simona Coltello',
-    desc: 'Cursor is a cyberfeminist micro magazine & series of events based in Copenhagen. Event Photography & Documentation.',
+    subtitle: 'Photography by Simona Coltello',
+    desc: 'Cursor is a cyberfeminist micro magazine & series of events based in Copenhagen.',
     imgs: ['assets/Images/Clients/Cursomag/cursor1.jpg', 'assets/Images/Clients/Cursomag/cursor 2.jpg', 'assets/Images/Clients/Cursomag/cursor3.jpg', 'assets/Images/Clients/Cursomag/cursor4.jpg']
   },
   'slipmode': {
     title: "SLIPMODE X ARC'TERYX ITALIA",
-    subtitle: 'Event Photography & Documentation',
+    subtitle: 'Photography by Simona Coltello',
     desc: "Photography documentation of the series of collaboration between milanese collective Slipmode & sport brand Arc'teryx.",
     imgs: ['assets/Images/Clients/Slipmode/slip1.jpg', 'assets/Images/Clients/Slipmode/slip2.jpg', 'assets/Images/Clients/Slipmode/slip3.jpg', 'assets/Images/Clients/Slipmode/slip4.jpg']
   },
   'trashgirls8000': {
     title: 'TRASHGIRLS8000',
-    subtitle: 'Event Photography & Documentation',
+    subtitle: 'Photography by Simona Coltello',
     desc: 'Trashgirls8000 is a Aarhus and Copenhagen based FLINTA project that opens radical confrontation about the toxicity of the fashion industry, extreme waste and initiatives towards sustainable upcycling.',
     imgs: ['assets/Images/Clients/Trashgirls/trash1.jpg', 'assets/Images/Clients/Trashgirls/trash2.jpg', 'assets/Images/Clients/Trashgirls/trash3.jpg', 'assets/Images/Clients/Trashgirls/trash4.jpg']
   },
   'pessima': {
     title: 'PESSIMA MAGAZINE VOL.2',
-    subtitle: 'A project curated by Simona Coltello',
+    subtitle: 'Photography by Simona Coltello',
     desc: 'Pessima is an annual, independent magazine that explores and represents Trans* identities.\n\nFeaturing: Jenna Marvin (RUS), 2 dual (AUS), Opia (UK), Lux Aeterna (ITA), E.R. Fightmaster (USA), Vampy (USA)\n\nSewn Binding – 300 pages, 8 editorials, 50+ artists involved – A4',
     imgs: ['assets/Images/Clients/Pessima/pessima1.jpg', 'assets/Images/Clients/Pessima/pessima2.jpeg', 'assets/Images/Clients/Pessima/pessima3.jpg', 'assets/Images/Clients/Pessima/pessima4.png']
   }
